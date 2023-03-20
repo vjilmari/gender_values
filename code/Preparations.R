@@ -1,0 +1,399 @@
+#' ---
+#' title: "Data preparations"
+#' output: html_document
+#' date: "`r Sys.Date()`"
+#' ---
+#' 
+## ----setup, include=FALSE----------------------------------------------------------------
+knitr::opts_chunk$set(echo = TRUE)
+
+#' 
+#' # Packages
+#' 
+## ----------------------------------------------------------------------------------------
+library(rio)
+library(dplyr)
+
+#' 
+#' # Read Data
+#' 
+## ----------------------------------------------------------------------------------------
+# this reads directly from the zip
+d<-import("../data/ESS-Data-Wizard-subset-2023-03-15.zip")
+
+table(d$essround,useNA="always")
+table(d$cntry,useNA="always")
+
+#' 
+#' # Calculate the number of waves per each country
+#' 
+## ----------------------------------------------------------------------------------------
+gd<-data.frame(cntry=unique(d$cntry))
+gd$waves<-NA
+
+for (i in 1:nrow(gd)){
+  gd[i,"waves"]<-length(unique(d[d$cntry==unique(d$cntry)[i],
+                                 "essround"]))
+}
+gd  
+
+# attach number of rounds variable to data
+
+d<-left_join(
+  x=d,
+  y=gd,
+  by="cntry")
+
+table(d$waves,useNA="always")
+
+#' 
+#' # Gender
+#' 
+## ----------------------------------------------------------------------------------------
+
+# code binary gender variable
+attributes(d$gndr)
+table(d$gndr,useNA="always")
+d$gndr.bin<-ifelse(d$gndr==2,0,d$gndr)
+table(d$gndr.bin,useNA="always")
+
+# code effect coded gender variable
+d$gndr.c<-d$gndr.bin-0.5
+table(d$gndr.c,useNA="always")
+
+#' 
+#' # Childlessness
+#' 
+## ----------------------------------------------------------------------------------------
+# first based only on the single variable
+# this variable has a large number of missing values
+# because it is a follow up question
+# but the prior question is only present in ESS1-8
+attributes(d$chldhhe)
+table(d$chldhhe,useNA="always")
+
+table(d$essround,d$chldhhe,useNA="always")
+prop.table(table(d$essround,d$chldhhe,useNA="always"),1)
+
+d$childless1<-
+  case_when(d$chldhhe==2~1,
+            d$chldhhe==1~0,
+            TRUE~NA_integer_)
+table(d$childless1,useNA="always")
+prop.table(table(d$childless1,useNA="always"))
+prop.table(table(d$childless1))
+
+# then based on the two variables
+# this latter includes those who live with a kid currently
+
+attributes(d$chldhm)
+table(d$chldhhe,d$chldhm,useNA="always")
+
+d$childless2<-
+  case_when(d$chldhhe==2 & d$chldhm==2~1, # childless if ever and currently childless
+            d$chldhhe==1 | d$chldhm==1 ~0, # non-childless if ever OR currently has kids in the HH
+            TRUE~NA_integer_)
+table(d$childless2,useNA="always")
+prop.table(table(d$childless2,useNA="always"))
+prop.table(table(d$childless2))
+
+table(d$essround,d$childless2,useNA="always")
+
+# check the responses in rshipa
+attributes(d$rship10)
+attributes(d$rshipa20)
+
+hh_rshipa=paste0("rshipa",2:24)
+hh_rship=paste0("rship",2:9)
+
+d$hh_child1<-apply(d[,hh_rship], 1, function(row) as.integer(any(row == 2)))
+table(d$hh_child1,useNA="always")
+
+d$hh_child2<-apply(d[,hh_rshipa], 1, function(row) as.integer(any(row == 2)))
+table(d$hh_child2,useNA="always")
+
+d$hh_child<-ifelse(d$hh_child1==1 | d$hh_child2==1,1,0)
+table(d$hh_child,useNA="always")
+# code NA as 0
+d$hh_child[is.na(d$hh_child)]<-0
+table(d$hh_child,useNA="always")
+
+table(d$chldhm,d$hh_child,useNA="always")
+
+# try to apply this same system for all waves
+# if there is a child in the HH, then the person in not childless
+# if there is not a child in the HH, then the second question is used
+# to define if the person is childless
+
+
+d$childless3<-
+  case_when(d$hh_child==1 | d$chldhhe==1~0, # non-childless if kid at home OR ever had
+            d$hh_child==0 & d$chldhhe==2~1, # childless if no kid at household AND never was
+            TRUE~NA_integer_)
+table(d$childless3,useNA="always")
+prop.table(table(d$childless3,useNA="always"))
+prop.table(table(d$childless3))
+
+#' 
+#' # essround
+#' 
+## ----------------------------------------------------------------------------------------
+# center around midpoint
+d$essround.c<-d$essround-5.5
+table(d$essround.c)
+
+#' 
+#' # Age
+#' 
+## ----------------------------------------------------------------------------------------
+attributes(d$agea)
+
+d$age.c<-scale(d$agea,center = T,scale=T)
+
+# belong to the focal age range of childlessness examination
+
+d$age_included<-
+  case_when(d$agea>17 & d$agea<46~1,
+            TRUE~0)
+table(d$age_included,useNA="always")
+
+table(d$essround,
+      d$age_included,useNA="always")
+
+#' 
+#' # Education
+#' 
+## ----------------------------------------------------------------------------------------
+attributes(d$eduyrs)
+table(d$eduyrs,useNA="always")
+
+d$eduyrs.c<-scale(d$eduyrs,center = T,scale=T)
+
+#' 
+#' # Religiosity
+#' 
+## ----------------------------------------------------------------------------------------
+attributes(d$rlgdgr)
+table(d$rlgdgr,useNA="always")
+d$rlgdgr.c<-scale(d$rlgdgr,center=T,scale=T)
+
+# country mean-level religiosity
+
+reld<-d %>%
+  group_by(cntry) %>%
+  summarise(rlgdgr.cm=mean(rlgdgr.c,na.rm=T))
+reld
+
+d<-
+  left_join(
+    x=d,
+    y=reld,
+    by="cntry")
+
+#' 
+#' # Country x time datasets
+#' 
+## ----------------------------------------------------------------------------------------
+d$cntry_time<-paste0(d$cntry,"_",d$essround)
+table(d$cntry_time,useNA="always")
+
+#' 
+#' # Same-gender partnership
+#' 
+## ----------------------------------------------------------------------------------------
+# must be done separately for ESS1
+
+# use a function that checks if there are 
+# same-sex partners living in the household
+
+has_samegndr_partner<-function(data,hh_gndr,hh_rshipa){
+  
+  gndr_self<-data[,"gndr"]
+  test_mat<-matrix(NA,nrow=nrow(data),ncol=length(hh_gndr))
+  
+  for (i in 1:length(hh_gndr)){
+    test_mat[,i]<-
+      (gndr_self == data[,hh_gndr[i]] & data[,hh_rshipa[i]]==1)
+  }
+  
+  result<-rowSums(test_mat,na.rm=T)
+  return(result)
+  
+}
+
+
+hh_gndr=paste0("gndr",2:24)
+hh_rshipa=paste0("rshipa",2:24)
+
+d$same_gndr210<-has_samegndr_partner(data=d,
+                        hh_gndr=hh_gndr,
+                        hh_rshipa=hh_rshipa)
+table(d$same_gndr210,useNA="always")
+
+d$same_gndr1<-has_samegndr_partner(
+  data=d,
+  hh_gndr=paste0("gndr",2:9),
+  hh_rshipa=paste0("rship",2:9)
+)
+
+table(d$same_gndr1,useNA="always")
+
+# combine
+
+d$same_gndr_partner<-
+  case_when(d$same_gndr1>0 | d$same_gndr210>0~1,
+            TRUE~0)
+table(d$same_gndr_partner,useNA="always")
+
+#' 
+#' # Values
+#' 
+## ----------------------------------------------------------------------------------------
+## reverse code all value items first
+
+d$impdiff.R<-7-d$impdiff
+d$impenv.R<-7-d$impenv
+d$impfree.R<-7-d$impfree
+d$impfun.R<-7-d$impfun
+d$imprich.R<-7-d$imprich
+d$impsafe.R<-7-d$impsafe
+d$imptrad.R<-7-d$imptrad
+d$ipadvnt.R<-7-d$ipadvnt
+d$ipbhprp.R<-7-d$ipbhprp
+d$ipcrtiv.R<-7-d$ipcrtiv
+d$ipeqopt.R<-7-d$ipeqopt
+d$ipfrule.R<-7-d$ipfrule
+d$ipgdtim.R<-7-d$ipgdtim
+d$iphlppl.R<-7-d$iphlppl
+d$iplylfr.R<-7-d$iplylfr
+d$ipmodst.R<-7-d$ipmodst
+d$iprspot.R<-7-d$iprspot
+d$ipshabt.R<-7-d$ipshabt
+d$ipstrgv.R<-7-d$ipstrgv
+d$ipsuces.R<-7-d$ipsuces
+d$ipudrst.R<-7-d$ipudrst
+
+# conformity
+attributes(d$ipfrule)
+attributes(d$ipbhprp)
+d$con<-rowMeans(d[,c("ipfrule.R","ipbhprp.R")],na.rm=T)
+
+# tradition
+attributes(d$ipmodst)
+attributes(d$imptrad)
+d$tra<-rowMeans(d[,c("ipmodst.R","imptrad.R")],na.rm=T)
+
+# benevolence
+
+attributes(d$iphlppl)
+attributes(d$iplylfr)
+d$ben<-rowMeans(d[,c("iphlppl.R","iplylfr.R")],na.rm=T)
+
+# universalism
+
+attributes(d$ipeqopt)
+attributes(d$ipudrst)
+attributes(d$impenv)
+d$uni<-rowMeans(d[,c("ipeqopt.R","ipudrst.R","impenv.R")],na.rm=T)
+
+# self-diretion
+
+attributes(d$ipcrtiv)
+attributes(d$impfree)
+d$sdi<-rowMeans(d[,c("ipcrtiv.R","impfree.R")],na.rm=T)
+
+# stimulation
+
+attributes(d$impdiff)
+attributes(d$ipadvnt)
+d$sti<-rowMeans(d[,c("impdiff.R","ipadvnt.R")],na.rm=T)
+
+# hedonism
+
+attributes(d$ipgdtim)
+attributes(d$impfun)
+d$hed<-rowMeans(d[,c("ipgdtim.R","impfun.R")],na.rm=T)
+
+# achievement
+
+attributes(d$ipshabt)
+attributes(d$ipsuces)
+d$ach<-rowMeans(d[,c("ipshabt.R","ipsuces.R")],na.rm=T)
+
+# power
+
+attributes(d$imprich)
+attributes(d$iprspot)
+d$pow<-rowMeans(d[,c("imprich.R","iprspot.R")],na.rm=T)
+
+# security
+# impsafe and ipstrgv
+
+attributes(d$impsafe)
+attributes(d$ipstrgv)
+d$sec<-rowMeans(d[,c("impsafe.R","ipstrgv.R")],na.rm=T)
+
+#' 
+#' 
+#' # Marriage
+#' 
+## ----------------------------------------------------------------------------------------
+attributes(d$marital)
+table(d$marital,useNA="always")
+
+attributes(d$maritala)
+table(d$maritala,useNA="always")
+
+attributes(d$maritalb)
+table(d$maritalb,useNA="always")
+
+d$married<-case_when(d$marital==1 |
+                    d$maritala==1 |
+                    d$maritalb==1 ~1,
+                    TRUE~0)
+table(d$married,useNA="always")
+
+# mid-point centered marriage
+d$married.c<-d$married-0.5
+
+#' # Domicile
+#' 
+## ----------------------------------------------------------------------------------------
+attributes(d$domicil)
+table(d$domicil,useNA="always")
+d$rural=case_when(
+  d$domicil==4 | d$domicil==5~1,
+  d$domicil<4~0,
+  TRUE~NA_integer_
+)
+table(d$rural,useNA="always")
+
+d$rural.c<-d$rural-0.5
+table(d$rural.c,useNA="always")
+
+
+#' 
+#' # Variable selection
+#' 
+## ----------------------------------------------------------------------------------------
+
+fd<-d %>%
+  dplyr::select(
+    essround,essround.c,idno,cntry,waves,pspwght,cntry_time,
+    rlgdgr,rlgdgr.c,rlgdgr.cm,
+    gndr,gndr.bin,gndr.c,
+    agea,age.c,age_included,
+    chldhhe,chldhm,childless1,childless2,childless3,
+    eduyrs,eduyrs.c,
+    married,married.c,
+    rural,rural.c,
+    same_gndr_partner,
+    con,tra,ben,uni,sdi,sti,hed,ach,pow,sec
+    )
+
+#' 
+#' # Data export
+#' 
+## ----------------------------------------------------------------------------------------
+export(fd,"../data/fdat.xlsx",overwrite=T)
+
