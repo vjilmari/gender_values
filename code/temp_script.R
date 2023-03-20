@@ -9,6 +9,9 @@ library(ggplot2)
 library(finalfit)
 library(ggflags)
 library(lmerTest)
+library(metafor)
+library(ggpubr)
+
 
 fdat<-import("data/fdat.xlsx")
 
@@ -1607,3 +1610,294 @@ round(GEP_dadas$dadas,3)
 round(GEP_dadas$vpc_at_reduced,3)
 round(GEP_dadas$scaled_estimates,3)
 GEP_dadas$re_cov_test
+
+# plot the results
+
+
+
+# start with obtaining predicted values for means and differences
+
+# refit reduced and full models with GGGI in original scale
+
+mod_GGGI<-lmer(FM.z~gndr.c+essround.c+GGGI.m+GGGI.m:gndr.c+(gndr.c|cntry),
+              data=GEP_dat,REML=F,
+              control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
+
+mod_GGGI_red<-lmer(FM.z~gndr.c+essround.c+(gndr.c|cntry),
+               data=GEP_dat,REML=F,
+               control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
+
+
+p<-
+  emmip(
+    mod_GGGI, 
+    gndr.c ~ GGGI.m,
+    at=list(gndr.c = c(-0.5,0.5),
+            GGGI.m=
+              seq(from=round(range(GEP_dat$GGGI.m)[1],2),
+                  to=round(range(GEP_dat$GGGI.m)[2],2),
+                  by=0.001)),
+    plotit=F,CIs=T,lmerTest.limit = 1e6,disable.pbkrtest=T)
+
+p$gndr.c<-p$tvar
+levels(p$gndr.c)<-c("Women","Men")
+
+# obtain min and max for aligned plots
+min.y.comp<-min(p$LCL)
+max.y.comp<-max(p$UCL)
+
+# Men and Women mean distributions
+
+p3<-coefficients(mod_GGGI_red)$cntry
+p3<-cbind(rbind(p3,p3),weight=rep(c(-0.5,0.5),each=nrow(p3)))
+p3$xvar<-p3$`(Intercept)`+p3$gndr.c*p3$weight
+p3$gndr.c<-as.factor(p3$weight)
+levels(p3$gndr.c)<-c("Women","Men")
+
+# obtain min and max for aligned plots
+min.y.mean.distr<-min(p3$xvar)
+max.y.mean.distr<-max(p3$xvar)
+
+
+# obtain the coefs for the gndr.c-effect (difference) as function of GGGI.m
+
+p2<-data.frame(
+  emtrends(mod_GGGI,var="gndr.c",
+           specs="GGGI.m",
+           at=list(#gndr.c = c(-0.5,0.5),
+             GGGI.m=
+               seq(from=round(range(GEP_dat$GGGI.m)[1],2),
+                   to=round(range(GEP_dat$GGGI.m)[2],2),
+                   by=0.001)),
+           lmerTest.limit = 1e6,disable.pbkrtest=T))
+
+p2$yvar<-p2$gndr.c.trend
+p2$xvar<-p2$GGGI.m
+p2$LCL<-p2$lower.CL
+p2$UCL<-p2$upper.CL
+
+# obtain min and max for aligned plots
+min.y.diff<-min(p2$LCL)
+max.y.diff<-max(p2$UCL)
+
+# difference score distribution
+
+p4<-coefficients(mod_GGGI_red)$cntry
+p4$xvar=(+1)*p4$gndr.c
+
+# obtain mix and max for aligned plots
+
+min.y.diff.distr<-min(p4$xvar)
+max.y.diff.distr<-max(p4$xvar)
+
+# define mins and maxs
+
+min.y.pred<-
+  ifelse(min.y.comp<min.y.mean.distr,min.y.comp,min.y.mean.distr)
+
+max.y.pred<-
+  ifelse(max.y.comp>max.y.mean.distr,max.y.comp,max.y.mean.distr)
+
+min.y.narrow<-
+  ifelse(min.y.diff<min.y.diff.distr,min.y.diff,min.y.diff.distr)
+
+max.y.narrow<-
+  ifelse(max.y.diff>max.y.diff.distr,max.y.diff,max.y.diff.distr)
+
+# Figures 
+
+# p1
+
+# scaled simple effects to the plot
+pvals<-round_tidy(GEP_dadas$
+                    dadas$p.value,3)[4:5]
+
+GEP_dadas$vpc_at_reduced
+FM_GGGI_pooled_SD<-
+  sqrt(((GEP_dadas$vpc_at_reduced[1,"mean.n.obs"]-1)*
+         GEP_dadas$vpc_at_reduced[1,"Intercept.var"]+
+         (GEP_dadas$vpc_at_reduced[2,"mean.n.obs"]-1)*
+         GEP_dadas$vpc_at_reduced[2,"Intercept.var"])/(
+           GEP_dadas$vpc_at_reduced[1,"mean.n.obs"]+
+             GEP_dadas$vpc_at_reduced[2,"mean.n.obs"]-2
+         ))
+
+
+
+ests<-
+  round_tidy(c(GEP_dadas$dadas["-0.5","estimate"]/
+               FM_GGGI_pooled_SD,
+               GEP_dadas$dadas["0.5","estimate"]/
+                 FM_GGGI_pooled_SD),2)
+
+coef1<-paste0("std. b11 = ",ests[1],", p = ",pvals[1])
+coef2<-paste0("std. b21 = ",ests[2],", p = ",pvals[2])
+coefs<-data.frame(gndr.c=c("Women","Men"),
+                  coef=c(coef1,coef2))
+
+coef_q<-transf.rtoz(GEP_dadas$dadas["0.5","estimate"]/
+                      FM_GGGI_pooled_SD)-
+  transf.rtoz(GEP_dadas$dadas["-0.5","estimate"]/
+                FM_GGGI_pooled_SD)
+coef_q<-paste0("Cohen's q = ",round_tidy(coef_q,2),", p = ",
+               substr(round_tidy(GEP_dadas$dadas["interaction","p.value"],3),2,5))  
+
+p1.FM<-ggplot(p,aes(y=yvar,x=xvar,color=gndr.c))+
+  geom_point(size=3)+
+  geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.5)+
+  xlab("Global Gender Gap Index")+
+  #ylim=c(2.3,3.9)+
+  ylim(c(min.y.pred,max.y.pred))+
+  ylab("Value male-typicality mean-level")+
+  scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
+  theme(legend.position = "top",
+        legend.title=element_blank(),
+        text=element_text(size=16,  family="sans"),
+        panel.background = element_rect(fill = "white",
+                                        #colour = "black",
+                                        #size = 0.5, linetype = "solid"
+        ),
+        panel.grid.major.x = element_line(linewidth = 0.5, linetype = 2,
+                                          colour = "gray"))+
+  geom_text(data = coefs,show.legend=F,
+            aes(label=coef,x=0.65,
+                y=c(round(min(p$LCL),2)+0.05
+                    ,round(min(p$LCL),2))+0.10,size=14,hjust="left"))+
+  geom_text(inherit.aes=F,aes(x=0.65,y=-0.60,
+                              label=coef_q,size=14,hjust="left"),
+            show.legend=F)
+p1.FM
+
+
+# prediction plot for difference score
+
+pvals2<-round_tidy(GEP_dadas$
+                     dadas$p.value,3)[3]
+ests2<-
+  round_tidy(-1*GEP_dadas$
+               scaled_estimates[,"scaled_est"],2)[3]
+
+coefs2<-paste0("difference score correlation = ",ests2,", p = ",pvals2)
+
+p2.FM<-ggplot(p2,aes(y=yvar,x=xvar))+
+  geom_point(size=3)+
+  geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.5)+
+  xlab("Global Gender Gap Index")+
+  ylim(c(min.y.narrow,max.y.narrow))+
+  ylab("Difference in Value male-typicality")+
+  #scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
+  theme(legend.position = "right",
+        legend.title=element_blank(),
+        text=element_text(size=16,  family="sans"),
+        panel.background = element_rect(fill = "white",
+                                        #colour = "black",
+                                        #size = 0.5, linetype = "solid"
+        ),
+        panel.grid.major.x = element_line(size = 0.5, linetype = 2,
+                                          colour = "gray"))+
+  #geom_text(coef2,aes(x=0.63,y=min(p2$LCL)))
+  geom_text(data = data.frame(coefs2),show.legend=F,
+            aes(label=coefs2,x=0.65,
+                y=c(round(min(p2$LCL),2)),size=14,hjust="left"))
+p2.FM
+
+
+# attempt to make a flag-plot
+
+flag_points<-coefficients(mod_GGGI_red)$cntry
+
+flag_points$women<-flag_points$`(Intercept)`+(-0.5)*flag_points$gndr.c
+flag_points$men<-flag_points$`(Intercept)`+(0.5)*flag_points$gndr.c
+flag_points$mean_level<-flag_points$`(Intercept)`
+flag_points$difference<-flag_points$men-flag_points$women
+flag_points$cntry<-rownames(flag_points)
+
+flag_points<-
+  left_join(x=flag_points,
+            y=GGGI[,c("ISO2","GGGI.m")],by=c("cntry"="ISO2"))
+flag_points
+
+flag_points_long<-
+  data.frame(mean_level=c(flag_points$women,
+                          flag_points$men),
+             GGGI.m=c(flag_points$GGGI.m,
+                      flag_points$GGGI.m),
+             cntry=c(flag_points$cntry,
+                      flag_points$cntry),
+             gndr.c=rep(c("Women","Men"),each=nrow(flag_points)
+             ))
+  
+
+p1.FM.flags<-
+  ggplot(p,aes(y=yvar,x=xvar,color=gndr.c))+
+  geom_point(size=3)+
+  geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
+  xlab("Global Gender Gap Index")+
+  #ylim=c(2.3,3.9)+
+  ylim(c(min.y.pred,max.y.pred))+
+  ylab("Value male-typicality mean-level")+
+  scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
+  theme(legend.position = "top",
+        legend.title=element_blank(),
+        text=element_text(size=16,  family="sans"),
+        panel.background = element_rect(fill = "white",
+                                        #colour = "black",
+                                        #size = 0.5, linetype = "solid"
+        ),
+        panel.grid.major.x = element_line(linewidth = 0.5, linetype = 2,
+                                          colour = "gray"))+
+  geom_text(data = coefs,show.legend=F,
+            aes(label=coef,x=0.60,
+                y=c(round(min(p$LCL),2)+0.05
+                    ,round(min(p$LCL),2))+0.20,size=14,hjust="left"))+
+  geom_text(inherit.aes=F,aes(x=0.60,y=-0.50,
+                              label=coef_q,size=14,hjust="left"),
+            show.legend=F)+
+  geom_point(data=flag_points_long,size=9,
+             aes(x=GGGI.m,y=mean_level))+
+  geom_line(data=flag_points_long,aes(group = cntry,x=GGGI.m,y=mean_level),
+            color="black",linetype=2)+
+  geom_flag(data=flag_points_long,show.legend=F,
+            aes(country=tolower(cntry),size=14,x=GGGI.m,y=mean_level))
+  
+p1.FM.flags
+
+
+p2.FM.flags<-ggplot(p2,aes(y=yvar,x=xvar))+
+  geom_point(size=3)+
+  geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
+  xlab("Global Gender Gap Index")+
+  #ylim(c(min.y.narrow,max.y.narrow))+
+  ylab("Difference in Value male-typicality")+
+  #scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
+  theme(legend.position = "right",
+        legend.title=element_blank(),
+        text=element_text(size=16,  family="sans"),
+        panel.background = element_rect(fill = "white",
+                                        #colour = "black",
+                                        #size = 0.5, linetype = "solid"
+        ),
+        panel.grid.major.x = element_line(size = 0.5, linetype = 2,
+                                          colour = "gray"))+
+  #geom_text(coef2,aes(x=0.63,y=min(p2$LCL)))
+  geom_text(data = data.frame(coefs2),show.legend=F,
+            aes(label=coefs2,x=0.65,
+                y=c(round(min(p2$LCL),2)),size=14,hjust="left"))+
+  geom_flag(data=flag_points,show.legend=F,
+            aes(country=tolower(cntry),size=14,x=GGGI.m,y=difference))
+  
+p2.FM.flags
+
+
+pflag_comb<-
+  ggarrange(p1.FM.flags,p2.FM.flags,align = "hv",
+            ncol=1,nrow=2,heights=c(2,1))
+pflag_comb
+
+
+png(filename = 
+      "results/adjusted_main_effects.png",
+    units = "cm",
+    width = 21.0,height=29.7*(3/4),res = 300)
+p1
+dev.off()
