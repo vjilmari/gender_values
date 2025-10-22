@@ -1829,12 +1829,12 @@ flag_points_long<-
   
 
 p1.FM.flags<-
-  ggplot(p,aes(y=yvar,x=xvar,color=gndr.c))+
+  ggplot(p,aes(y=yvar,x=GGGI.m,color=gndr.c))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
-  xlab("Global Gender Gap Index")+
-  #ylim=c(2.3,3.9)+
+  xlab("Global Gender Gap Index (Average 2009-2022)")+
   ylim(c(min.y.pred,max.y.pred))+
+  xlim(c(0.60,0.88))+
   ylab("Value male-typicality mean-level")+
   scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "top",
@@ -1847,13 +1847,12 @@ p1.FM.flags<-
         panel.grid.major.x = element_line(linewidth = 0.5, linetype = 2,
                                           colour = "gray"))+
   geom_text(data = coefs,show.legend=F,
-            aes(label=coef,x=0.60,
-                y=c(round(min(p$LCL),2)+0.05
-                    ,round(min(p$LCL),2))+0.20,size=14,hjust="left"))+
-  geom_text(inherit.aes=F,aes(x=0.60,y=-0.50,
+            aes(label=coef,x=0.77,
+                y=c(0.54,0.49),size=14,hjust="left"))+
+  geom_text(inherit.aes=F,aes(x=0.77,y=0.44,
                               label=coef_q,size=14,hjust="left"),
             show.legend=F)+
-  geom_point(data=flag_points_long,size=9,
+  geom_point(data=flag_points_long,size=8,alpha=0.30,
              aes(x=GGGI.m,y=mean_level))+
   geom_line(data=flag_points_long,aes(group = cntry,x=GGGI.m,y=mean_level),
             color="black",linetype=2)+
@@ -1863,10 +1862,11 @@ p1.FM.flags<-
 p1.FM.flags
 
 
-p2.FM.flags<-ggplot(p2,aes(y=yvar,x=xvar))+
+p2.FM.flags<-ggplot(p2,aes(y=yvar,x=GGGI.m))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
-  xlab("Global Gender Gap Index")+
+  xlab("Global Gender Gap Index (Average 2009-2022)")+
+  xlim(c(0.60,0.88))+
   #ylim(c(min.y.narrow,max.y.narrow))+
   ylab("Difference in Value male-typicality")+
   #scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
@@ -1881,23 +1881,25 @@ p2.FM.flags<-ggplot(p2,aes(y=yvar,x=xvar))+
                                           colour = "gray"))+
   #geom_text(coef2,aes(x=0.63,y=min(p2$LCL)))
   geom_text(data = data.frame(coefs2),show.legend=F,
-            aes(label=coefs2,x=0.65,
-                y=c(round(min(p2$LCL),2)),size=14,hjust="left"))+
+            aes(label=coefs2,x=0.70,
+                y=c(round(min(p2$LCL),2)),size=18,hjust="left"))+
   geom_flag(data=flag_points,show.legend=F,
-            aes(country=tolower(cntry),size=14,x=GGGI.m,y=difference))
+            aes(country=tolower(cntry),size=18,x=GGGI.m,y=difference))
   
 p2.FM.flags
 
 
 pflag_comb<-
-  ggarrange(p1.FM.flags,p2.FM.flags,align = "hv",
+  ggarrange(p1.FM.flags,p2.FM.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
-pflag_comb
+#pflag_comb
 
 
 png(filename = 
-      "results/adjusted_main_effects.png",
+      "results/GGGI_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
-p1
+pflag_comb
 dev.off()
+
+
