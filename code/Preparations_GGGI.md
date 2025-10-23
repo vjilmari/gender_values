@@ -77,8 +77,9 @@ names(GGGI_wide)
 ```
 
 ```
-##  [1] "cname"     "ccodealp"  "gggi_2005" "gggi_2006" "gggi_2007" "gggi_2008" "gggi_2009" "gggi_2010" "gggi_2011" "gggi_2012" "gggi_2013"
-## [12] "gggi_2014" "gggi_2015" "gggi_2016" "gggi_2017" "gggi_2019" "gggi_2020" "gggi_2021" "gggi_2022" "gggi_2023" "ISO2"
+##  [1] "cname"     "ccodealp"  "gggi_2005" "gggi_2006" "gggi_2007" "gggi_2008" "gggi_2009" "gggi_2010"
+##  [9] "gggi_2011" "gggi_2012" "gggi_2013" "gggi_2014" "gggi_2015" "gggi_2016" "gggi_2017" "gggi_2019"
+## [17] "gggi_2020" "gggi_2021" "gggi_2022" "gggi_2023" "ISO2"
 ```
 
 ``` r
@@ -90,8 +91,9 @@ GGGI_vars_2002_2022
 ```
 
 ```
-##  [1] "gggi_2002" "gggi_2003" "gggi_2004" "gggi_2005" "gggi_2006" "gggi_2007" "gggi_2008" "gggi_2009" "gggi_2010" "gggi_2011" "gggi_2012"
-## [12] "gggi_2013" "gggi_2014" "gggi_2015" "gggi_2016" "gggi_2017" "gggi_2018" "gggi_2019" "gggi_2020" "gggi_2021" "gggi_2022"
+##  [1] "gggi_2002" "gggi_2003" "gggi_2004" "gggi_2005" "gggi_2006" "gggi_2007" "gggi_2008" "gggi_2009"
+##  [9] "gggi_2010" "gggi_2011" "gggi_2012" "gggi_2013" "gggi_2014" "gggi_2015" "gggi_2016" "gggi_2017"
+## [17] "gggi_2018" "gggi_2019" "gggi_2020" "gggi_2021" "gggi_2022"
 ```
 
 ``` r

@@ -4,7 +4,7 @@ output:
   html_document: 
     toc: true
     keep_md: true
-date: "2025-10-22"
+date: "2025-10-23"
 ---
 
 
@@ -40,10 +40,12 @@ table(d$cntry,useNA="always")
 
 ```
 ## 
-##    AL    AT    BE    BG    CH    CY    CZ    DE    DK    EE    ES    FI    FR    GB    GR    HR    HU    IE    IL    IS    IT    LT    LU 
-##  1201 15225 17451 13240 16925  6065 20090 34425 12408 16856 19452 19532 19038 20979 12558  6535 16642 22233 16218  3975 10178 11652  3187 
-##    LV    ME    MK    NL    NO    PL    PT    RO    RS    RU    SE    SI    SK    TR    UA    XK  <NA> 
-##  3921  2478  1429 18329 16065 17689 17881  2146  3548 12458 18216 13484 11292  4272  9987  1295     0
+##    AL    AT    BE    BG    CH    CY    CZ    DE    DK    EE    ES    FI    FR    GB    GR    HR    HU 
+##  1201 15225 17451 13240 16925  6065 20090 34425 12408 16856 19452 19532 19038 20979 12558  6535 16642 
+##    IE    IL    IS    IT    LT    LU    LV    ME    MK    NL    NO    PL    PT    RO    RS    RU    SE 
+## 22233 16218  3975 10178 11652  3187  3921  2478  1429 18329 16065 17689 17881  2146  3548 12458 18216 
+##    SI    SK    TR    UA    XK  <NA> 
+## 13484 11292  4272  9987  1295     0
 ```
 
 # Calculate the number of waves per each country
@@ -380,10 +382,12 @@ attributes(d$rship10)
 ## [1] "F1.0"
 ## 
 ## $labels
-##      Husband/wife/partner Son/daughter/step/adopted      Parent/parent-in-law            Other relative        Other non-relative 
-##                         1                         2                         3                         4                         5 
-##            Not applicable                   Refusal                Don't know                 No answer 
-##                         6                         7                         8                         9
+##      Husband/wife/partner Son/daughter/step/adopted      Parent/parent-in-law            Other relative 
+##                         1                         2                         3                         4 
+##        Other non-relative            Not applicable                   Refusal                Don't know 
+##                         5                         6                         7                         8 
+##                 No answer 
+##                         9
 ```
 
 ``` r
@@ -398,12 +402,14 @@ attributes(d$rshipa20)
 ## [1] "F2.0"
 ## 
 ## $labels
-##               Husband/wife/partner   Son/daughter/step/adopted/foster               Parent/parent-in-law Brother/sister/step/adopted/foster 
-##                                  1                                  2                                  3                                  4 
-##                     Other relative                 Other non-relative                     Not applicable                            Refusal 
-##                                  5                                  6                                 66                                 77 
-##                         Don't know                          No answer 
-##                                 88                                 99
+##               Husband/wife/partner   Son/daughter/step/adopted/foster               Parent/parent-in-law 
+##                                  1                                  2                                  3 
+## Brother/sister/step/adopted/foster                     Other relative                 Other non-relative 
+##                                  4                                  5                                  6 
+##                     Not applicable                            Refusal                         Don't know 
+##                                 66                                 77                                 88 
+##                          No answer 
+##                                 99
 ```
 
 ``` r
@@ -603,12 +609,14 @@ table(d$eduyrs,useNA="always")
 
 ```
 ## 
-##     0     1     2     3     4     5     6     7     8     9    10    11  11.5    12    13    14  14.5    15    16    17    18  18.5    19 
-##  3074   822  1376  3072  9433  5913 10136 10161 29136 28228 32029 49334     4 80272 45535 33862     1 34024 32604 24410 19866     1  9734 
-##    20    21    22    23    24    25    26    27    28    29    30    31    32    33    34    35    36    37    38    39    40    41    42 
-##  9369  3192  2625  1510  1022  1004   308   191   142    80   269    28    32    23    13    35    18     7    10     9    67     2     6 
-##    43    44    45    47    48    50    51    54    55    56    60    65    76  <NA> 
-##     4     4    11     2     6    14     4     2     2     2     3     1     3  7508
+##     0     1     2     3     4     5     6     7     8     9    10    11  11.5    12    13    14  14.5 
+##  3074   822  1376  3072  9433  5913 10136 10161 29136 28228 32029 49334     4 80272 45535 33862     1 
+##    15    16    17    18  18.5    19    20    21    22    23    24    25    26    27    28    29    30 
+## 34024 32604 24410 19866     1  9734  9369  3192  2625  1510  1022  1004   308   191   142    80   269 
+##    31    32    33    34    35    36    37    38    39    40    41    42    43    44    45    47    48 
+##    28    32    23    13    35    18     7    10     9    67     2     6     4     4    11     2     6 
+##    50    51    54    55    56    60    65    76  <NA> 
+##    14     4     2     2     2     3     1     3  7508
 ```
 
 ``` r
@@ -630,12 +638,12 @@ attributes(d$rlgdgr)
 ## [1] "F2.0"
 ## 
 ## $labels
-## Not at all religious                    1                    2                    3                    4                    5 
-##                    0                    1                    2                    3                    4                    5 
-##                    6                    7                    8                    9       Very religious              Refusal 
-##                    6                    7                    8                    9                   10                   77 
-##           Don't know            No answer 
-##                   88                   99
+## Not at all religious                    1                    2                    3                    4 
+##                    0                    1                    2                    3                    4 
+##                    5                    6                    7                    8                    9 
+##                    5                    6                    7                    8                    9 
+##       Very religious              Refusal           Don't know            No answer 
+##                   10                   77                   88                   99
 ```
 
 ``` r
@@ -694,30 +702,38 @@ table(d$cntry_time,useNA="always")
 
 ```
 ## 
-##  AL_6  AT_1 AT_10  AT_2  AT_3  AT_7  AT_8  AT_9  BE_1 BE_10  BE_2  BE_3  BE_4  BE_5  BE_6  BE_7  BE_8  BE_9 BG_10  BG_3  BG_4  BG_5  BG_6 
-##  1201  2257  2003  2256  2405  1795  2010  2499  1899  1341  1778  1798  1760  1704  1869  1769  1766  1767  2718  1400  2230  2434  2260 
-##  BG_9  CH_1 CH_10  CH_2  CH_3  CH_4  CH_5  CH_6  CH_7  CH_8  CH_9 CY_10  CY_3  CY_4  CY_5  CY_6  CY_9  CZ_1 CZ_10  CZ_2  CZ_4  CZ_5  CZ_6 
-##  2198  2040  1523  2141  1804  1819  1506  1493  1532  1525  1542   875   995  1215  1083  1116   781  1360  2476  3026  2018  2386  2009 
-##  CZ_7  CZ_8  CZ_9  DE_1 DE_10  DE_2  DE_3  DE_4  DE_5  DE_6  DE_7  DE_8  DE_9  DK_1  DK_2  DK_3  DK_4  DK_5  DK_6  DK_7  DK_9 EE_10  EE_2 
-##  2148  2269  2398  2919  8725  2870  2916  2751  3031  2958  3045  2852  2358  1506  1487  1505  1610  1576  1650  1502  1572  1542  1989 
-##  EE_3  EE_4  EE_5  EE_6  EE_7  EE_8  EE_9  ES_1 ES_10  ES_2  ES_3  ES_4  ES_5  ES_6  ES_7  ES_8  ES_9  FI_1 FI_10  FI_2  FI_3  FI_4  FI_5 
-##  1517  1661  1793  2380  2051  2019  1904  1729  2283  1663  1876  2576  1885  1889  1925  1958  1668  2000  1577  2022  1896  2195  1878 
-##  FI_6  FI_7  FI_8  FI_9  FR_1 FR_10  FR_2  FR_3  FR_4  FR_5  FR_6  FR_7  FR_8  FR_9  GB_1 GB_10  GB_2  GB_3  GB_4  GB_5  GB_6  GB_7  GB_8 
-##  2197  2087  1925  1755  1503  1977  1806  1986  2073  1728  1968  1917  2070  2010  2052  1149  1897  2394  2352  2422  2286  2264  1959 
-##  GB_9  GR_1 GR_10  GR_2  GR_4  GR_5 HR_10  HR_4  HR_5  HR_9  HU_1 HU_10  HU_2  HU_3  HU_4  HU_5  HU_6  HU_7  HU_8  HU_9  IE_1 IE_10  IE_2 
-##  2204  2566  2799  2406  2072  2715  1592  1484  1649  1810  1685  1849  1498  1518  1544  1561  2014  1698  1614  1661  2046  1770  2286 
-##  IE_3  IE_4  IE_5  IE_6  IE_7  IE_8  IE_9  IL_1 IL_10  IL_4  IL_5  IL_6  IL_7  IL_8 IS_10  IS_2  IS_6  IS_8  IS_9  IT_1 IT_10  IT_6  IT_8 
-##  1800  1764  2576  2628  2390  2757  2216  2499  1308  2490  2294  2508  2562  2557   903   579   752   880   861  1207  2640   960  2626 
-##  IT_9 LT_10  LT_5  LT_6  LT_7  LT_8  LT_9  LU_1  LU_2 LV_10  LV_4  LV_9 ME_10  ME_9 MK_10  NL_1 NL_10  NL_2  NL_3  NL_4  NL_5  NL_6  NL_7 
-##  2745  1659  1677  2109  2250  2122  1835  1552  1635  1023  1980   918  1278  1200  1429  2364  1470  1881  1889  1778  1829  1845  1919 
-##  NL_8  NL_9  NO_1 NO_10  NO_2  NO_3  NO_4  NO_5  NO_6  NO_7  NO_8  NO_9  PL_1 PL_10  PL_2  PL_3  PL_4  PL_5  PL_6  PL_7  PL_8  PL_9  PT_1 
-##  1681  1673  2036  1411  1760  1750  1549  1548  1624  1436  1545  1406  2110  2065  1716  1721  1619  1751  1898  1615  1694  1500  1511 
-## PT_10  PT_2  PT_3  PT_4  PT_5  PT_6  PT_7  PT_8  PT_9  RO_4 RS_10  RS_9  RU_3  RU_4  RU_5  RU_6  RU_8  SE_1 SE_10  SE_2  SE_3  SE_4  SE_5 
-##  1838  2052  2222  2367  2150  2151  1265  1270  1055  2146  1505  2043  2437  2512  2595  2484  2430  1999  2287  1948  1927  1830  1497 
-##  SE_6  SE_7  SE_8  SE_9  SI_1 SI_10  SI_2  SI_3  SI_4  SI_5  SI_6  SI_7  SI_8  SI_9 SK_10  SK_2  SK_3  SK_4  SK_5  SK_6  SK_9  TR_2  TR_4 
-##  1847  1791  1551  1539  1519  1252  1442  1476  1286  1403  1257  1224  1307  1318  1418  1512  1766  1810  1856  1847  1083  1856  2416 
-##  UA_2  UA_3  UA_4  UA_5  UA_6  XK_6  <NA> 
-##  2031  2002  1845  1931  2178  1295     0
+##  AL_6  AT_1 AT_10  AT_2  AT_3  AT_7  AT_8  AT_9  BE_1 BE_10  BE_2  BE_3  BE_4  BE_5  BE_6  BE_7  BE_8 
+##  1201  2257  2003  2256  2405  1795  2010  2499  1899  1341  1778  1798  1760  1704  1869  1769  1766 
+##  BE_9 BG_10  BG_3  BG_4  BG_5  BG_6  BG_9  CH_1 CH_10  CH_2  CH_3  CH_4  CH_5  CH_6  CH_7  CH_8  CH_9 
+##  1767  2718  1400  2230  2434  2260  2198  2040  1523  2141  1804  1819  1506  1493  1532  1525  1542 
+## CY_10  CY_3  CY_4  CY_5  CY_6  CY_9  CZ_1 CZ_10  CZ_2  CZ_4  CZ_5  CZ_6  CZ_7  CZ_8  CZ_9  DE_1 DE_10 
+##   875   995  1215  1083  1116   781  1360  2476  3026  2018  2386  2009  2148  2269  2398  2919  8725 
+##  DE_2  DE_3  DE_4  DE_5  DE_6  DE_7  DE_8  DE_9  DK_1  DK_2  DK_3  DK_4  DK_5  DK_6  DK_7  DK_9 EE_10 
+##  2870  2916  2751  3031  2958  3045  2852  2358  1506  1487  1505  1610  1576  1650  1502  1572  1542 
+##  EE_2  EE_3  EE_4  EE_5  EE_6  EE_7  EE_8  EE_9  ES_1 ES_10  ES_2  ES_3  ES_4  ES_5  ES_6  ES_7  ES_8 
+##  1989  1517  1661  1793  2380  2051  2019  1904  1729  2283  1663  1876  2576  1885  1889  1925  1958 
+##  ES_9  FI_1 FI_10  FI_2  FI_3  FI_4  FI_5  FI_6  FI_7  FI_8  FI_9  FR_1 FR_10  FR_2  FR_3  FR_4  FR_5 
+##  1668  2000  1577  2022  1896  2195  1878  2197  2087  1925  1755  1503  1977  1806  1986  2073  1728 
+##  FR_6  FR_7  FR_8  FR_9  GB_1 GB_10  GB_2  GB_3  GB_4  GB_5  GB_6  GB_7  GB_8  GB_9  GR_1 GR_10  GR_2 
+##  1968  1917  2070  2010  2052  1149  1897  2394  2352  2422  2286  2264  1959  2204  2566  2799  2406 
+##  GR_4  GR_5 HR_10  HR_4  HR_5  HR_9  HU_1 HU_10  HU_2  HU_3  HU_4  HU_5  HU_6  HU_7  HU_8  HU_9  IE_1 
+##  2072  2715  1592  1484  1649  1810  1685  1849  1498  1518  1544  1561  2014  1698  1614  1661  2046 
+## IE_10  IE_2  IE_3  IE_4  IE_5  IE_6  IE_7  IE_8  IE_9  IL_1 IL_10  IL_4  IL_5  IL_6  IL_7  IL_8 IS_10 
+##  1770  2286  1800  1764  2576  2628  2390  2757  2216  2499  1308  2490  2294  2508  2562  2557   903 
+##  IS_2  IS_6  IS_8  IS_9  IT_1 IT_10  IT_6  IT_8  IT_9 LT_10  LT_5  LT_6  LT_7  LT_8  LT_9  LU_1  LU_2 
+##   579   752   880   861  1207  2640   960  2626  2745  1659  1677  2109  2250  2122  1835  1552  1635 
+## LV_10  LV_4  LV_9 ME_10  ME_9 MK_10  NL_1 NL_10  NL_2  NL_3  NL_4  NL_5  NL_6  NL_7  NL_8  NL_9  NO_1 
+##  1023  1980   918  1278  1200  1429  2364  1470  1881  1889  1778  1829  1845  1919  1681  1673  2036 
+## NO_10  NO_2  NO_3  NO_4  NO_5  NO_6  NO_7  NO_8  NO_9  PL_1 PL_10  PL_2  PL_3  PL_4  PL_5  PL_6  PL_7 
+##  1411  1760  1750  1549  1548  1624  1436  1545  1406  2110  2065  1716  1721  1619  1751  1898  1615 
+##  PL_8  PL_9  PT_1 PT_10  PT_2  PT_3  PT_4  PT_5  PT_6  PT_7  PT_8  PT_9  RO_4 RS_10  RS_9  RU_3  RU_4 
+##  1694  1500  1511  1838  2052  2222  2367  2150  2151  1265  1270  1055  2146  1505  2043  2437  2512 
+##  RU_5  RU_6  RU_8  SE_1 SE_10  SE_2  SE_3  SE_4  SE_5  SE_6  SE_7  SE_8  SE_9  SI_1 SI_10  SI_2  SI_3 
+##  2595  2484  2430  1999  2287  1948  1927  1830  1497  1847  1791  1551  1539  1519  1252  1442  1476 
+##  SI_4  SI_5  SI_6  SI_7  SI_8  SI_9 SK_10  SK_2  SK_3  SK_4  SK_5  SK_6  SK_9  TR_2  TR_4  UA_2  UA_3 
+##  1286  1403  1257  1224  1307  1318  1418  1512  1766  1810  1856  1847  1083  1856  2416  2031  2002 
+##  UA_4  UA_5  UA_6  XK_6  <NA> 
+##  1845  1931  2178  1295     0
 ```
 
 # Same-gender partnership
@@ -831,10 +847,10 @@ attributes(d$ipfrule)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -849,10 +865,10 @@ attributes(d$ipbhprp)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -870,10 +886,10 @@ attributes(d$ipmodst)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -888,10 +904,10 @@ attributes(d$imptrad)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -910,10 +926,10 @@ attributes(d$iphlppl)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -928,10 +944,10 @@ attributes(d$iplylfr)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -950,10 +966,10 @@ attributes(d$ipeqopt)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -968,10 +984,10 @@ attributes(d$ipudrst)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -986,10 +1002,10 @@ attributes(d$impenv)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1008,10 +1024,10 @@ attributes(d$ipcrtiv)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1026,10 +1042,10 @@ attributes(d$impfree)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1048,10 +1064,10 @@ attributes(d$impdiff)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1066,10 +1082,10 @@ attributes(d$ipadvnt)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1088,10 +1104,10 @@ attributes(d$ipgdtim)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1106,10 +1122,10 @@ attributes(d$impfun)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1128,10 +1144,10 @@ attributes(d$ipshabt)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1146,10 +1162,10 @@ attributes(d$ipsuces)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1168,10 +1184,10 @@ attributes(d$imprich)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1186,10 +1202,10 @@ attributes(d$iprspot)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1209,10 +1225,10 @@ attributes(d$impsafe)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1227,10 +1243,10 @@ attributes(d$ipstrgv)
 ## [1] "F1.0"
 ## 
 ## $labels
-##  Very much like me            Like me   Somewhat like me   A little like me        Not like me Not like me at all            Refusal 
-##                  1                  2                  3                  4                  5                  6                  7 
-##         Don't know          No answer 
-##                  8                  9
+##  Very much like me            Like me   Somewhat like me   A little like me        Not like me 
+##                  1                  2                  3                  4                  5 
+## Not like me at all            Refusal         Don't know          No answer 
+##                  6                  7                  8                  9
 ```
 
 ``` r
@@ -1380,8 +1396,10 @@ attributes(d$marital)
 ## [1] "F1.0"
 ## 
 ## $labels
-##       Married     Separated      Divorced       Widowed Never married       Refusal    Don't know     No answer 
-##             1             2             3             4             5             7             8             9
+##       Married     Separated      Divorced       Widowed Never married       Refusal    Don't know 
+##             1             2             3             4             5             7             8 
+##     No answer 
+##             9
 ```
 
 ``` r
@@ -1406,14 +1424,18 @@ attributes(d$maritala)
 ## [1] "F2.0"
 ## 
 ## $labels
-##                                      Married                       In a civil partnership            Separated (still legally married) 
-##                                            1                                            2                                            3 
-##     Separated (still in a civil partnership)                                     Divorced                                      Widowed 
-##                                            4                                            5                                            6 
-## Formerly in civil partnership, now dissolved  Formerly in civil partnership, partner died Never married and never in civil partnership 
-##                                            7                                            8                                            9 
-##                                      Refusal                                   Don't know                                    No answer 
-##                                           77                                           88                                           99
+##                                      Married                       In a civil partnership 
+##                                            1                                            2 
+##            Separated (still legally married)     Separated (still in a civil partnership) 
+##                                            3                                            4 
+##                                     Divorced                                      Widowed 
+##                                            5                                            6 
+## Formerly in civil partnership, now dissolved  Formerly in civil partnership, partner died 
+##                                            7                                            8 
+## Never married and never in civil partnership                                      Refusal 
+##                                            9                                           77 
+##                                   Don't know                                    No answer 
+##                                           88                                           99
 ```
 
 ``` r
@@ -1438,14 +1460,22 @@ attributes(d$maritalb)
 ## [1] "F2.0"
 ## 
 ## $labels
-##                                                    Legally married                                In a legally registered civil union 
-##                                                                  1                                                                  2 
-##                                                  Legally separated                             Legally divorced/Civil union dissolved 
-##                                                                  3                                                                  4 
-##                                         Widowed/Civil partner died None of these (NEVER married or in legally registered civil union) 
-##                                                                  5                                                                  6 
-##                                                            Refusal                                                         Don't know 
-##                                                                 77                                                                 88 
+##                                                    Legally married 
+##                                                                  1 
+##                                In a legally registered civil union 
+##                                                                  2 
+##                                                  Legally separated 
+##                                                                  3 
+##                             Legally divorced/Civil union dissolved 
+##                                                                  4 
+##                                         Widowed/Civil partner died 
+##                                                                  5 
+## None of these (NEVER married or in legally registered civil union) 
+##                                                                  6 
+##                                                            Refusal 
+##                                                                 77 
+##                                                         Don't know 
+##                                                                 88 
 ##                                                          No answer 
 ##                                                                 99
 ```
@@ -1494,10 +1524,12 @@ attributes(d$domicil)
 ## [1] "F1.0"
 ## 
 ## $labels
-##                       A big city Suburbs or outskirts of big city               Town or small city                  Country village 
-##                                1                                2                                3                                4 
-##      Farm or home in countryside                          Refusal                       Don't know                        No answer 
-##                                5                                7                                8                                9
+##                       A big city Suburbs or outskirts of big city               Town or small city 
+##                                1                                2                                3 
+##                  Country village      Farm or home in countryside                          Refusal 
+##                                4                                5                                7 
+##                       Don't know                        No answer 
+##                                8                                9
 ```
 
 ``` r
@@ -1589,10 +1621,12 @@ print(s,locale=F)
 ## [1] dplyr_1.1.4    rio_1.2.4      knitr_1.50     rmarkdown_2.30
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] vctrs_0.6.5       cli_3.6.5         rlang_1.1.6       xfun_0.53         forcats_1.0.1     haven_2.5.5       generics_0.1.4   
-##  [8] jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.8.1 sass_0.4.10       hms_1.1.4         evaluate_1.0.5    jquerylib_0.1.4  
-## [15] tibble_3.3.0      tzdb_0.5.0        fastmap_1.2.0     yaml_2.3.10       lifecycle_1.0.4   compiler_4.5.1    pkgconfig_2.0.3  
-## [22] rstudioapi_0.17.1 R.oo_1.27.1       R.utils_2.13.0    digest_0.6.37     R6_2.6.1          utf8_1.2.6        readr_2.1.5      
-## [29] tidyselect_1.2.1  pillar_1.11.1     magrittr_2.0.4    bslib_0.9.0       R.methodsS3_1.8.2 withr_3.0.2       tools_4.5.1      
+##  [1] vctrs_0.6.5       cli_3.6.5         rlang_1.1.6       xfun_0.53         forcats_1.0.1    
+##  [6] haven_2.5.5       generics_0.1.4    jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.8.1
+## [11] sass_0.4.10       hms_1.1.4         evaluate_1.0.5    jquerylib_0.1.4   tibble_3.3.0     
+## [16] tzdb_0.5.0        fastmap_1.2.0     yaml_2.3.10       lifecycle_1.0.4   compiler_4.5.1   
+## [21] pkgconfig_2.0.3   rstudioapi_0.17.1 R.oo_1.27.1       R.utils_2.13.0    digest_0.6.37    
+## [26] R6_2.6.1          utf8_1.2.6        readr_2.1.5       tidyselect_1.2.1  pillar_1.11.1    
+## [31] magrittr_2.0.4    bslib_0.9.0       R.methodsS3_1.8.2 withr_3.0.2       tools_4.5.1      
 ## [36] cachem_1.1.0
 ```

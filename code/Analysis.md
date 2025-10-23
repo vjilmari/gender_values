@@ -7,6 +7,7 @@ output:
 ---
 
 
+
 # Packages
 
 Two packages are not in CRAN and need different installation
@@ -32,6 +33,7 @@ library(Hmisc)
 library(r2mlm)
 library(tidyr)
 library(stringr)
+library(apaTables)
 ```
 
 # Data
@@ -42,6 +44,15 @@ library(stringr)
 ``` r
 load("../data/fdat.rdata")
 ```
+
+* Include ISO data for country-names
+
+
+``` r
+# read country names
+ISO<-read.csv2("../data/ISO.csv")
+```
+
 
 # Exclusions
 
@@ -86,38 +97,36 @@ table(fdat$cntry_time)
 
 ```
 ## 
-##  AL_6  AT_1  AT_2  AT_3  AT_7  AT_8  AT_9  BE_1 BE_10  BE_2  BE_3  BE_4  BE_5  BE_6  BE_7  BE_8 
-##  1117  2254  2198  2348  1795  1993  2477  1830  1334  1771  1796  1754  1699  1862  1767  1759 
-##  BE_9 BG_10  BG_3  BG_4  BG_5  BG_6  BG_9  CH_1 CH_10  CH_2  CH_3  CH_4  CH_5  CH_6  CH_7  CH_8 
-##  1756  2697  1295  2144  2371  2179  1926  2024  1505  2110  1780  1753  1491  1483  1521  1504 
-##  CH_9  CY_3  CY_4  CY_5  CY_6  CY_9  CZ_1 CZ_10  CZ_2  CZ_4  CZ_5  CZ_6  CZ_7  CZ_8  CZ_9  DE_1 
-##  1517   978  1210  1053  1110   773  1208  2369  2557  1986  2335  1973  1862  2252  2343  2819 
-##  DE_2  DE_3  DE_4  DE_5  DE_6  DE_7  DE_8  DE_9  DK_1  DK_2  DK_3  DK_4  DK_5  DK_6  DK_7  DK_9 
-##  2840  2884  2732  3007  2935  3006  2821  2328  1470  1458  1461  1581  1564  1621  1483  1554 
-## EE_10  EE_2  EE_3  EE_4  EE_5  EE_6  EE_7  EE_8  EE_9  ES_1  ES_2  ES_3  ES_4  ES_5  ES_6  ES_7 
-##  1538  1948  1466  1646  1793  2345  2036  2007  1899  1712  1623  1847  2562  1881  1871  1907 
-##  ES_8  ES_9  FI_1 FI_10  FI_2  FI_3  FI_4  FI_5  FI_6  FI_7  FI_8  FI_9  FR_1 FR_10  FR_2  FR_3 
-##  1929  1619  1763  1561  1701  1649  1901  1649  2158  2050  1903  1735  1355  1951  1699  1983 
-##  FR_4  FR_5  FR_6  FR_7  FR_8  FR_9  GB_1 GB_10  GB_2  GB_3  GB_4  GB_5  GB_6  GB_7  GB_8  GB_9 
-##  2067  1723  1960  1902  2057  1982  1798  1131  1864  2353  2311  2374  2261  2231  1942  2183 
-##  GR_1 GR_10  GR_2  GR_4  GR_5 HR_10  HR_4  HR_5  HR_9  HU_1 HU_10  HU_2  HU_3  HU_4  HU_5  HU_6 
-##  2551  2768  2399  2063  2669  1564  1430  1601  1781  1634  1816  1460  1462  1430  1473  1968 
-##  HU_7  HU_8  HU_9  IE_1 IE_10  IE_2  IE_3  IE_4  IE_5  IE_6  IE_7  IE_8  IE_9  IL_1  IL_4  IL_5 
-##  1520  1458  1643  1916  1751  1187  1589  1757  2400  2616  2380  2746  2189  2279  2382  2212 
-##  IL_6  IL_7  IL_8 IS_10  IS_2  IS_6  IS_8  IS_9 IT_10  IT_6  IT_8  IT_9 LT_10  LT_5  LT_6  LT_7 
-##  2378  2351  2366   886   524   739   841   844  2573   909  2531  2660  1606  1632  2108  2241 
-##  LT_8  LT_9  LU_2  LV_4  LV_9 ME_10  ME_9 MK_10  NL_1 NL_10  NL_2  NL_3  NL_4  NL_5  NL_6  NL_7 
-##  2079  1677  1614  1970   891  1248  1188  1400  2337  1466  1858  1860  1724  1801  1828  1823 
-##  NL_8  NL_9  NO_1 NO_10  NO_2  NO_3  NO_4  NO_5  NO_6  NO_7  NO_8  NO_9  PL_1  PL_2  PL_3  PL_4 
-##  1669  1657  1819  1408  1575  1550  1391  1530  1610  1423  1530  1396  2065  1683  1685  1596 
-##  PL_5  PL_6  PL_7  PL_8  PL_9  PT_1 PT_10  PT_2  PT_3  PT_4  PT_5  PT_6  PT_7  PT_8  PT_9  RO_4 
-##  1719  1866  1594  1675  1443  1482  1827  2024  2182  2337  2139  2138  1242  1254  1045  2104 
-##  RS_9  RU_3  RU_4  RU_5  RU_6  RU_8  SE_1  SE_2  SE_3  SE_4  SE_5  SE_6  SE_7  SE_8  SE_9  SI_1 
-##  1969  2339  2446  2557  2429  2374  1682  1678  1604  1556  1463  1838  1761  1526  1510  1488 
-## SI_10  SI_2  SI_3  SI_4  SI_5  SI_6  SI_7  SI_8  SI_9 SK_10  SK_2  SK_3  SK_4  SK_5  SK_6  SK_9 
-##  1232  1384  1465  1257  1369  1244  1189  1295  1307  1395  1425  1711  1789  1803  1827  1061 
-##  TR_2  TR_4  UA_2  UA_3  UA_4  UA_5  UA_6  XK_6 
-##  1790  2305  1896  1885  1766  1779  2064  1244
+##  AL_6  AT_1  AT_2  AT_3  AT_7  AT_8  AT_9  BE_1 BE_10  BE_2  BE_3  BE_4  BE_5  BE_6  BE_7  BE_8  BE_9 
+##  1117  2254  2198  2348  1795  1993  2477  1830  1334  1771  1796  1754  1699  1862  1767  1759  1756 
+## BG_10  BG_3  BG_4  BG_5  BG_6  BG_9  CH_1 CH_10  CH_2  CH_3  CH_4  CH_5  CH_6  CH_7  CH_8  CH_9  CY_3 
+##  2697  1295  2144  2371  2179  1926  2024  1505  2110  1780  1753  1491  1483  1521  1504  1517   978 
+##  CY_4  CY_5  CY_6  CY_9  CZ_1 CZ_10  CZ_2  CZ_4  CZ_5  CZ_6  CZ_7  CZ_8  CZ_9  DE_1  DE_2  DE_3  DE_4 
+##  1210  1053  1110   773  1208  2369  2557  1986  2335  1973  1862  2252  2343  2819  2840  2884  2732 
+##  DE_5  DE_6  DE_7  DE_8  DE_9  DK_1  DK_2  DK_3  DK_4  DK_5  DK_6  DK_7  DK_9 EE_10  EE_2  EE_3  EE_4 
+##  3007  2935  3006  2821  2328  1470  1458  1461  1581  1564  1621  1483  1554  1538  1948  1466  1646 
+##  EE_5  EE_6  EE_7  EE_8  EE_9  ES_1  ES_2  ES_3  ES_4  ES_5  ES_6  ES_7  ES_8  ES_9  FI_1 FI_10  FI_2 
+##  1793  2345  2036  2007  1899  1712  1623  1847  2562  1881  1871  1907  1929  1619  1763  1561  1701 
+##  FI_3  FI_4  FI_5  FI_6  FI_7  FI_8  FI_9  FR_1 FR_10  FR_2  FR_3  FR_4  FR_5  FR_6  FR_7  FR_8  FR_9 
+##  1649  1901  1649  2158  2050  1903  1735  1355  1951  1699  1983  2067  1723  1960  1902  2057  1982 
+##  GB_1 GB_10  GB_2  GB_3  GB_4  GB_5  GB_6  GB_7  GB_8  GB_9  GR_1 GR_10  GR_2  GR_4  GR_5 HR_10  HR_4 
+##  1798  1131  1864  2353  2311  2374  2261  2231  1942  2183  2551  2768  2399  2063  2669  1564  1430 
+##  HR_5  HR_9  HU_1 HU_10  HU_2  HU_3  HU_4  HU_5  HU_6  HU_7  HU_8  HU_9  IE_1 IE_10  IE_2  IE_3  IE_4 
+##  1601  1781  1634  1816  1460  1462  1430  1473  1968  1520  1458  1643  1916  1751  1187  1589  1757 
+##  IE_5  IE_6  IE_7  IE_8  IE_9  IL_1  IL_4  IL_5  IL_6  IL_7  IL_8 IS_10  IS_2  IS_6  IS_8  IS_9 IT_10 
+##  2400  2616  2380  2746  2189  2279  2382  2212  2378  2351  2366   886   524   739   841   844  2573 
+##  IT_6  IT_8  IT_9 LT_10  LT_5  LT_6  LT_7  LT_8  LT_9  LU_2  LV_4  LV_9 ME_10  ME_9 MK_10  NL_1 NL_10 
+##   909  2531  2660  1606  1632  2108  2241  2079  1677  1614  1970   891  1248  1188  1400  2337  1466 
+##  NL_2  NL_3  NL_4  NL_5  NL_6  NL_7  NL_8  NL_9  NO_1 NO_10  NO_2  NO_3  NO_4  NO_5  NO_6  NO_7  NO_8 
+##  1858  1860  1724  1801  1828  1823  1669  1657  1819  1408  1575  1550  1391  1530  1610  1423  1530 
+##  NO_9  PL_1  PL_2  PL_3  PL_4  PL_5  PL_6  PL_7  PL_8  PL_9  PT_1 PT_10  PT_2  PT_3  PT_4  PT_5  PT_6 
+##  1396  2065  1683  1685  1596  1719  1866  1594  1675  1443  1482  1827  2024  2182  2337  2139  2138 
+##  PT_7  PT_8  PT_9  RO_4  RS_9  RU_3  RU_4  RU_5  RU_6  RU_8  SE_1  SE_2  SE_3  SE_4  SE_5  SE_6  SE_7 
+##  1242  1254  1045  2104  1969  2339  2446  2557  2429  2374  1682  1678  1604  1556  1463  1838  1761 
+##  SE_8  SE_9  SI_1 SI_10  SI_2  SI_3  SI_4  SI_5  SI_6  SI_7  SI_8  SI_9 SK_10  SK_2  SK_3  SK_4  SK_5 
+##  1526  1510  1488  1232  1384  1465  1257  1369  1244  1189  1295  1307  1395  1425  1711  1789  1803 
+##  SK_6  SK_9  TR_2  TR_4  UA_2  UA_3  UA_4  UA_5  UA_6  XK_6 
+##  1827  1061  1790  2305  1896  1885  1766  1779  2064  1244
 ```
 
 ``` r
@@ -178,7 +187,7 @@ round(coefficients(value_typ$cv.mod,s = "lambda.min"),2)
 plot(value_typ$cv.mod)
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](Analysis_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 ### Description of gender differences/prediction in testing dataset
 
@@ -451,29 +460,29 @@ table(diff_dat$essround,diff_dat$cntry)
 
 ```
 ##     
-##        AT   BE   BG   CH   CY   CZ   DE   DK   EE   ES   FI   FR   GB   GR   HR   HU   IE   IL   IS
-##   1  2054 1630    0 1824    0 1008 2619 1270    0 1512 1563 1155 1598 2351    0 1434 1716 2079    0
-##   2  1998 1571    0 1910    0 2357 2640 1258 1748 1423 1501 1499 1664 2199    0 1260  987    0  324
-##   3  2148 1596 1095 1580  778    0 2684 1261 1266 1647 1449 1783 2153    0    0 1262 1389    0    0
-##   4     0 1554 1944 1553 1010 1786 2532 1381 1446 2362 1701 1867 2111 1863 1230 1230 1557 2182    0
-##   5     0 1499 2171 1291  853 2135 2807 1364 1593 1681 1449 1523 2174 2469 1401 1273 2200 2012    0
-##   6     0 1662 1979 1283  910 1773 2735 1421 2145 1671 1958 1760 2061    0    0 1768 2416 2178  539
-##   7  1595 1567    0 1321    0 1662 2806 1283 1836 1707 1850 1702 2031    0    0 1320 2180 2151    0
-##   8  1793 1559    0 1304    0 2052 2621    0 1807 1729 1703 1857 1742    0    0 1258 2546 2166  641
-##   9  2277 1556 1726 1317  573 2143 2128 1354 1699 1419 1535 1782 1983    0 1581 1443 1989    0  644
-##   10    0 1134 2497 1305    0 2169    0    0 1338    0 1361 1751  931 2568 1364 1616 1551    0  686
+##        AT   BE   BG   CH   CY   CZ   DE   DK   EE   ES   FI   FR   GB   GR   HR   HU   IE   IL   IS   IT
+##   1  2054 1630    0 1824    0 1008 2619 1270    0 1512 1563 1155 1598 2351    0 1434 1716 2079    0    0
+##   2  1998 1571    0 1910    0 2357 2640 1258 1748 1423 1501 1499 1664 2199    0 1260  987    0  324    0
+##   3  2148 1596 1095 1580  778    0 2684 1261 1266 1647 1449 1783 2153    0    0 1262 1389    0    0    0
+##   4     0 1554 1944 1553 1010 1786 2532 1381 1446 2362 1701 1867 2111 1863 1230 1230 1557 2182    0    0
+##   5     0 1499 2171 1291  853 2135 2807 1364 1593 1681 1449 1523 2174 2469 1401 1273 2200 2012    0    0
+##   6     0 1662 1979 1283  910 1773 2735 1421 2145 1671 1958 1760 2061    0    0 1768 2416 2178  539  709
+##   7  1595 1567    0 1321    0 1662 2806 1283 1836 1707 1850 1702 2031    0    0 1320 2180 2151    0    0
+##   8  1793 1559    0 1304    0 2052 2621    0 1807 1729 1703 1857 1742    0    0 1258 2546 2166  641 2331
+##   9  2277 1556 1726 1317  573 2143 2128 1354 1699 1419 1535 1782 1983    0 1581 1443 1989    0  644 2460
+##   10    0 1134 2497 1305    0 2169    0    0 1338    0 1361 1751  931 2568 1364 1616 1551    0  686 2373
 ##     
-##        IT   LT   LV   ME   NL   NO   PL   PT   RU   SE   SI   SK   TR   UA
-##   1     0    0    0    0 2137 1619 1865 1282    0 1482 1288    0    0    0
-##   2     0    0    0    0 1658 1375 1483 1824    0 1478 1184 1225 1590 1696
-##   3     0    0    0    0 1660 1350 1485 1982 2139 1404 1265 1511    0 1685
-##   4     0    0 1770    0 1524 1191 1396 2137 2246 1356 1057 1589 2105 1566
-##   5     0 1432    0    0 1601 1330 1519 1939 2357 1263 1169 1603    0 1579
-##   6   709 1908    0    0 1628 1410 1666 1938 2229 1638 1044 1627    0 1864
-##   7     0 2041    0    0 1623 1223 1394 1042    0 1561  989    0    0    0
-##   8  2331 1879    0    0 1469 1330 1475 1054 2174 1326 1095    0    0    0
-##   9  2460 1477  691  988 1457 1196 1243  845    0 1310 1107  861    0    0
-##   10 2373 1406    0 1048 1266 1208    0 1627    0    0 1032 1195    0    0
+##        LT   LV   ME   NL   NO   PL   PT   RU   SE   SI   SK   TR   UA
+##   1     0    0    0 2137 1619 1865 1282    0 1482 1288    0    0    0
+##   2     0    0    0 1658 1375 1483 1824    0 1478 1184 1225 1590 1696
+##   3     0    0    0 1660 1350 1485 1982 2139 1404 1265 1511    0 1685
+##   4     0 1770    0 1524 1191 1396 2137 2246 1356 1057 1589 2105 1566
+##   5  1432    0    0 1601 1330 1519 1939 2357 1263 1169 1603    0 1579
+##   6  1908    0    0 1628 1410 1666 1938 2229 1638 1044 1627    0 1864
+##   7  2041    0    0 1623 1223 1394 1042    0 1561  989    0    0    0
+##   8  1879    0    0 1469 1330 1475 1054 2174 1326 1095    0    0    0
+##   9  1477  691  988 1457 1196 1243  845    0 1310 1107  861    0    0
+##   10 1406    0 1048 1266 1208    0 1627    0    0 1032 1195    0    0
 ```
 
 ``` r
@@ -490,7 +499,7 @@ range(table(diff_dat$cntry))
 hist(diff_dat$pred)
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](Analysis_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 # scale/standardize with SD pooled across all country-time-gender folds
@@ -508,7 +517,7 @@ diff_dat$FM.z<-diff_dat$pred/FM_pooled_sd
 hist(diff_dat$FM.z)
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+![](Analysis_files/figure-html/unnamed-chunk-9-2.png)<!-- -->
 
 ## Add GEI-variable
 
@@ -737,10 +746,8 @@ psych::describe(GDP_in_ESS_d$gdp_2002_2022_avg)
 ```
 
 ```
-##    vars  n     mean      sd   median  trimmed      mad      min      max    range skew kurtosis
-## X1    1 33 44309.55 16988.2 40528.07 43238.06 16282.88 16406.88 85115.96 68709.08 0.48    -0.58
-##         se
-## X1 2957.27
+##    vars  n     mean      sd   median  trimmed      mad      min      max    range skew kurtosis      se
+## X1    1 33 44309.55 16988.2 40528.07 43238.06 16282.88 16406.88 85115.96 68709.08 0.48    -0.58 2957.27
 ```
 
 ``` r
@@ -880,6 +887,270 @@ diff_dat<-
   )
 ```
 
+# Descriptive statistics
+
+## Country-specific descriptives
+
+
+``` r
+# sample sizes from weights
+
+cntry_n_frame<-
+  diff_dat %>% group_by(cntry) %>%
+  summarise('n ESS rounds' = mean(n_unique_essround),
+            n=round(sum(pspwght),0))
+
+# value-based male-typicality
+
+cntry_FM_frame<-
+  diff_dat %>% group_by(cntry,essround) %>%
+  summarise('FM M' = weighted.mean(x=FM.z,w=pspwght),
+            'FM SD' = sqrt(wtd.var(FM.z,pspwght))) %>%
+  group_by(cntry) %>%
+  summarise('FM M' = mean(x=`FM M`),
+            'FM SD'= mean(x=`FM SD`))
+```
+
+```
+## `summarise()` has grouped output by 'cntry'. You can override using the `.groups` argument.
+```
+
+``` r
+cntry_FM_women_frame<-
+  diff_dat %>%
+  filter(gndr.c==-0.5) %>%
+  group_by(cntry,essround) %>%
+  summarise('FM M' = weighted.mean(x=FM.z,w=pspwght),
+            'FM SD' = sqrt(wtd.var(FM.z,pspwght))) %>%
+  group_by(cntry) %>%
+  summarise('FM M Women' = mean(x=`FM M`),
+            'FM SD Women'= mean(x=`FM SD`))
+```
+
+```
+## `summarise()` has grouped output by 'cntry'. You can override using the `.groups` argument.
+```
+
+``` r
+cntry_FM_men_frame<-
+  diff_dat %>%
+  filter(gndr.c==0.5) %>%
+  group_by(cntry,essround) %>%
+  summarise('FM M' = weighted.mean(x=FM.z,w=pspwght),
+            'FM SD' = sqrt(wtd.var(FM.z,pspwght))) %>%
+  group_by(cntry) %>%
+  summarise('FM M Men' = mean(x=`FM M`),
+            'FM SD Men'= mean(x=`FM SD`))
+```
+
+```
+## `summarise()` has grouped output by 'cntry'. You can override using the `.groups` argument.
+```
+
+``` r
+# link n and FM datasets
+
+desc_frame<-
+  left_join(
+    x=cntry_n_frame,
+    y=cntry_FM_frame,
+    by="cntry"
+  )
+
+desc_frame<-
+  left_join(
+    x=desc_frame,
+    y=cntry_FM_women_frame,
+    by="cntry"
+  )
+
+desc_frame<-
+  left_join(
+    x=desc_frame,
+    y=cntry_FM_men_frame,
+    by="cntry"
+  )
+
+desc_frame
+```
+
+```
+## # A tibble: 33 × 9
+##    cntry `n ESS rounds`     n  `FM M` `FM SD` `FM M Women` `FM SD Women` `FM M Men` `FM SD Men`
+##    <chr>          <dbl> <dbl>   <dbl>   <dbl>        <dbl>         <dbl>      <dbl>       <dbl>
+##  1 AT                 6 11869  0.0820   1.06        -0.168         1.04      0.355        1.00 
+##  2 BE                10 15312 -0.0363   0.923       -0.225         0.922     0.164        0.880
+##  3 BG                 6 11429 -0.0387   1.09        -0.252         1.12      0.198        1.00 
+##  4 CH                10 14723 -0.0624   0.872       -0.278         0.857     0.164        0.829
+##  5 CY                 5  4116 -0.304    1.01        -0.436         1.06     -0.161        0.939
+##  6 CZ                 9 17101  0.419    1.14         0.138         1.15      0.726        1.04 
+##  7 DE                 9 23579 -0.225    1.000       -0.469         0.980     0.0337       0.954
+##  8 DK                 8 10594  0.0664   0.960       -0.174         0.921     0.314        0.935
+##  9 EE                 9 14874 -0.0956   1.05        -0.330         1.04      0.196        0.990
+## 10 ES                 9 15164 -0.452    1.02        -0.625         1.03     -0.271        0.972
+## # ℹ 23 more rows
+```
+
+``` r
+# add country-level measures
+
+desc_frame<-
+  left_join(
+    x=desc_frame,
+    y=GII_country_means[,c("ISO2","gei.cm")],
+    by=c("cntry"="ISO2")
+  )
+
+desc_frame<-
+  left_join(
+    x=desc_frame,
+    y=GGGI_country_means[,c("ISO2","gggi.cm")],
+    by=c("cntry"="ISO2")
+  )
+
+desc_frame<-
+  left_join(
+    x=desc_frame,
+    y=GDI_country_means[,c("ISO2","gdi.cm")],
+    by=c("cntry"="ISO2")
+  )
+
+
+desc_frame<-
+  left_join(
+    x=desc_frame,
+    y=GDP_country_means[,c("ISO2","gdp.cm")],
+    by=c("cntry"="ISO2")
+  )
+
+desc_frame<-left_join(
+  x=desc_frame,
+  y=ISO[,c("ISO2","CLDR")],
+  by=c("cntry"="ISO2")
+)
+
+# finalize the formatted table
+
+cntry_desc_tbl<-
+  desc_frame %>%
+  select(
+    Country = CLDR,
+    `n ESS rounds`,
+    n,
+    `FM M`, `FM SD`,
+    `FM M Women`, `FM SD Women`,
+    `FM M Men`, `FM SD Men`,
+    GEI = gei.cm,
+    GGGI = gggi.cm,
+    GDI = gdi.cm,
+    GDP = gdp.cm
+  ) %>%
+  mutate(
+    across(
+      .cols = -c(Country, `n ESS rounds`, n, GDP) & where(is.numeric),
+      .fns  = ~ round_tidy(.x, 2)
+    )
+  ) %>%
+  mutate(
+    across(
+      .cols = GDP,
+      .fns  = ~ round_tidy(.x, 0)
+    )
+  )
+cntry_desc_tbl
+```
+
+```
+## # A tibble: 33 × 13
+##    Country    `n ESS rounds`     n `FM M` `FM SD` `FM M Women` `FM SD Women` `FM M Men` `FM SD Men` GEI  
+##    <chr>               <dbl> <dbl> <chr>  <chr>   <chr>        <chr>         <chr>      <chr>       <chr>
+##  1 Austria                 6 11869 0.08   1.06    -0.17        1.04          0.35       1.00        0.91 
+##  2 Belgium                10 15312 -0.04  0.92    -0.23        0.92          0.16       0.88        0.92 
+##  3 Bulgaria                6 11429 -0.04  1.09    -0.25        1.12          0.20       1.00        0.78 
+##  4 Switzerla…             10 14723 -0.06  0.87    -0.28        0.86          0.16       0.83        0.95 
+##  5 Cyprus                  5  4116 -0.30  1.01    -0.44        1.06          -0.16      0.94        0.79 
+##  6 Czechia                 9 17101 0.42   1.14    0.14         1.15          0.73       1.04        0.86 
+##  7 Germany                 9 23579 -0.22  1.00    -0.47        0.98          0.03       0.95        0.91 
+##  8 Denmark                 8 10594 0.07   0.96    -0.17        0.92          0.31       0.94        0.96 
+##  9 Estonia                 9 14874 -0.10  1.05    -0.33        1.04          0.20       0.99        0.85 
+## 10 Spain                   9 15164 -0.45  1.02    -0.63        1.03          -0.27      0.97        0.91 
+## # ℹ 23 more rows
+## # ℹ 3 more variables: GGGI <chr>, GDI <chr>, GDP <chr>
+```
+
+``` r
+export(cntry_desc_tbl,"../results/cntry_desc_tbl.xlsx",overwrite=T)
+```
+
+## Country-level correlations table
+
+
+``` r
+cor_frame<-
+  desc_frame %>%
+  select(
+    VBMT=`FM M`,
+    VBMT_Women=`FM M Women`,
+    VBMT_Men=`FM M Men`,
+    GEI = gei.cm,
+    GGGI = gggi.cm,
+    GDI = gdi.cm,
+    GDP = gdp.cm
+  ) %>%
+  mutate(
+    log_GDP=log(GDP)
+  ) %>%
+  select(-GDP)
+
+apa.cor.table(
+  data=cor_frame,
+  filename = "../results/CorTable1.doc",
+  #table.number = NA,
+  show.conf.interval = FALSE,
+  show.sig.stars = F,
+  landscape = F
+)
+```
+
+```
+## The ability to suppress reporting of reporting confidence intervals has been deprecated in this version.
+## The function argument show.conf.interval will be removed in a later version.
+```
+
+```
+## 
+## 
+## Means, standard deviations, and correlations with confidence intervals
+##  
+## 
+##   Variable      M     SD   1            2            3            4           5           6          
+##   1. VBMT       0.04  0.23                                                                           
+##                                                                                                      
+##   2. VBMT_Women -0.16 0.25 .99                                                                       
+##                            [.97, .99]                                                                
+##                                                                                                      
+##   3. VBMT_Men   0.26  0.23 .98          .93                                                          
+##                            [.96, .99]   [.87, .97]                                                   
+##                                                                                                      
+##   4. GEI        0.87  0.07 -.37         -.45         -.29                                            
+##                            [-.64, -.02] [-.69, -.12] [-.58, .07]                                     
+##                                                                                                      
+##   5. GGGI       0.73  0.05 -.46         -.53         -.36         .73                                
+##                            [-.69, -.13] [-.74, -.23] [-.62, -.01] [.52, .86]                         
+##                                                                                                      
+##   6. GDI        0.99  0.03 .10          .08          .17          .07         .20                    
+##                            [-.25, .43]  [-.27, .41]  [-.18, .49]  [-.29, .41] [-.16, .51]            
+##                                                                                                      
+##   7. log_GDP    10.62 0.40 -.34         -.40         -.29         .75         .67         -.22       
+##                            [-.61, .00]  [-.65, -.06] [-.58, .06]  [.55, .87]  [.42, .82]  [-.53, .13]
+##                                                                                                      
+## 
+## Note. M and SD are used to represent mean and standard deviation, respectively.
+## Values in square brackets indicate the 95% confidence interval.
+## The confidence interval is a plausible range of population correlations 
+## that could have caused the sample correlation (Cumming, 2014).
+## 
+```
 
 
 # Analysis
@@ -896,7 +1167,7 @@ summary(mod0)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ (1 | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -964,7 +1235,7 @@ summary(mod1)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + (1 | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -1036,94 +1307,6 @@ r2mlm(mod1,bargraph = F)
 ## fvm 0.09329808
 ```
 
-* Alternative model with country-mean centered gender
-
-
-``` r
-diff_dat_gmc<-group_mean_center(data=diff_dat,
-                                group.var = "cntry",vars = c("gndr.c","essround.c"))
-
-mod1_alt<-lmer(FM.z~gndr.c.gmc+(1|cntry),data=diff_dat_gmc,REML=F,weights = pspwght,
-           control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
-summary(mod1_alt)
-```
-
-```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
-## Formula: FM.z ~ gndr.c.gmc + (1 | cntry)
-##    Data: diff_dat_gmc
-## Weights: pspwght
-## Control: lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+07))
-## 
-##       AIC       BIC    logLik -2*log(L)  df.resid 
-## 1171107.5 1171151.0 -585549.7 1171099.5    392764 
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -9.3384 -0.6154  0.0034  0.6019  9.8999 
-## 
-## Random effects:
-##  Groups   Name        Variance Std.Dev.
-##  cntry    (Intercept) 0.05456  0.2336  
-##  Residual             1.01593  1.0079  
-## Number of obs: 392768, groups:  cntry, 33
-## 
-## Fixed effects:
-##              Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept) 3.845e-02  4.071e-02 3.298e+01   0.945    0.352    
-## gndr.c.gmc  4.308e-01  3.216e-03 3.927e+05 133.977   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Correlation of Fixed Effects:
-##            (Intr)
-## gndr.c.gmc -0.002
-```
-
-``` r
-getFE(mod1_alt,round=3)
-```
-
-```
-##              Est.    SE         df       t     p     LL    UL
-## (Intercept) 0.038 0.041     32.977   0.945 0.352 -0.044 0.121
-## gndr.c.gmc  0.431 0.003 392738.544 133.977 0.000  0.425 0.437
-```
-
-``` r
-getVC(mod1_alt)
-```
-
-```
-##        grp        var1 var2 sdcor vcov
-## 1    cntry (Intercept) <NA>  0.23 0.05
-## 2 Residual        <NA> <NA>  1.01 1.02
-```
-
-``` r
-r2mlm(mod1_alt,bargraph = F)
-```
-
-```
-## $Decompositions
-##                     total     within between
-## fixed, within   0.0409895 0.04309587      NA
-## fixed, between  0.0000000         NA       0
-## slope variation 0.0000000 0.00000000      NA
-## mean variation  0.0488764         NA       1
-## sigma2          0.9101341 0.95690413      NA
-## 
-## $R2s
-##         total     within between
-## f1  0.0409895 0.04309587      NA
-## f2  0.0000000         NA       0
-## v   0.0000000 0.00000000      NA
-## m   0.0488764         NA       1
-## f   0.0409895         NA      NA
-## fv  0.0409895 0.04309587      NA
-## fvm 0.0898659         NA      NA
-```
-
 ## mod2: Gender fixed and random effect
 
 * Include random effect correlation by default
@@ -1136,7 +1319,7 @@ summary(mod2)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + (gndr.c | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -1247,7 +1430,7 @@ summary(mod2_norecov)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + (gndr.c || cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -1315,111 +1498,6 @@ anova(mod2_norecov,mod2)
 ```
 
 
-* Alternative model with country-mean centered gender
-
-
-``` r
-mod2_alt<-lmer(FM.z~gndr.c.gmc+(gndr.c.gmc|cntry),data=diff_dat_gmc,
-               REML=F,weights = pspwght,
-           control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
-summary(mod2_alt)
-```
-
-```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
-## Formula: FM.z ~ gndr.c.gmc + (gndr.c.gmc | cntry)
-##    Data: diff_dat_gmc
-## Weights: pspwght
-## Control: lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+07))
-## 
-##       AIC       BIC    logLik -2*log(L)  df.resid 
-## 1170509.4 1170574.7 -585248.7 1170497.4    392762 
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -9.4446 -0.6151  0.0035  0.6022  9.8987 
-## 
-## Random effects:
-##  Groups   Name        Variance Std.Dev. Corr 
-##  cntry    (Intercept) 0.054778 0.23405       
-##           gndr.c.gmc  0.007665 0.08755  -0.18
-##  Residual             1.014117 1.00703       
-## Number of obs: 392768, groups:  cntry, 33
-## 
-## Fixed effects:
-##             Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)  0.03926    0.04079 32.97814   0.963    0.343    
-## gndr.c.gmc   0.41947    0.01571 32.72336  26.708   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Correlation of Fixed Effects:
-##            (Intr)
-## gndr.c.gmc -0.178
-```
-
-``` r
-getFE(mod2_alt,round=3)
-```
-
-```
-##              Est.    SE     df      t     p     LL    UL
-## (Intercept) 0.039 0.041 32.978  0.963 0.343 -0.044 0.122
-## gndr.c.gmc  0.419 0.016 32.723 26.708 0.000  0.388 0.451
-```
-
-``` r
-getVC(mod2_alt)
-```
-
-```
-##        grp        var1       var2 sdcor vcov
-## 1    cntry (Intercept)       <NA>  0.23 0.05
-## 2    cntry  gndr.c.gmc       <NA>  0.09 0.01
-## 3    cntry (Intercept) gndr.c.gmc -0.18 0.00
-## 4 Residual        <NA>       <NA>  1.01 1.01
-```
-
-``` r
-r2mlm(mod2_alt,bargraph = F)
-```
-
-```
-## $Decompositions
-##                       total      within between
-## fixed, within   0.038934061 0.040947224      NA
-## fixed, between  0.000000000          NA       0
-## slope variation 0.001696124 0.001783825      NA
-## mean variation  0.049164813          NA       1
-## sigma2          0.910205003 0.957268951      NA
-## 
-## $R2s
-##           total      within between
-## f1  0.038934061 0.040947224      NA
-## f2  0.000000000          NA       0
-## v   0.001696124 0.001783825      NA
-## m   0.049164813          NA       1
-## f   0.038934061          NA      NA
-## fv  0.040630185 0.042731049      NA
-## fvm 0.089794997          NA      NA
-```
-
-``` r
-anova(mod1_alt,mod2_alt)
-```
-
-```
-## Data: diff_dat_gmc
-## Models:
-## mod1_alt: FM.z ~ gndr.c.gmc + (1 | cntry)
-## mod2_alt: FM.z ~ gndr.c.gmc + (gndr.c.gmc | cntry)
-##          npar     AIC     BIC  logLik -2*log(L)  Chisq Df Pr(>Chisq)    
-## mod1_alt    4 1171107 1171151 -585550   1171099                         
-## mod2_alt    6 1170509 1170575 -585249   1170497 602.08  2  < 2.2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
 ## mod2 with Gender-equality index (GEI)
 
 
@@ -1431,7 +1509,7 @@ summary(mod2_GEI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + gei.z.cm + gndr.c:gei.z.cm + (gndr.c | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -1512,10 +1590,6 @@ r2mlm(mod2_GEI,bargraph = F)
 ## fvm 0.092610113
 ```
 
-``` r
-#anova(mod2,mod2_GEI)
-```
-
 ### Deconstructed associations
 
 
@@ -1531,7 +1605,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 30.3852 secs
+## Time difference of 32.55618 secs
 ```
 
 ``` r
@@ -1797,47 +1871,8 @@ flag_points_GEI$cntry<-rownames(flag_points_GEI)
 flag_points_GEI<-
   left_join(x=flag_points_GEI,
             y=GII_country_means[,c("ISO2","gei.cm")],by=c("cntry"="ISO2"))
-flag_points_GEI
-```
+#flag_points_GEI
 
-```
-##      (Intercept)    gndr.c        women          men    mean_level difference cntry    gei.cm
-## 1   0.0948299497 0.5193530 -0.164846538  0.354506437  0.0948299497  0.5193530    AT 0.9106190
-## 2  -0.0280225633 0.3893576 -0.222701380  0.166656253 -0.0280225633  0.3893576    BE 0.9225238
-## 3   0.0004875384 0.4479737 -0.223499296  0.224474372  0.0004875384  0.4479737    BG 0.7777143
-## 4  -0.0548407863 0.4396872 -0.274684367  0.165002794 -0.0548407863  0.4396872    CH 0.9528095
-## 5  -0.2828774030 0.3125188 -0.439136785 -0.126618021 -0.2828774030  0.3125188    CY 0.7855714
-## 6   0.4510108218 0.5744602  0.163780714  0.738240930  0.4510108218  0.5744602    CZ 0.8596190
-## 7  -0.2143483402 0.4987950 -0.463745832  0.035049152 -0.2143483402  0.4987950    DE 0.9113810
-## 8   0.0692355583 0.4851882 -0.173358543  0.311829659  0.0692355583  0.4851882    DK 0.9620476
-## 9  -0.0707126187 0.5237921 -0.332608663  0.191183425 -0.0707126187  0.5237921    EE 0.8486190
-## 10 -0.4562691757 0.3597009 -0.636119614 -0.276418737 -0.4562691757  0.3597009    ES 0.9090000
-## 11 -0.2543634386 0.5570902 -0.532908528  0.024181650 -0.2543634386  0.5570902    FI 0.9383333
-## 12 -0.2779086140 0.4861975 -0.521007379 -0.034809849 -0.2779086140  0.4861975    FR 0.8897143
-## 13 -0.1230585927 0.4765461 -0.361331663  0.115214477 -0.1230585927  0.4765461    GB 0.8453333
-## 14  0.0905758515 0.3111970 -0.065022644  0.246174347  0.0905758515  0.3111970    GR 0.8516190
-## 15 -0.2066317701 0.4128105 -0.413036996 -0.000226544 -0.2066317701  0.4128105    HR 0.8639048
-## 16  0.1972929069 0.3232607  0.035662558  0.358923256  0.1972929069  0.3232607    HU 0.7514762
-## 17  0.0089596780 0.3879343 -0.185007461  0.202926817  0.0089596780  0.3879343    IE 0.8667619
-## 18  0.2825498044 0.2981460  0.133476792  0.431622816  0.2825498044  0.2981460    IL 0.8701429
-## 19 -0.3625487161 0.4534617 -0.589279545 -0.135817887 -0.3625487161  0.4534617    IS 0.9205714
-## 20  0.1538918860 0.2882877  0.009748044  0.298035727  0.1538918860  0.2882877    IT 0.8936190
-## 21  0.5534242147 0.4393454  0.333751504  0.773096925  0.5534242147  0.4393454    LT 0.8493810
-## 22  0.3265508249 0.5062813  0.073410194  0.579691456  0.3265508249  0.5062813    LV 0.7867143
-## 23  0.0535446075 0.4179219 -0.155416338  0.262505553  0.0535446075  0.4179219    ME 0.8387647
-## 24  0.2439906404 0.4721541  0.007913602  0.480067679  0.2439906404  0.4721541    NL 0.9533333
-## 25  0.0666189662 0.4317132 -0.149237612  0.282475544  0.0666189662  0.4317132    NO 0.9506667
-## 26  0.0208329565 0.4712907 -0.214812392  0.256478305  0.0208329565  0.4712907    PL 0.8590952
-## 27  0.1049849842 0.2959446 -0.042987322  0.252957291  0.1049849842  0.2959446    PT 0.8843333
-## 28  0.3407704039 0.3192295  0.181155679  0.500385129  0.3407704039  0.3192295    RU 0.7484286
-## 29  0.0407574260 0.4896334 -0.204059254  0.285574106  0.0407574260  0.4896334    SE 0.9611429
-## 30  0.1917581629 0.4129903 -0.014736986  0.398253312  0.1917581629  0.4129903    SI 0.9077143
-## 31  0.2795168603 0.4618020  0.048615871  0.510417850  0.2795168603  0.4618020    SK 0.8110000
-## 32  0.4569010032 0.2463075  0.333747243  0.580054763  0.4569010032  0.2463075    TR 0.6203810
-## 33  0.2447436927 0.3302140  0.079636707  0.409850679  0.2447436927  0.3302140    UA       NaN
-```
-
-``` r
 flag_points_GEI_long<-
   data.frame(mean_level=c(flag_points_GEI$women,
                           flag_points_GEI$men),
@@ -1880,32 +1915,6 @@ p1.FM.flags<-
   geom_flag(data=flag_points_GEI_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=gei.cm,y=mean_level))
 
-p1.FM.flags
-```
-
-```
-## Warning in geom_text(inherit.aes = F, aes(x = 0.65, y = -0.45, label = coef_q, : All aesthetics have length 1, but the data has 682 rows.
-## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
-```
-
-```
-## Warning: Removed 2 rows containing missing values or values outside the scale range
-## (`geom_point()`).
-```
-
-```
-## Warning: Removed 2 rows containing missing values or values outside the scale range
-## (`geom_line()`).
-```
-
-```
-## Warning: Removed 2 rows containing missing values or values outside the scale range
-## (`geom_flag()`).
-```
-
-![](Analysis_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
-
-``` r
 p2.FM.flags<-ggplot(p2,aes(y=yvar,x=gei.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
@@ -1930,16 +1939,6 @@ p2.FM.flags<-ggplot(p2,aes(y=yvar,x=gei.cm))+
   geom_flag(data=flag_points_GEI,show.legend=F,
             aes(country=tolower(cntry),size=18,x=gei.cm,y=difference))
 
-p2.FM.flags
-```
-
-```
-## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_flag()`).
-```
-
-![](Analysis_files/figure-html/unnamed-chunk-21-2.png)<!-- -->
-
-``` r
 pflag_comb<-
   ggarrange(p1.FM.flags,p2.FM.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
@@ -1951,18 +1950,15 @@ pflag_comb<-
 ```
 
 ```
-## Warning: Removed 2 rows containing missing values or values outside the scale range
-## (`geom_point()`).
+## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).
 ```
 
 ```
-## Warning: Removed 2 rows containing missing values or values outside the scale range
-## (`geom_line()`).
+## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).
 ```
 
 ```
-## Warning: Removed 2 rows containing missing values or values outside the scale range
-## (`geom_flag()`).
+## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_flag()`).
 ```
 
 ```
@@ -1973,7 +1969,7 @@ pflag_comb<-
 pflag_comb
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-21-3.png)<!-- -->
+![](Analysis_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 png(filename = 
@@ -2000,7 +1996,7 @@ summary(mod2_GGGI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + gggi.z.cm + gndr.c:gggi.z.cm + (gndr.c | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -2081,10 +2077,6 @@ r2mlm(mod2_GGGI,bargraph = F)
 ## fvm 0.100877992
 ```
 
-``` r
-#anova(mod2,mod2_GGGI)
-```
-
 ### Deconstructed associations
 
 
@@ -2100,7 +2092,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 30.52917 secs
+## Time difference of 31.40783 secs
 ```
 
 ``` r
@@ -2366,47 +2358,8 @@ flag_points_GGGI$cntry<-rownames(flag_points_GGGI)
 flag_points_GGGI<-
   left_join(x=flag_points_GGGI,
             y=GGGI_country_means[,c("ISO2","gggi.cm")],by=c("cntry"="ISO2"))
-flag_points_GGGI
-```
+#flag_points_GGGI
 
-```
-##      (Intercept)    gndr.c        women          men    mean_level difference cntry   gggi.cm
-## 1   0.0948299497 0.5193530 -0.164846538  0.354506437  0.0948299497  0.5193530    AT 0.7280529
-## 2  -0.0280225633 0.3893576 -0.222701380  0.166656253 -0.0280225633  0.3893576    BE 0.7518824
-## 3   0.0004875384 0.4479737 -0.223499296  0.224474372  0.0004875384  0.4479737    BG 0.7206176
-## 4  -0.0548407863 0.4396872 -0.274684367  0.165002794 -0.0548407863  0.4396872    CH 0.7609706
-## 5  -0.2828774030 0.3125188 -0.439136785 -0.126618021 -0.2828774030  0.3125188    CY 0.6752824
-## 6   0.4510108218 0.5744602  0.163780714  0.738240930  0.4510108218  0.5744602    CZ 0.6859235
-## 7  -0.2143483402 0.4987950 -0.463745832  0.035049152 -0.2143483402  0.4987950    DE 0.7709588
-## 8   0.0692355583 0.4851882 -0.173358543  0.311829659  0.0692355583  0.4851882    DK 0.7700353
-## 9  -0.0707126187 0.5237921 -0.332608663  0.191183425 -0.0707126187  0.5237921    EE 0.7217941
-## 10 -0.4562691757 0.3597009 -0.636119614 -0.276418737 -0.4562691757  0.3597009    ES 0.7512882
-## 11 -0.2543634386 0.5570902 -0.532908528  0.024181650 -0.2543634386  0.5570902    FI 0.8350824
-## 12 -0.2779086140 0.4861975 -0.521007379 -0.034809849 -0.2779086140  0.4861975    FR 0.7387118
-## 13 -0.1230585927 0.4765461 -0.361331663  0.115214477 -0.1230585927  0.4765461    GB 0.7554824
-## 14  0.0905758515 0.3111970 -0.065022644  0.246174347  0.0905758515  0.3111970    GR 0.6819118
-## 15 -0.2066317701 0.4128105 -0.413036996 -0.000226544 -0.2066317701  0.4128105    HR 0.7096750
-## 16  0.1972929069 0.3232607  0.035662558  0.358923256  0.1972929069  0.3232607    HU 0.6774059
-## 17  0.0089596780 0.3879343 -0.185007461  0.202926817  0.0089596780  0.3879343    IE 0.7819647
-## 18  0.2825498044 0.2981460  0.133476792  0.431622816  0.2825498044  0.2981460    IL 0.7066000
-## 19 -0.3625487161 0.4534617 -0.589279545 -0.135817887 -0.3625487161  0.4534617    IS 0.8571471
-## 20  0.1538918860 0.2882877  0.009748044  0.298035727  0.1538918860  0.2882877    IT 0.6919647
-## 21  0.5534242147 0.4393454  0.333751504  0.773096925  0.5534242147  0.4393454    LT 0.7406000
-## 22  0.3265508249 0.5062813  0.073410194  0.579691456  0.3265508249  0.5062813    LV 0.7554529
-## 23  0.0535446075 0.4179219 -0.155416338  0.262505553  0.0535446075  0.4179219    ME 0.7056111
-## 24  0.2439906404 0.4721541  0.007913602  0.480067679  0.2439906404  0.4721541    NL 0.7530588
-## 25  0.0666189662 0.4317132 -0.149237612  0.282475544  0.0666189662  0.4317132    NO 0.8366824
-## 26  0.0208329565 0.4712907 -0.214812392  0.256478305  0.0208329565  0.4712907    PL 0.7085176
-## 27  0.1049849842 0.2959446 -0.042987322  0.252957291  0.1049849842  0.2959446    PT 0.7263294
-## 28  0.3407704039 0.3192295  0.181155679  0.500385129  0.3407704039  0.3192295    RU 0.6969200
-## 29  0.0407574260 0.4896334 -0.204059254  0.285574106  0.0407574260  0.4896334    SE 0.8158706
-## 30  0.1917581629 0.4129903 -0.014736986  0.398253312  0.1917581629  0.4129903    SI 0.7348235
-## 31  0.2795168603 0.4618020  0.048615871  0.510417850  0.2795168603  0.4618020    SK 0.6903294
-## 32  0.4569010032 0.2463075  0.333747243  0.580054763  0.4569010032  0.2463075    TR 0.6111941
-## 33  0.2447436927 0.3302140  0.079636707  0.409850679  0.2447436927  0.3302140    UA 0.6980647
-```
-
-``` r
 flag_points_GGGI_long<-
   data.frame(mean_level=c(flag_points_GGGI$women,
                           flag_points_GGGI$men),
@@ -2449,17 +2402,6 @@ p1.FM.flags<-
   geom_flag(data=flag_points_GGGI_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=gggi.cm,y=mean_level))
 
-p1.FM.flags
-```
-
-```
-## Warning in geom_text(inherit.aes = F, aes(x = 0.61, y = -0.45, label = coef_q, : All aesthetics have length 1, but the data has 502 rows.
-## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
-```
-
-![](Analysis_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
-
-``` r
 p2.FM.flags<-ggplot(p2,aes(y=yvar,x=gggi.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
@@ -2484,12 +2426,6 @@ p2.FM.flags<-ggplot(p2,aes(y=yvar,x=gggi.cm))+
   geom_flag(data=flag_points_GGGI,show.legend=F,
             aes(country=tolower(cntry),size=18,x=gggi.cm,y=difference))
 
-p2.FM.flags
-```
-
-![](Analysis_files/figure-html/unnamed-chunk-24-2.png)<!-- -->
-
-``` r
 pflag_comb<-
   ggarrange(p1.FM.flags,p2.FM.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
@@ -2504,7 +2440,7 @@ pflag_comb<-
 pflag_comb
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-24-3.png)<!-- -->
+![](Analysis_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
 
 ``` r
 png(filename = 
@@ -2532,7 +2468,7 @@ summary(mod2_GDI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + gdi.z.cm + gndr.c:gdi.z.cm + (gndr.c | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -2613,10 +2549,6 @@ r2mlm(mod2_GDI,bargraph = F)
 ## fvm 0.092464353
 ```
 
-``` r
-#anova(mod2,mod2_GDI)
-```
-
 ### Deconstructed associations
 
 
@@ -2632,7 +2564,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 30.28639 secs
+## Time difference of 30.63073 secs
 ```
 
 ``` r
@@ -2896,47 +2828,8 @@ flag_points_GDI$cntry<-rownames(flag_points_GDI)
 flag_points_GDI<-
   left_join(x=flag_points_GDI,
             y=GDI_country_means[,c("ISO2","gdi.cm")],by=c("cntry"="ISO2"))
-flag_points_GDI
-```
+#flag_points_GDI
 
-```
-##      (Intercept)    gndr.c        women          men    mean_level difference cntry    gdi.cm
-## 1   0.0948299497 0.5193530 -0.164846538  0.354506437  0.0948299497  0.5193530    AT 0.9701905
-## 2  -0.0280225633 0.3893576 -0.222701380  0.166656253 -0.0280225633  0.3893576    BE 0.9694286
-## 3   0.0004875384 0.4479737 -0.223499296  0.224474372  0.0004875384  0.4479737    BG 0.9954286
-## 4  -0.0548407863 0.4396872 -0.274684367  0.165002794 -0.0548407863  0.4396872    CH 0.9627143
-## 5  -0.2828774030 0.3125188 -0.439136785 -0.126618021 -0.2828774030  0.3125188    CY 0.9718571
-## 6   0.4510108218 0.5744602  0.163780714  0.738240930  0.4510108218  0.5744602    CZ 0.9764286
-## 7  -0.2143483402 0.4987950 -0.463745832  0.035049152 -0.2143483402  0.4987950    DE 0.9569048
-## 8   0.0692355583 0.4851882 -0.173358543  0.311829659  0.0692355583  0.4851882    DK 0.9871905
-## 9  -0.0707126187 0.5237921 -0.332608663  0.191183425 -0.0707126187  0.5237921    EE 1.0277619
-## 10 -0.4562691757 0.3597009 -0.636119614 -0.276418737 -0.4562691757  0.3597009    ES 0.9820476
-## 11 -0.2543634386 0.5570902 -0.532908528  0.024181650 -0.2543634386  0.5570902    FI 0.9954762
-## 12 -0.2779086140 0.4861975 -0.521007379 -0.034809849 -0.2779086140  0.4861975    FR 0.9865714
-## 13 -0.1230585927 0.4765461 -0.361331663  0.115214477 -0.1230585927  0.4765461    GB 0.9704762
-## 14  0.0905758515 0.3111970 -0.065022644  0.246174347  0.0905758515  0.3111970    GR 0.9658095
-## 15 -0.2066317701 0.4128105 -0.413036996 -0.000226544 -0.2066317701  0.4128105    HR 0.9860952
-## 16  0.1972929069 0.3232607  0.035662558  0.358923256  0.1972929069  0.3232607    HU 0.9923810
-## 17  0.0089596780 0.3879343 -0.185007461  0.202926817  0.0089596780  0.3879343    IE 0.9770476
-## 18  0.2825498044 0.2981460  0.133476792  0.431622816  0.2825498044  0.2981460    IL 0.9712857
-## 19 -0.3625487161 0.4534617 -0.589279545 -0.135817887 -0.3625487161  0.4534617    IS 0.9726667
-## 20  0.1538918860 0.2882877  0.009748044  0.298035727  0.1538918860  0.2882877    IT 0.9679524
-## 21  0.5534242147 0.4393454  0.333751504  0.773096925  0.5534242147  0.4393454    LT 1.0292857
-## 22  0.3265508249 0.5062813  0.073410194  0.579691456  0.3265508249  0.5062813    LV 1.0351905
-## 23  0.0535446075 0.4179219 -0.155416338  0.262505553  0.0535446075  0.4179219    ME 0.9638333
-## 24  0.2439906404 0.4721541  0.007913602  0.480067679  0.2439906404  0.4721541    NL 0.9581905
-## 25  0.0666189662 0.4317132 -0.149237612  0.282475544  0.0666189662  0.4317132    NO 0.9973810
-## 26  0.0208329565 0.4712907 -0.214812392  0.256478305  0.0208329565  0.4712907    PL 1.0078571
-## 27  0.1049849842 0.2959446 -0.042987322  0.252957291  0.1049849842  0.2959446    PT 0.9940476
-## 28  0.3407704039 0.3192295  0.181155679  0.500385129  0.3407704039  0.3192295    RU 1.0287500
-## 29  0.0407574260 0.4896334 -0.204059254  0.285574106  0.0407574260  0.4896334    SE 0.9892381
-## 30  0.1917581629 0.4129903 -0.014736986  0.398253312  0.1917581629  0.4129903    SI 1.0018095
-## 31  0.2795168603 0.4618020  0.048615871  0.510417850  0.2795168603  0.4618020    SK 0.9939524
-## 32  0.4569010032 0.2463075  0.333747243  0.580054763  0.4569010032  0.2463075    TR 0.9031905
-## 33  0.2447436927 0.3302140  0.079636707  0.409850679  0.2447436927  0.3302140    UA 1.0176667
-```
-
-``` r
 flag_points_GDI_long<-
   data.frame(mean_level=c(flag_points_GDI$women,
                           flag_points_GDI$men),
@@ -2979,17 +2872,9 @@ p1.FM.flags<-
   geom_flag(data=flag_points_GDI_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=gdi.cm,y=mean_level))
 
-p1.FM.flags
-```
+#p1.FM.flags
 
-```
-## Warning in geom_text(inherit.aes = F, aes(x = 0.9, y = -0.45, label = coef_q, : All aesthetics have length 1, but the data has 282 rows.
-## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
-```
 
-![](Analysis_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
-
-``` r
 p2.FM.flags<-ggplot(p2,aes(y=yvar,x=gdi.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
@@ -3013,13 +2898,19 @@ p2.FM.flags<-ggplot(p2,aes(y=yvar,x=gdi.cm))+
                 y=c(round(min(p2$LCL),2)),size=18,hjust="left"))+
   geom_flag(data=flag_points_GDI,show.legend=F,
             aes(country=tolower(cntry),size=18,x=gdi.cm,y=difference))
-
-p2.FM.flags
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-27-2.png)<!-- -->
+```
+## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
 
 ``` r
+#p2.FM.flags
+
+
 pflag_comb<-
   ggarrange(p1.FM.flags,p2.FM.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
@@ -3034,7 +2925,7 @@ pflag_comb<-
 pflag_comb
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-27-3.png)<!-- -->
+![](Analysis_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
 
 ``` r
 png(filename = 
@@ -3065,7 +2956,7 @@ summary(mod2_log_GDP)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + log_gdp.z.cm + gndr.c:log_gdp.z.cm + (gndr.c |      cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -3146,10 +3037,6 @@ r2mlm(mod2_log_GDP,bargraph = F)
 ## fvm 0.091499451
 ```
 
-``` r
-#anova(mod2,mod2_log_GDP)
-```
-
 ### Deconstructed associations
 
 
@@ -3163,8 +3050,8 @@ ddsc_mod2_log_GDP<-
 ```
 
 ```
-## Warning in ddsc_ml(model = mod2_log_GDP, predictor = "log_gdp.z.cm", moderator = "gndr.c", :
-## Predictor not properly standardized, SD = 1.01176689233303
+## Warning in ddsc_ml(model = mod2_log_GDP, predictor = "log_gdp.z.cm", moderator = "gndr.c", : Predictor
+## not properly standardized, SD = 1.01176689233303
 ```
 
 ``` r
@@ -3173,7 +3060,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 30.42957 secs
+## Time difference of 30.55086 secs
 ```
 
 ``` r
@@ -3438,47 +3325,8 @@ flag_points_log_GDP$cntry<-rownames(flag_points_log_GDP)
 flag_points_log_GDP<-
   left_join(x=flag_points_log_GDP,
             y=GDP_country_means[,c("ISO2","log_gdp.cm")],by=c("cntry"="ISO2"))
-flag_points_log_GDP
-```
+#flag_points_log_GDP
 
-```
-##      (Intercept)    gndr.c        women          men    mean_level difference cntry log_gdp.cm
-## 1   0.0948299497 0.5193530 -0.164846538  0.354506437  0.0948299497  0.5193530    AT  11.008132
-## 2  -0.0280225633 0.3893576 -0.222701380  0.166656253 -0.0280225633  0.3893576    BE  10.946219
-## 3   0.0004875384 0.4479737 -0.223499296  0.224474372  0.0004875384  0.4479737    BG  10.024001
-## 4  -0.0548407863 0.4396872 -0.274684367  0.165002794 -0.0548407863  0.4396872    CH  11.222820
-## 5  -0.2828774030 0.3125188 -0.439136785 -0.126618021 -0.2828774030  0.3125188    CY  10.641538
-## 6   0.4510108218 0.5744602  0.163780714  0.738240930  0.4510108218  0.5744602    CZ  10.602096
-## 7  -0.2143483402 0.4987950 -0.463745832  0.035049152 -0.2143483402  0.4987950    DE  10.951411
-## 8   0.0692355583 0.4851882 -0.173358543  0.311829659  0.0692355583  0.4851882    DK  11.041181
-## 9  -0.0707126187 0.5237921 -0.332608663  0.191183425 -0.0707126187  0.5237921    EE  10.453078
-## 10 -0.4562691757 0.3597009 -0.636119614 -0.276418737 -0.4562691757  0.3597009    ES  10.680598
-## 11 -0.2543634386 0.5570902 -0.532908528  0.024181650 -0.2543634386  0.5570902    FI  10.899727
-## 12 -0.2779086140 0.4861975 -0.521007379 -0.034809849 -0.2779086140  0.4861975    FR  10.820760
-## 13 -0.1230585927 0.4765461 -0.361331663  0.115214477 -0.1230585927  0.4765461    GB  10.795470
-## 14  0.0905758515 0.3111970 -0.065022644  0.246174347  0.0905758515  0.3111970    GR  10.458468
-## 15 -0.2066317701 0.4128105 -0.413036996 -0.000226544 -0.2066317701  0.4128105    HR  10.312802
-## 16  0.1972929069 0.3232607  0.035662558  0.358923256  0.1972929069  0.3232607    HU  10.328579
-## 17  0.0089596780 0.3879343 -0.185007461  0.202926817  0.0089596780  0.3879343    IE  11.199280
-## 18  0.2825498044 0.2981460  0.133476792  0.431622816  0.2825498044  0.2981460    IL  10.568869
-## 19 -0.3625487161 0.4534617 -0.589279545 -0.135817887 -0.3625487161  0.4534617    IS  10.972691
-## 20  0.1538918860 0.2882877  0.009748044  0.298035727  0.1538918860  0.2882877    IT  10.811351
-## 21  0.5534242147 0.4393454  0.333751504  0.773096925  0.5534242147  0.4393454    LT  10.352204
-## 22  0.3265508249 0.5062813  0.073410194  0.579691456  0.3265508249  0.5062813    LV  10.234123
-## 23  0.0535446075 0.4179219 -0.155416338  0.262505553  0.0535446075  0.4179219    ME   9.896653
-## 24  0.2439906404 0.4721541  0.007913602  0.480067679  0.2439906404  0.4721541    NL  11.045016
-## 25  0.0666189662 0.4317132 -0.149237612  0.282475544  0.0666189662  0.4317132    NO  11.351260
-## 26  0.0208329565 0.4712907 -0.214812392  0.256478305  0.0208329565  0.4712907    PL  10.266271
-## 27  0.1049849842 0.2959446 -0.042987322  0.252957291  0.1049849842  0.2959446    PT  10.512324
-## 28  0.3407704039 0.3192295  0.181155679  0.500385129  0.3407704039  0.3192295    RU  10.398951
-## 29  0.0407574260 0.4896334 -0.204059254  0.285574106  0.0407574260  0.4896334    SE  10.945268
-## 30  0.1917581629 0.4129903 -0.014736986  0.398253312  0.1917581629  0.4129903    SI  10.570158
-## 31  0.2795168603 0.4618020  0.048615871  0.510417850  0.2795168603  0.4618020    SK  10.305981
-## 32  0.4569010032 0.2463075  0.333747243  0.580054763  0.4569010032  0.2463075    TR  10.009841
-## 33  0.2447436927 0.3302140  0.079636707  0.409850679  0.2447436927  0.3302140    UA   9.699690
-```
-
-``` r
 flag_points_log_GDP_long<-
   data.frame(mean_level=c(flag_points_log_GDP$women,
                           flag_points_log_GDP$men),
@@ -3521,17 +3369,6 @@ p1.FM.flags<-
   geom_flag(data=flag_points_log_GDP_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=log_gdp.cm,y=mean_level))
 
-p1.FM.flags
-```
-
-```
-## Warning in geom_text(inherit.aes = F, aes(x = 9.75, y = -0.45, label = coef_q, : All aesthetics have length 1, but the data has 3302 rows.
-## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
-```
-
-![](Analysis_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
-
-``` r
 p2.FM.flags<-ggplot(p2,aes(y=yvar,x=log_gdp.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
@@ -3556,12 +3393,7 @@ p2.FM.flags<-ggplot(p2,aes(y=yvar,x=log_gdp.cm))+
   geom_flag(data=flag_points_log_GDP,show.legend=F,
             aes(country=tolower(cntry),size=18,x=log_gdp.cm,y=difference))
 
-p2.FM.flags
-```
 
-![](Analysis_files/figure-html/unnamed-chunk-30-2.png)<!-- -->
-
-``` r
 pflag_comb<-
   ggarrange(p1.FM.flags,p2.FM.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
@@ -3576,7 +3408,7 @@ pflag_comb<-
 pflag_comb
 ```
 
-![](Analysis_files/figure-html/unnamed-chunk-30-3.png)<!-- -->
+![](Analysis_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
 
 ``` r
 png(filename = 
@@ -3603,7 +3435,7 @@ summary(mod3)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + (gndr.c | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -3697,134 +3529,6 @@ anova(mod2,mod3)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-* Alternative model with country-mean centered gender and time
-
-
-``` r
-mod3_alt<-lmer(FM.z~gndr.c.gmc+essround.c.gmc+(gndr.c.gmc|cntry),
-               data=diff_dat_gmc,REML=F,weights = pspwght,
-           control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
-summary(mod3_alt)
-```
-
-```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
-## Formula: FM.z ~ gndr.c.gmc + essround.c.gmc + (gndr.c.gmc | cntry)
-##    Data: diff_dat_gmc
-## Weights: pspwght
-## Control: lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+07))
-## 
-##       AIC       BIC    logLik -2*log(L)  df.resid 
-## 1169928.2 1170004.4 -584957.1 1169914.2    392761 
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -9.3688 -0.6146  0.0035  0.6025  9.9540 
-## 
-## Random effects:
-##  Groups   Name        Variance Std.Dev. Corr 
-##  cntry    (Intercept) 0.054771 0.23403       
-##           gndr.c.gmc  0.007714 0.08783  -0.18
-##  Residual             1.012612 1.00629       
-## Number of obs: 392768, groups:  cntry, 33
-## 
-## Fixed effects:
-##                  Estimate Std. Error         df t value Pr(>|t|)    
-## (Intercept)     3.909e-02  4.079e-02  3.298e+01   0.958    0.345    
-## gndr.c.gmc      4.198e-01  1.575e-02  3.275e+01  26.646   <2e-16 ***
-## essround.c.gmc -1.486e-02  6.153e-04  3.927e+05 -24.158   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Correlation of Fixed Effects:
-##             (Intr) gndr..
-## gndr.c.gmc  -0.180       
-## essrnd.c.gm  0.000 -0.001
-```
-
-``` r
-getFE(mod3_alt,round=3)
-```
-
-```
-##                  Est.    SE         df       t     p     LL     UL
-## (Intercept)     0.039 0.041     32.978   0.958 0.345 -0.044  0.122
-## gndr.c.gmc      0.420 0.016     32.748  26.646 0.000  0.388  0.452
-## essround.c.gmc -0.015 0.001 392707.413 -24.158 0.000 -0.016 -0.014
-```
-
-``` r
-getVC(mod3_alt)
-```
-
-```
-##        grp        var1       var2 sdcor vcov
-## 1    cntry (Intercept)       <NA>  0.23 0.05
-## 2    cntry  gndr.c.gmc       <NA>  0.09 0.01
-## 3    cntry (Intercept) gndr.c.gmc -0.18 0.00
-## 4 Residual        <NA>       <NA>  1.01 1.01
-```
-
-``` r
-r2mlm(mod3_alt,bargraph = F)
-```
-
-```
-## $Decompositions
-##                      total      within between
-## fixed, within   0.04019899 0.042277481      NA
-## fixed, between  0.00000000          NA       0
-## slope variation 0.00170711 0.001795376      NA
-## mean variation  0.04916310          NA       1
-## sigma2          0.90893080 0.955927142      NA
-## 
-## $R2s
-##          total      within between
-## f1  0.04019899 0.042277481      NA
-## f2  0.00000000          NA       0
-## v   0.00170711 0.001795376      NA
-## m   0.04916310          NA       1
-## f   0.04019899          NA      NA
-## fv  0.04190610 0.044072858      NA
-## fvm 0.09106920          NA      NA
-```
-
-``` r
-r2mlm_comp(mod2_alt,mod3_alt,bargraph = F)
-```
-
-```
-## $`Model A R2s`
-##           total      within between
-## f1  0.038934061 0.040947224      NA
-## f2  0.000000000          NA       0
-## v   0.001696124 0.001783825      NA
-## m   0.049164813          NA       1
-## f   0.038934061          NA      NA
-## fv  0.040630185 0.042731049      NA
-## fvm 0.089794997          NA      NA
-## 
-## $`Model B R2s`
-##          total      within between
-## f1  0.04019899 0.042277481      NA
-## f2  0.00000000          NA       0
-## v   0.00170711 0.001795376      NA
-## m   0.04916310          NA       1
-## f   0.04019899          NA      NA
-## fv  0.04190610 0.044072858      NA
-## fvm 0.09106920          NA      NA
-## 
-## $`R2 differences, Model B - Model A`
-##             total       within between
-## f1   1.264928e-03 1.330258e-03      NA
-## f2   0.000000e+00           NA       0
-## v    1.098621e-05 1.155103e-05      NA
-## m   -1.716182e-06           NA       0
-## f    1.264928e-03           NA      NA
-## fv   1.275915e-03 1.341809e-03      NA
-## fvm  1.274198e-03           NA      NA
-```
-
 ## mod4: random effect of time (Ess round)
 
 
@@ -3836,7 +3540,7 @@ summary(mod4)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + (gndr.c + essround.c | cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -3919,166 +3623,19 @@ r2mlm(mod4,bargraph = F)
 ```
 
 ``` r
-anova(mod3,mod4)
+anova(mod2,mod3,mod4)
 ```
 
 ```
 ## Data: diff_dat
 ## Models:
+## mod2: FM.z ~ gndr.c + (gndr.c | cntry)
 ## mod3: FM.z ~ gndr.c + essround.c + (gndr.c | cntry)
 ## mod4: FM.z ~ gndr.c + essround.c + (gndr.c + essround.c | cntry)
-##      npar     AIC     BIC  logLik -2*log(L) Chisq Df Pr(>Chisq)    
-## mod3    7 1169930 1170006 -584958   1169916                        
-## mod4   10 1166638 1166747 -583309   1166618  3298  3  < 2.2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-
-* Alternative model with country-mean centered gender and time
-
-
-``` r
-mod4_alt<-lmer(FM.z~gndr.c.gmc+essround.c.gmc+(gndr.c.gmc+essround.c.gmc|cntry),
-               data=diff_dat_gmc,REML=F,weights = pspwght,
-           control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
-summary(mod4_alt)
-```
-
-```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
-## Formula: FM.z ~ gndr.c.gmc + essround.c.gmc + (gndr.c.gmc + essround.c.gmc |      cntry)
-##    Data: diff_dat_gmc
-## Weights: pspwght
-## Control: lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+07))
-## 
-##       AIC       BIC    logLik -2*log(L)  df.resid 
-## 1166612.5 1166721.3 -583296.2 1166592.5    392758 
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -9.7082 -0.6131  0.0044  0.6008  9.9638 
-## 
-## Random effects:
-##  Groups   Name           Variance Std.Dev. Corr       
-##  cntry    (Intercept)    0.054940 0.23439             
-##           gndr.c.gmc     0.007864 0.08868  -0.19      
-##           essround.c.gmc 0.005425 0.07366   0.43 -0.42
-##  Residual                1.003631 1.00181             
-## Number of obs: 392768, groups:  cntry, 33
-## 
-## Fixed effects:
-##                 Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)     0.039003   0.040848 32.977605   0.955    0.347    
-## gndr.c.gmc      0.418871   0.015890 32.729691  26.360   <2e-16 ***
-## essround.c.gmc  0.003744   0.012903 26.852608   0.290    0.774    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Correlation of Fixed Effects:
-##             (Intr) gndr..
-## gndr.c.gmc  -0.188       
-## essrnd.c.gm  0.427 -0.406
-```
-
-``` r
-getFE(mod4_alt,round=3)
-```
-
-```
-##                 Est.    SE     df      t     p     LL    UL
-## (Intercept)    0.039 0.041 32.978  0.955 0.347 -0.044 0.122
-## gndr.c.gmc     0.419 0.016 32.730 26.360 0.000  0.387 0.451
-## essround.c.gmc 0.004 0.013 26.853  0.290 0.774 -0.023 0.030
-```
-
-``` r
-getVC(mod4_alt)
-```
-
-```
-##        grp           var1           var2 sdcor vcov
-## 1    cntry    (Intercept)           <NA>  0.23 0.05
-## 2    cntry     gndr.c.gmc           <NA>  0.09 0.01
-## 3    cntry essround.c.gmc           <NA>  0.07 0.01
-## 4    cntry    (Intercept)     gndr.c.gmc -0.19 0.00
-## 5    cntry    (Intercept) essround.c.gmc  0.43 0.01
-## 6    cntry     gndr.c.gmc essround.c.gmc -0.42 0.00
-## 7 Residual           <NA>           <NA>  1.00 1.00
-```
-
-``` r
-r2mlm(mod4_alt,bargraph = F)
-```
-
-```
-## $Decompositions
-##                      total     within between
-## fixed, within   0.03803948 0.03996452      NA
-## fixed, between  0.00000000         NA       0
-## slope variation 0.03385955 0.03557306      NA
-## mean variation  0.04816874         NA       1
-## sigma2          0.87993223 0.92446242      NA
-## 
-## $R2s
-##          total     within between
-## f1  0.03803948 0.03996452      NA
-## f2  0.00000000         NA       0
-## v   0.03385955 0.03557306      NA
-## m   0.04816874         NA       1
-## f   0.03803948         NA      NA
-## fv  0.07189903 0.07553758      NA
-## fvm 0.12006777         NA      NA
-```
-
-``` r
-r2mlm_comp(mod3_alt,mod4_alt,bargraph = F)
-```
-
-```
-## $`Model A R2s`
-##          total      within between
-## f1  0.04019899 0.042277481      NA
-## f2  0.00000000          NA       0
-## v   0.00170711 0.001795376      NA
-## m   0.04916310          NA       1
-## f   0.04019899          NA      NA
-## fv  0.04190610 0.044072858      NA
-## fvm 0.09106920          NA      NA
-## 
-## $`Model B R2s`
-##          total     within between
-## f1  0.03803948 0.03996452      NA
-## f2  0.00000000         NA       0
-## v   0.03385955 0.03557306      NA
-## m   0.04816874         NA       1
-## f   0.03803948         NA      NA
-## fv  0.07189903 0.07553758      NA
-## fvm 0.12006777         NA      NA
-## 
-## $`R2 differences, Model B - Model A`
-##             total       within between
-## f1  -0.0021595098 -0.002312961      NA
-## f2   0.0000000000           NA       0
-## v    0.0321524386  0.033777682      NA
-## m   -0.0009943589           NA       0
-## f   -0.0021595098           NA      NA
-## fv   0.0299929288  0.031464720      NA
-## fvm  0.0289985699           NA      NA
-```
-
-``` r
-anova(mod3_alt,mod4_alt)
-```
-
-```
-## Data: diff_dat_gmc
-## Models:
-## mod3_alt: FM.z ~ gndr.c.gmc + essround.c.gmc + (gndr.c.gmc | cntry)
-## mod4_alt: FM.z ~ gndr.c.gmc + essround.c.gmc + (gndr.c.gmc + essround.c.gmc | cntry)
-##          npar     AIC     BIC  logLik -2*log(L)  Chisq Df Pr(>Chisq)    
-## mod3_alt    7 1169928 1170004 -584957   1169914                         
-## mod4_alt   10 1166612 1166721 -583296   1166592 3321.8  3  < 2.2e-16 ***
+##      npar     AIC     BIC  logLik -2*log(L)   Chisq Df Pr(>Chisq)    
+## mod2    6 1170512 1170577 -585250   1170500                          
+## mod3    7 1169930 1170006 -584958   1169916  583.43  1  < 2.2e-16 ***
+## mod4   10 1166638 1166747 -583309   1166618 3298.04  3  < 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -4095,7 +3652,7 @@ summary(mod5)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + (gndr.c + essround.c |      cntry)
 ##    Data: diff_dat
 ## Weights: pspwght
@@ -4196,122 +3753,6 @@ anova(mod4,mod5)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-* Alternative model with country-mean centered gender and time
-
-
-``` r
-mod5_alt<-lmer(FM.z~gndr.c.gmc+essround.c.gmc+gndr.c.gmc:essround.c.gmc+
-                 (gndr.c.gmc+essround.c.gmc|cntry),
-               data=diff_dat_gmc,REML=F,weights = pspwght,
-           control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
-summary(mod5_alt)
-```
-
-```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
-## Formula: FM.z ~ gndr.c.gmc + essround.c.gmc + gndr.c.gmc:essround.c.gmc +  
-##     (gndr.c.gmc + essround.c.gmc | cntry)
-##    Data: diff_dat_gmc
-## Weights: pspwght
-## Control: lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+07))
-## 
-##       AIC       BIC    logLik -2*log(L)  df.resid 
-## 1166540.7 1166660.4 -583259.4 1166518.7    392757 
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -9.7354 -0.6128  0.0043  0.6006  9.9840 
-## 
-## Random effects:
-##  Groups   Name           Variance Std.Dev. Corr       
-##  cntry    (Intercept)    0.054921 0.23435             
-##           gndr.c.gmc     0.007857 0.08864  -0.19      
-##           essround.c.gmc 0.005426 0.07366   0.43 -0.42
-##  Residual                1.003443 1.00172             
-## Number of obs: 392768, groups:  cntry, 33
-## 
-## Fixed effects:
-##                             Estimate Std. Error         df t value Pr(>|t|)    
-## (Intercept)                3.906e-02  4.084e-02  3.298e+01   0.956    0.346    
-## gndr.c.gmc                 4.187e-01  1.588e-02  3.273e+01  26.363   <2e-16 ***
-## essround.c.gmc             3.976e-03  1.290e-02  2.687e+01   0.308    0.760    
-## gndr.c.gmc:essround.c.gmc -1.053e-02  1.227e-03  3.927e+05  -8.587   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Correlation of Fixed Effects:
-##             (Intr) gndr.. essr..
-## gndr.c.gmc  -0.188              
-## essrnd.c.gm  0.429 -0.406       
-## gndr.c.g:..  0.000  0.001 -0.002
-```
-
-``` r
-getFE(mod5_alt,round=3)
-```
-
-```
-##                             Est.    SE         df      t     p     LL     UL
-## (Intercept)                0.039 0.041     32.980  0.956 0.346 -0.044  0.122
-## gndr.c.gmc                 0.419 0.016     32.731 26.363 0.000  0.386  0.451
-## essround.c.gmc             0.004 0.013     26.873  0.308 0.760 -0.023  0.030
-## gndr.c.gmc:essround.c.gmc -0.011 0.001 392671.344 -8.587 0.000 -0.013 -0.008
-```
-
-``` r
-getVC(mod5_alt)
-```
-
-```
-##        grp           var1           var2 sdcor vcov
-## 1    cntry    (Intercept)           <NA>  0.23 0.05
-## 2    cntry     gndr.c.gmc           <NA>  0.09 0.01
-## 3    cntry essround.c.gmc           <NA>  0.07 0.01
-## 4    cntry    (Intercept)     gndr.c.gmc -0.19 0.00
-## 5    cntry    (Intercept) essround.c.gmc  0.43 0.01
-## 6    cntry     gndr.c.gmc essround.c.gmc -0.42 0.00
-## 7 Residual           <NA>           <NA>  1.00 1.00
-```
-
-``` r
-r2mlm(mod5_alt,bargraph = F)
-```
-
-```
-## $Decompositions
-##                      total
-## fixed           0.03818833
-## slope variation 0.03386582
-## mean variation  0.04815306
-## sigma2          0.87979279
-## 
-## $R2s
-##          total
-## f   0.03818833
-## v   0.03386582
-## m   0.04815306
-## fv  0.07205415
-## fvm 0.12020721
-```
-
-``` r
-#r2mlm_comp(mod4_alt,mod5_alt,bargraph = F)
-anova(mod4_alt,mod5_alt)
-```
-
-```
-## Data: diff_dat_gmc
-## Models:
-## mod4_alt: FM.z ~ gndr.c.gmc + essround.c.gmc + (gndr.c.gmc + essround.c.gmc | cntry)
-## mod5_alt: FM.z ~ gndr.c.gmc + essround.c.gmc + gndr.c.gmc:essround.c.gmc + (gndr.c.gmc + essround.c.gmc | cntry)
-##          npar     AIC     BIC  logLik -2*log(L)  Chisq Df Pr(>Chisq)    
-## mod4_alt   10 1166612 1166721 -583296   1166592                         
-## mod5_alt   11 1166541 1166660 -583259   1166519 73.726  1  < 2.2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-
 ## mod6: random interaction between time and gender
 
 
@@ -4324,7 +3765,7 @@ summary(mod6)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + (gndr.c + essround.c +  
 ##     gndr.c:essround.c | cntry)
 ##    Data: diff_dat
@@ -4416,16 +3857,18 @@ r2mlm(mod6,bargraph = F)
 ```
 
 ``` r
-anova(mod5,mod6)
+anova(mod4,mod5,mod6)
 ```
 
 ```
 ## Data: diff_dat
 ## Models:
+## mod4: FM.z ~ gndr.c + essround.c + (gndr.c + essround.c | cntry)
 ## mod5: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + (gndr.c + essround.c | cntry)
 ## mod6: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + (gndr.c + essround.c + gndr.c:essround.c | cntry)
 ##      npar     AIC     BIC  logLik -2*log(L)  Chisq Df Pr(>Chisq)    
-## mod5   11 1166569 1166688 -583273   1166547                         
+## mod4   10 1166638 1166747 -583309   1166618                         
+## mod5   11 1166569 1166688 -583273   1166547 71.522  1  < 2.2e-16 ***
 ## mod6   15 1166539 1166702 -583254   1166509 37.917  4  1.165e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -4504,20 +3947,20 @@ pairs(change_in_diff_mod6,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3660 0.0209 21.5   -0.409   -0.323
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0657 0.1110 27.1   -0.161    0.292
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4131 0.1130 28.8   -0.644   -0.182
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4317 0.1000 25.7    0.226    0.638
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0470 0.1010 26.9   -0.254    0.160
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4788 0.0199 28.0   -0.520   -0.438
-##  t.ratio p.value
-##  -17.540  <.0001
-##    0.595  0.5571
-##   -3.657  0.0010
-##    4.314  0.0002
-##   -0.465  0.6454
-##  -24.029  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3660 0.0209 21.5   -0.409   -0.323 -17.540
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0657 0.1110 27.1   -0.161    0.292   0.595
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4131 0.1130 28.8   -0.644   -0.182  -3.657
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4317 0.1000 25.7    0.226    0.638   4.314
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0470 0.1010 26.9   -0.254    0.160  -0.465
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4788 0.0199 28.0   -0.520   -0.438 -24.029
+##  p.value
+##   <.0001
+##   0.5571
+##   0.0010
+##   0.0002
+##   0.6454
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -4558,127 +4001,6 @@ pairs(diff_mod6,infer=c(T,T))
 ## Confidence level used: 0.95
 ```
 
-
-
-* Alternative model with country-mean centered gender and time
-
-
-``` r
-mod6_alt<-lmer(FM.z~gndr.c.gmc+essround.c.gmc+gndr.c.gmc:essround.c.gmc+
-                 (gndr.c.gmc+essround.c.gmc+gndr.c.gmc:essround.c.gmc|cntry),
-               data=diff_dat_gmc,REML=F,weights = pspwght,
-           control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
-summary(mod6_alt)
-```
-
-```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
-## Formula: FM.z ~ gndr.c.gmc + essround.c.gmc + gndr.c.gmc:essround.c.gmc +  
-##     (gndr.c.gmc + essround.c.gmc + gndr.c.gmc:essround.c.gmc |          cntry)
-##    Data: diff_dat_gmc
-## Weights: pspwght
-## Control: lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e+07))
-## 
-##       AIC       BIC    logLik -2*log(L)  df.resid 
-## 1166506.2 1166669.4 -583238.1 1166476.2    392753 
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -9.8115 -0.6127  0.0042  0.6004  9.9808 
-## 
-## Random effects:
-##  Groups   Name                      Variance  Std.Dev. Corr             
-##  cntry    (Intercept)               0.0549245 0.23436                   
-##           gndr.c.gmc                0.0078664 0.08869  -0.19            
-##           essround.c.gmc            0.0056356 0.07507   0.43 -0.42      
-##           gndr.c.gmc:essround.c.gmc 0.0002183 0.01478  -0.37  0.21 -0.75
-##  Residual                           1.0032493 1.00162                   
-## Number of obs: 392768, groups:  cntry, 33
-## 
-## Fixed effects:
-##                            Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                0.039086   0.040842 32.971496   0.957 0.345530    
-## gndr.c.gmc                 0.418911   0.015892 32.728157  26.360  < 2e-16 ***
-## essround.c.gmc             0.004503   0.013148 26.716085   0.342 0.734681    
-## gndr.c.gmc:essround.c.gmc -0.014236   0.002963 11.782727  -4.805 0.000453 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Correlation of Fixed Effects:
-##             (Intr) gndr.. essr..
-## gndr.c.gmc  -0.189              
-## essrnd.c.gm  0.423 -0.402       
-## gndr.c.g:.. -0.325  0.178 -0.652
-```
-
-``` r
-getFE(mod6_alt,round=3)
-```
-
-```
-##                             Est.    SE     df      t     p     LL     UL
-## (Intercept)                0.039 0.041 32.971  0.957 0.346 -0.044  0.122
-## gndr.c.gmc                 0.419 0.016 32.728 26.360 0.000  0.387  0.451
-## essround.c.gmc             0.005 0.013 26.716  0.342 0.735 -0.022  0.031
-## gndr.c.gmc:essround.c.gmc -0.014 0.003 11.783 -4.805 0.000 -0.021 -0.008
-```
-
-``` r
-getVC(mod6_alt)
-```
-
-```
-##         grp                      var1                      var2 sdcor vcov
-## 1     cntry               (Intercept)                      <NA>  0.23 0.05
-## 2     cntry                gndr.c.gmc                      <NA>  0.09 0.01
-## 3     cntry            essround.c.gmc                      <NA>  0.08 0.01
-## 4     cntry gndr.c.gmc:essround.c.gmc                      <NA>  0.01 0.00
-## 5     cntry               (Intercept)                gndr.c.gmc -0.19 0.00
-## 6     cntry               (Intercept)            essround.c.gmc  0.43 0.01
-## 7     cntry               (Intercept) gndr.c.gmc:essround.c.gmc -0.37 0.00
-## 8     cntry                gndr.c.gmc            essround.c.gmc -0.42 0.00
-## 9     cntry                gndr.c.gmc gndr.c.gmc:essround.c.gmc  0.21 0.00
-## 10    cntry            essround.c.gmc gndr.c.gmc:essround.c.gmc -0.75 0.00
-## 11 Residual                      <NA>                      <NA>  1.00 1.00
-```
-
-``` r
-r2mlm(mod6_alt,bargraph = F)
-```
-
-```
-## $Decompositions
-##                      total
-## fixed           0.03832576
-## slope variation 0.03535077
-## mean variation  0.04805521
-## sigma2          0.87826827
-## 
-## $R2s
-##          total
-## f   0.03832576
-## v   0.03535077
-## m   0.04805521
-## fv  0.07367653
-## fvm 0.12173173
-```
-
-``` r
-#r2mlm_comp(mod4_alt,mod6_alt,bargraph = F)
-anova(mod5_alt,mod6_alt)
-```
-
-```
-## Data: diff_dat_gmc
-## Models:
-## mod5_alt: FM.z ~ gndr.c.gmc + essround.c.gmc + gndr.c.gmc:essround.c.gmc + (gndr.c.gmc + essround.c.gmc | cntry)
-## mod6_alt: FM.z ~ gndr.c.gmc + essround.c.gmc + gndr.c.gmc:essround.c.gmc + (gndr.c.gmc + essround.c.gmc + gndr.c.gmc:essround.c.gmc | cntry)
-##          npar     AIC     BIC  logLik -2*log(L) Chisq Df Pr(>Chisq)    
-## mod5_alt   11 1166541 1166660 -583259   1166519                        
-## mod6_alt   15 1166506 1166669 -583238   1166476  42.5  4  1.314e-08 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
 
 ### Figure for time trends
 
@@ -4789,111 +4111,17 @@ p_time_trends<-
         axis.text.x  = element_text(size = 14),                  
         axis.text.y  = element_text(size = 14))
 
+p_time_trends
+```
+
+![](Analysis_files/figure-html/unnamed-chunk-37-1.png)<!-- -->
+
+``` r
 png(filename = 
       "../results/time_trends.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 p_time_trends
-dev.off()
-```
-
-```
-## png 
-##   2
-```
-#### Add year specific predictors to the figure
-
-
-``` r
-# obtain predicted values from which country-variance is removed
-
-GEI_mod<-lmer(gei~(1|ISO2)+(1|year),data=long_GII_in_ESS_d)
-GEI_means<-coefficients(GEI_mod)$year
-GEI_means$year<-as.numeric(rownames(GEI_means))
-GEI_means$gei_year_mean<-GEI_means$`(Intercept)`
-
-p_mod6<-left_join(
-  x=p_mod6,
-  y=GEI_means[,c("year","gei_year_mean")],
-  by="year")
-
-GGGI_mod<-lmer(gggi~(1|ISO2)+(1|year),data=long_GGGI_in_ESS_d)
-GGGI_means<-coefficients(GGGI_mod)$year
-GGGI_means$year<-as.numeric(rownames(GGGI_means))
-GGGI_means$gggi_year_mean<-GGGI_means$`(Intercept)`
-
-p_mod6<-left_join(
-  x=p_mod6,
-  y=GGGI_means[,c("year","gggi_year_mean")],
-  by="year")
-
-GDI_mod<-lmer(gdi~(1|ISO2)+(1|year),data=long_GDI_in_ESS_d)
-GDI_means<-coefficients(GDI_mod)$year
-GDI_means$year<-as.numeric(rownames(GDI_means))
-GDI_means$gdi_year_mean<-GDI_means$`(Intercept)`
-
-p_mod6<-left_join(
-  x=p_mod6,
-  y=GDI_means[,c("year","gdi_year_mean")],
-  by="year")
-
-GDP_mod<-lmer(log_gdp~(1|ISO2)+(1|year),data=long_GDP_in_ESS_d)
-GDP_means<-coefficients(GDP_mod)$year
-GDP_means$year<-as.numeric(rownames(GDP_means))
-GDP_means$log_gdp_year_mean<-GDP_means$`(Intercept)`
-
-p_mod6<-left_join(
-  x=p_mod6,
-  y=GDP_means[,c("year","log_gdp_year_mean")],
-  by="year")
-
-
-p_time_trends_w_GE<-p_time_trends+
-  geom_line(data = p_mod6, aes(x = year, y = gei_year_mean),
-          color = "black", linewidth = 2) +
-  geom_point(data = p_mod6, aes(x = year, y = gei_year_mean),
-             color = "black", size = 6) +
-  geom_line(data = p_mod6, aes(x = year, y = gggi_year_mean),
-            color = "darkgray", linewidth = 2) +
-  geom_point(data = p_mod6, aes(x = year, y = gggi_year_mean),
-             color = "darkgray", size = 6)+
-  geom_text(
-    data = p_mod6 %>% filter(year == min(year)),
-    aes(x = year + 0.0, y = gei_year_mean+0.1, label = "GEI year average"),
-    color = "black", hjust = 0, vjust = -0.5, size = 5
-  ) +
-  geom_text(
-    data = p_mod6 %>% filter(year == 2016),
-    aes(x = year - 1.0, y = gggi_year_mean-0.05, label = "GGGI year average"),
-    color = "darkgray", hjust = 0, vjust = 1.5, size = 5
-  ) +
-  ylim(-0.6,1.1)
-```
-
-```
-## Scale for y is already present.
-## Adding another scale for y, which will replace the existing scale.
-```
-
-``` r
-png(filename = 
-      "../results/time_trends_with_GE.png",
-    units = "cm",
-    width = 21.0,height=29.7*(3/4),res = 300)
-p_time_trends_w_GE
-```
-
-```
-## Warning: Removed 4 rows containing missing values or values outside the scale range
-## (`geom_line()`).
-```
-
-```
-## Warning: Removed 6 rows containing missing values or values outside the scale range
-## (`geom_point()`).
-```
-
-``` r
 dev.off()
 ```
 
@@ -5021,7 +4249,7 @@ for (ctry in countries) {
   print(
     ggplot(pred_cntry_dat[pred_cntry_dat$cntry == ctry, ], 
            aes(x = year, y = FM.z_mean, color = gender)) +
-      geom_smooth(method = "lm", se = FALSE) +
+      geom_smooth(method = "lm",formula = "y ~ x", se = FALSE) +
       geom_point(size=8) +
       geom_point(aes(x=year,y=obs_mean_wt),size=8,shape = 1,alpha=.50)+
       geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
@@ -5034,45 +4262,7 @@ for (ctry in countries) {
       theme(legend.title=element_blank())
   )
 }
-```
 
-```
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-## `geom_smooth()` using formula = 'y ~ x'
-```
-
-``` r
 dev.off()
 ```
 
@@ -5085,7 +4275,7 @@ dev.off()
 
 
 ``` r
-ISO<-read.csv2("../data/ISO.csv")
+#ISO<-read.csv2("../data/ISO.csv")
 
 pred_cntry_dat<-left_join(
   x=pred_cntry_dat,
@@ -5120,9 +4310,12 @@ facet_plot<-
   #facet_wrap(~cntry,nrow=6,ncol=6)+
   geom_flag(aes(country=tolower(cntry)),size=2)
 
-#test_plot
+facet_plot
+```
 
+![](Analysis_files/figure-html/unnamed-chunk-39-1.png)<!-- -->
 
+``` r
 png(filename = 
       "../results/country_time_trend_facets.png",
     units = "cm",
@@ -5178,74 +4371,74 @@ cntry_specific_changes
 ```
 
 ```
-##    gndr.c change_per_18_years gndr_change_per_18_year men_change_per_18_years
-## 1    0.52               -0.24                   -0.09                   -0.29
-## 2    0.39               -0.07                   -0.02                   -0.08
-## 3    0.46                0.67                   -0.14                    0.60
-## 4    0.44               -0.03                    0.01                   -0.03
-## 5    0.31               -0.63                   -0.03                   -0.65
-## 6    0.59                0.36                   -0.26                    0.23
-## 7    0.50               -0.51                   -0.11                   -0.57
-## 8    0.48               -0.21                   -0.04                   -0.23
-## 9    0.53               -0.17                   -0.05                   -0.20
-## 10   0.36               -0.55                   -0.03                   -0.57
-## 11   0.56               -0.38                   -0.13                   -0.44
-## 12   0.49               -0.33                   -0.01                   -0.33
-## 13   0.48               -0.39                   -0.03                   -0.40
-## 14   0.31                0.10                    0.01                    0.10
-## 15   0.44               -0.16                   -0.14                   -0.23
-## 16   0.33                0.42                   -0.22                    0.31
-## 17   0.39               -0.15                   -0.06                   -0.18
-## 18   0.30               -0.02                   -0.08                   -0.06
-## 19   0.49               -0.27                   -0.16                   -0.35
-## 20   0.35                0.88                   -0.19                    0.78
-## 21   0.45               -0.05                   -0.06                   -0.08
-## 22   0.49               -0.95                   -0.09                   -1.00
-## 23   0.49                1.44                   -0.22                    1.33
-## 24   0.47               -0.26                   -0.09                   -0.30
-## 25   0.44               -0.29                   -0.20                   -0.39
-## 26   0.47               -0.10                   -0.08                   -0.14
-## 27   0.29               -0.35                   -0.04                   -0.37
-## 28   0.31                0.33                   -0.32                    0.17
-## 29   0.49               -0.41                   -0.12                   -0.47
-## 30   0.41               -0.35                   -0.08                   -0.39
-## 31   0.46                0.30                   -0.21                    0.20
-## 32   0.16                2.14                   -0.31                    1.99
-## 33   0.31                0.53                   -0.12                    0.47
-##    women_change_per_18_years cntry n_unique_essround
-## 1                      -0.19    AT                 6
-## 2                      -0.06    BE                10
-## 3                       0.74    BG                 6
-## 4                      -0.03    CH                10
-## 5                      -0.62    CY                 5
-## 6                       0.49    CZ                 9
-## 7                      -0.46    DE                 9
-## 8                      -0.18    DK                 8
-## 9                      -0.14    EE                 9
-## 10                     -0.54    ES                 9
-## 11                     -0.31    FI                10
-## 12                     -0.32    FR                10
-## 13                     -0.37    GB                10
-## 14                      0.09    GR                 5
-## 15                     -0.09    HR                 4
-## 16                      0.53    HU                10
-## 17                     -0.12    IE                10
-## 18                      0.02    IL                 6
-## 19                     -0.20    IS                 5
-## 20                      0.97    IT                 4
-## 21                     -0.02    LT                 6
-## 22                     -0.91    LV                 2
-## 23                      1.55    ME                 2
-## 24                     -0.21    NL                10
-## 25                     -0.19    NO                10
-## 26                     -0.06    PL                 9
-## 27                     -0.32    PT                10
-## 28                      0.49    RU                 5
-## 29                     -0.35    SE                 9
-## 30                     -0.31    SI                10
-## 31                      0.41    SK                 7
-## 32                      2.30    TR                 2
-## 33                      0.59    UA                 5
+##    gndr.c change_per_18_years gndr_change_per_18_year men_change_per_18_years women_change_per_18_years
+## 1    0.52               -0.24                   -0.09                   -0.29                     -0.19
+## 2    0.39               -0.07                   -0.02                   -0.08                     -0.06
+## 3    0.46                0.67                   -0.14                    0.60                      0.74
+## 4    0.44               -0.03                    0.01                   -0.03                     -0.03
+## 5    0.31               -0.63                   -0.03                   -0.65                     -0.62
+## 6    0.59                0.36                   -0.26                    0.23                      0.49
+## 7    0.50               -0.51                   -0.11                   -0.57                     -0.46
+## 8    0.48               -0.21                   -0.04                   -0.23                     -0.18
+## 9    0.53               -0.17                   -0.05                   -0.20                     -0.14
+## 10   0.36               -0.55                   -0.03                   -0.57                     -0.54
+## 11   0.56               -0.38                   -0.13                   -0.44                     -0.31
+## 12   0.49               -0.33                   -0.01                   -0.33                     -0.32
+## 13   0.48               -0.39                   -0.03                   -0.40                     -0.37
+## 14   0.31                0.10                    0.01                    0.10                      0.09
+## 15   0.44               -0.16                   -0.14                   -0.23                     -0.09
+## 16   0.33                0.42                   -0.22                    0.31                      0.53
+## 17   0.39               -0.15                   -0.06                   -0.18                     -0.12
+## 18   0.30               -0.02                   -0.08                   -0.06                      0.02
+## 19   0.49               -0.27                   -0.16                   -0.35                     -0.20
+## 20   0.35                0.88                   -0.19                    0.78                      0.97
+## 21   0.45               -0.05                   -0.06                   -0.08                     -0.02
+## 22   0.49               -0.95                   -0.09                   -1.00                     -0.91
+## 23   0.49                1.44                   -0.22                    1.33                      1.55
+## 24   0.47               -0.26                   -0.09                   -0.30                     -0.21
+## 25   0.44               -0.29                   -0.20                   -0.39                     -0.19
+## 26   0.47               -0.10                   -0.08                   -0.14                     -0.06
+## 27   0.29               -0.35                   -0.04                   -0.37                     -0.32
+## 28   0.31                0.33                   -0.32                    0.17                      0.49
+## 29   0.49               -0.41                   -0.12                   -0.47                     -0.35
+## 30   0.41               -0.35                   -0.08                   -0.39                     -0.31
+## 31   0.46                0.30                   -0.21                    0.20                      0.41
+## 32   0.16                2.14                   -0.31                    1.99                      2.30
+## 33   0.31                0.53                   -0.12                    0.47                      0.59
+##    cntry n_unique_essround
+## 1     AT                 6
+## 2     BE                10
+## 3     BG                 6
+## 4     CH                10
+## 5     CY                 5
+## 6     CZ                 9
+## 7     DE                 9
+## 8     DK                 8
+## 9     EE                 9
+## 10    ES                 9
+## 11    FI                10
+## 12    FR                10
+## 13    GB                10
+## 14    GR                 5
+## 15    HR                 4
+## 16    HU                10
+## 17    IE                10
+## 18    IL                 6
+## 19    IS                 5
+## 20    IT                 4
+## 21    LT                 6
+## 22    LV                 2
+## 23    ME                 2
+## 24    NL                10
+## 25    NO                10
+## 26    PL                 9
+## 27    PT                10
+## 28    RU                 5
+## 29    SE                 9
+## 30    SI                10
+## 31    SK                 7
+## 32    TR                 2
+## 33    UA                 5
 ```
 
 ``` r
@@ -5343,7 +4536,7 @@ summary(mod6_GEI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + gei.z.cm:gndr.c +  
 ##     gei.z.cm:essround.c + gei.z.cm:gndr.c:essround.c + (gndr.c +  
 ##     essround.c + gndr.c:essround.c | cntry)
@@ -5684,7 +4877,7 @@ summary(mod6_GGGI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + gggi.z.cm:gndr.c +  
 ##     gggi.z.cm:essround.c + gggi.z.cm:gndr.c:essround.c + (gndr.c +  
 ##     essround.c + gndr.c:essround.c | cntry)
@@ -5904,52 +5097,52 @@ pairs(change_in_diff_mod6_GGGI,adjust="none",infer=c(T,T))
 
 ```
 ## gggi.z.cm = -1:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3456 0.0294 30.4  -0.4057  -0.2855
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0717 0.1170 30.7  -0.1676   0.3111
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.3164 0.1080 31.2  -0.5362  -0.0967
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4173 0.1080 31.4   0.1979   0.6367
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       0.0292 0.0981 30.6  -0.1710   0.2294
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.3882 0.0318 33.0  -0.4529  -0.3234
-##  t.ratio p.value
-##  -11.742  <.0001
-##    0.611  0.5454
-##   -2.936  0.0062
-##    3.877  0.0005
-##    0.297  0.7683
-##  -12.202  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3456 0.0294 30.4  -0.4057  -0.2855 -11.742
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0717 0.1170 30.7  -0.1676   0.3111   0.611
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.3164 0.1080 31.2  -0.5362  -0.0967  -2.936
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4173 0.1080 31.4   0.1979   0.6367   3.877
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       0.0292 0.0981 30.6  -0.1710   0.2294   0.297
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.3882 0.0318 33.0  -0.4529  -0.3234 -12.202
+##  p.value
+##   <.0001
+##   0.5454
+##   0.0062
+##   0.0005
+##   0.7683
+##   <.0001
 ## 
 ## gggi.z.cm =  0:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3859 0.0192 28.3  -0.4252  -0.3466
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.0469 0.0784 28.0  -0.2074   0.1136
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4964 0.0719 28.5  -0.6436  -0.3493
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.3390 0.0721 28.5   0.1915   0.4865
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.1105 0.0652 27.9  -0.2441   0.0231
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4495 0.0214 29.2  -0.4932  -0.4058
-##  t.ratio p.value
-##  -20.113  <.0001
-##   -0.599  0.5542
-##   -6.905  <.0001
-##    4.704  0.0001
-##   -1.695  0.1012
-##  -21.031  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3859 0.0192 28.3  -0.4252  -0.3466 -20.113
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.0469 0.0784 28.0  -0.2074   0.1136  -0.599
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4964 0.0719 28.5  -0.6436  -0.3493  -6.905
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.3390 0.0721 28.5   0.1915   0.4865   4.704
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.1105 0.0652 27.9  -0.2441   0.0231  -1.695
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4495 0.0214 29.2  -0.4932  -0.4058 -21.031
+##  p.value
+##   <.0001
+##   0.5542
+##   <.0001
+##   0.0001
+##   0.1012
+##   <.0001
 ## 
 ## gggi.z.cm =  1:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.4263 0.0270 29.0  -0.4816  -0.3710
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.1655 0.1090 29.6  -0.3878   0.0567
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.6764 0.0997 30.4  -0.8799  -0.4730
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.2607 0.1000 30.0   0.0563   0.4651
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.2502 0.0904 29.7  -0.4349  -0.0655
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.5109 0.0311 29.9  -0.5744  -0.4473
-##  t.ratio p.value
-##  -15.764  <.0001
-##   -1.522  0.1387
-##   -6.787  <.0001
-##    2.604  0.0142
-##   -2.767  0.0096
-##  -16.421  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.4263 0.0270 29.0  -0.4816  -0.3710 -15.764
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.1655 0.1090 29.6  -0.3878   0.0567  -1.522
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.6764 0.0997 30.4  -0.8799  -0.4730  -6.787
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.2607 0.1000 30.0   0.0563   0.4651   2.604
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.2502 0.0904 29.7  -0.4349  -0.0655  -2.767
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.5109 0.0311 29.9  -0.5744  -0.4473 -16.421
+##  p.value
+##   <.0001
+##   0.1387
+##   <.0001
+##   0.0142
+##   0.0096
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -6024,7 +5217,7 @@ summary(mod6_GDI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + gdi.z.cm:gndr.c +  
 ##     gdi.z.cm:essround.c + gdi.z.cm:gndr.c:essround.c + (gndr.c +  
 ##     essround.c + gndr.c:essround.c | cntry)
@@ -6244,52 +5437,52 @@ pairs(change_in_diff_mod6_GDI,adjust="none",infer=c(T,T))
 
 ```
 ## gdi.z.cm = -1:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3423 0.0291 31.1  -0.4016  -0.2829
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.3193 0.1380 26.5   0.0359   0.6028
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.1308 0.1380 29.4  -0.4125   0.1509
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.6616 0.1270 24.6   0.4001   0.9230
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       0.2115 0.1250 26.8  -0.0443   0.4672
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4501 0.0279 28.5  -0.5073  -0.3929
-##  t.ratio p.value
-##  -11.759  <.0001
-##    2.314  0.0287
-##   -0.949  0.3504
-##    5.216  <.0001
-##    1.697  0.1013
-##  -16.112  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3423 0.0291 31.1  -0.4016  -0.2829 -11.759
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.3193 0.1380 26.5   0.0359   0.6028   2.314
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.1308 0.1380 29.4  -0.4125   0.1509  -0.949
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.6616 0.1270 24.6   0.4001   0.9230   5.216
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       0.2115 0.1250 26.8  -0.0443   0.4672   1.697
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4501 0.0279 28.5  -0.5073  -0.3929 -16.112
+##  p.value
+##   <.0001
+##   0.0287
+##   0.3504
+##   <.0001
+##   0.1013
+##   <.0001
 ## 
 ## gdi.z.cm =  0:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3659 0.0200 23.2  -0.4073  -0.3245
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0635 0.1000 28.0  -0.1421   0.2691
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4164 0.1010 29.8  -0.6229  -0.2098
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4294 0.0912 26.6   0.2422   0.6167
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0505 0.0903 28.0  -0.2355   0.1345
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4799 0.0194 25.7  -0.5198  -0.4401
-##  t.ratio p.value
-##  -18.285  <.0001
-##    0.633  0.5319
-##   -4.118  0.0003
-##    4.709  0.0001
-##   -0.559  0.5804
-##  -24.754  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3659 0.0200 23.2  -0.4073  -0.3245 -18.285
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0635 0.1000 28.0  -0.1421   0.2691   0.633
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4164 0.1010 29.8  -0.6229  -0.2098  -4.118
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4294 0.0912 26.6   0.2422   0.6167   4.709
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0505 0.0903 28.0  -0.2355   0.1345  -0.559
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4799 0.0194 25.7  -0.5198  -0.4401 -24.754
+##  p.value
+##   <.0001
+##   0.5319
+##   0.0003
+##   0.0001
+##   0.5804
+##   <.0001
 ## 
 ## gdi.z.cm =  1:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3895 0.0286 31.9  -0.4478  -0.3313
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.1923 0.1360 25.7  -0.4726   0.0880
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.7020 0.1360 28.5  -0.9809  -0.4232
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.1972 0.1250 23.8  -0.0612   0.4556
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.3125 0.1230 26.1  -0.5656  -0.0594
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.5097 0.0279 30.8  -0.5666  -0.4528
-##  t.ratio p.value
-##  -13.620  <.0001
-##   -1.411  0.1703
-##   -5.153  <.0001
-##    1.576  0.1282
-##   -2.537  0.0175
-##  -18.276  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3895 0.0286 31.9  -0.4478  -0.3313 -13.620
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.1923 0.1360 25.7  -0.4726   0.0880  -1.411
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.7020 0.1360 28.5  -0.9809  -0.4232  -5.153
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.1972 0.1250 23.8  -0.0612   0.4556   1.576
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.3125 0.1230 26.1  -0.5656  -0.0594  -2.537
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.5097 0.0279 30.8  -0.5666  -0.4528 -18.276
+##  p.value
+##   <.0001
+##   0.1703
+##   <.0001
+##   0.1282
+##   0.0175
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -6364,7 +5557,7 @@ summary(mod6_log_GDP)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + essround.c + gndr.c:essround.c + log_gdp.z.cm:gndr.c +  
 ##     log_gdp.z.cm:essround.c + log_gdp.z.cm:gndr.c:essround.c +  
 ##     (gndr.c + essround.c + gndr.c:essround.c | cntry)
@@ -6584,52 +5777,52 @@ pairs(change_in_diff_mod6_log_GDP,adjust="none",infer=c(T,T))
 
 ```
 ## log_gdp.z.cm = -1:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3329 0.0279 28.9 -0.38986  -0.2759
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.3918 0.1370 27.1  0.10995   0.6736
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.0786 0.1370 29.3 -0.35944   0.2023
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.7247 0.1280 25.9  0.46130   0.9881
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       0.2543 0.1260 27.3 -0.00469   0.5133
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4704 0.0293 29.4 -0.53025  -0.4105
-##  t.ratio p.value
-##  -11.951  <.0001
-##    2.852  0.0082
-##   -0.572  0.5717
-##    5.657  <.0001
-##    2.014  0.0540
-##  -16.056  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3329 0.0279 28.9 -0.38986  -0.2759 -11.951
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.3918 0.1370 27.1  0.10995   0.6736   2.852
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.0786 0.1370 29.3 -0.35944   0.2023  -0.572
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.7247 0.1280 25.9  0.46130   0.9881   5.657
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       0.2543 0.1260 27.3 -0.00469   0.5133   2.014
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4704 0.0293 29.4 -0.53025  -0.4105 -16.056
+##  p.value
+##   <.0001
+##   0.0082
+##   0.5717
+##   <.0001
+##   0.0540
+##   <.0001
 ## 
 ## log_gdp.z.cm =  0:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3667 0.0195 22.2 -0.40711  -0.3263
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0673 0.0968 26.8 -0.13141   0.2661
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4122 0.0973 28.8 -0.61130  -0.2131
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4340 0.0899 25.3  0.24906   0.6190
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0455 0.0887 26.6 -0.22765   0.1366
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4795 0.0200 24.0 -0.52081  -0.4383
-##  t.ratio p.value
-##  -18.800  <.0001
-##    0.695  0.4928
-##   -4.236  0.0002
-##    4.830  0.0001
-##   -0.513  0.6120
-##  -23.986  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3667 0.0195 22.2 -0.40711  -0.3263 -18.800
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0673 0.0968 26.8 -0.13141   0.2661   0.695
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4122 0.0973 28.8 -0.61130  -0.2131  -4.236
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4340 0.0899 25.3  0.24906   0.6190   4.830
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0455 0.0887 26.6 -0.22765   0.1366  -0.513
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4795 0.0200 24.0 -0.52081  -0.4383 -23.986
+##  p.value
+##   <.0001
+##   0.4928
+##   0.0002
+##   0.0001
+##   0.6120
+##   <.0001
 ## 
 ## log_gdp.z.cm =  1:
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.4005 0.0264 23.5 -0.45508  -0.3459
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.2571 0.1370 25.3 -0.53955   0.0253
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.7458 0.1380 27.6 -1.02781  -0.4639
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.1434 0.1280 24.1 -0.12045   0.4072
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.3454 0.1260 25.2 -0.60438  -0.0863
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4887 0.0276 24.7 -0.54567  -0.4318
-##  t.ratio p.value
-##  -15.157  <.0001
-##   -1.874  0.0725
-##   -5.422  <.0001
-##    1.121  0.2732
-##   -2.745  0.0110
-##  -17.686  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.4005 0.0264 23.5 -0.45508  -0.3459 -15.157
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.2571 0.1370 25.3 -0.53955   0.0253  -1.874
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.7458 0.1380 27.6 -1.02781  -0.4639  -5.422
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.1434 0.1280 24.1 -0.12045   0.4072   1.121
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.3454 0.1260 25.2 -0.60438  -0.0863  -2.745
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4887 0.0276 24.7 -0.54567  -0.4318 -17.686
+##  p.value
+##   <.0001
+##   0.0725
+##   <.0001
+##   0.2732
+##   0.0110
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -6710,7 +5903,7 @@ summary(mod7_GEI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + gei.z.cm + gndr.c:gei.z.cm + essround.c + gndr.c:essround.c +  
 ##     (gndr.c + essround.c + gndr.c:essround.c | cntry)
 ##    Data: diff_dat
@@ -6877,20 +6070,20 @@ pairs(change_in_diff_mod7_GEI,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3682 0.0169 23.4   -0.403   -0.333
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0648 0.1200 24.1   -0.182    0.312
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4230 0.1130 26.1   -0.655   -0.191
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4329 0.1150 22.6    0.195    0.671
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0549 0.1070 24.7   -0.276    0.166
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4878 0.0217 15.9   -0.534   -0.442
-##  t.ratio p.value
-##  -21.729  <.0001
-##    0.541  0.5934
-##   -3.741  0.0009
-##    3.765  0.0010
-##   -0.511  0.6137
-##  -22.452  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3682 0.0169 23.4   -0.403   -0.333 -21.729
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0648 0.1200 24.1   -0.182    0.312   0.541
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4230 0.1130 26.1   -0.655   -0.191  -3.741
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4329 0.1150 22.6    0.195    0.671   3.765
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0549 0.1070 24.7   -0.276    0.166  -0.511
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4878 0.0217 15.9   -0.534   -0.442 -22.452
+##  p.value
+##   <.0001
+##   0.5934
+##   0.0009
+##   0.0010
+##   0.6137
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7087,20 +6280,20 @@ pairs(change_in_diff_mod8_GEI,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3642 0.0209 11.9   -0.410   -0.319
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0932 0.1200 24.7   -0.153    0.340
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.3956 0.1100 26.6   -0.621   -0.170
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4574 0.1160 25.8    0.219    0.696
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0314 0.1090 25.6   -0.256    0.193
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4888 0.0357 15.1   -0.565   -0.413
-##  t.ratio p.value
-##  -17.405  <.0001
-##    0.778  0.4437
-##   -3.598  0.0013
-##    3.943  0.0005
-##   -0.288  0.7760
-##  -13.678  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3642 0.0209 11.9   -0.410   -0.319 -17.405
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0932 0.1200 24.7   -0.153    0.340   0.778
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.3956 0.1100 26.6   -0.621   -0.170  -3.598
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4574 0.1160 25.8    0.219    0.696   3.943
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0314 0.1090 25.6   -0.256    0.193  -0.288
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4888 0.0357 15.1   -0.565   -0.413 -13.678
+##  p.value
+##   <.0001
+##   0.4437
+##   0.0013
+##   0.0005
+##   0.7760
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7160,7 +6353,7 @@ summary(mod7_GGGI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + gggi.z.cm + gndr.c:gggi.z.cm + essround.c + gndr.c:essround.c +  
 ##     (gndr.c + essround.c + gndr.c:essround.c | cntry)
 ##    Data: diff_dat
@@ -7327,20 +6520,20 @@ pairs(change_in_diff_mod7_GGGI,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3839 0.0191 29.0   -0.423  -0.3448
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.0624 0.0831 30.2   -0.232   0.1072
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.5121 0.0771 29.9   -0.670  -0.3546
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.3215 0.0786 30.4    0.161   0.4820
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.1282 0.0722 30.1   -0.276   0.0193
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4497 0.0210 30.5   -0.492  -0.4069
-##  t.ratio p.value
-##  -20.101  <.0001
-##   -0.751  0.4584
-##   -6.642  <.0001
-##    4.088  0.0003
-##   -1.774  0.0861
-##  -21.449  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3839 0.0191 29.0   -0.423  -0.3448 -20.101
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.0624 0.0831 30.2   -0.232   0.1072  -0.751
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.5121 0.0771 29.9   -0.670  -0.3546  -6.642
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.3215 0.0786 30.4    0.161   0.4820   4.088
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.1282 0.0722 30.1   -0.276   0.0193  -1.774
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4497 0.0210 30.5   -0.492  -0.4069 -21.449
+##  p.value
+##   <.0001
+##   0.4584
+##   <.0001
+##   0.0003
+##   0.0861
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7537,20 +6730,20 @@ pairs(change_in_diff_mod8_GGGI,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5     -0.36576 0.0200 27.6   -0.407  -0.3247
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  0.00224 0.1090 28.9   -0.221   0.2260
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.47610 0.0981 28.8   -0.677  -0.2754
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.36800 0.1020 29.2    0.160   0.5757
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.11034 0.0913 28.5   -0.297   0.0766
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5) -0.47834 0.0308 23.5   -0.542  -0.4147
-##  t.ratio p.value
-##  -18.266  <.0001
-##    0.020  0.9838
-##   -4.852  <.0001
-##    3.623  0.0011
-##   -1.208  0.2369
-##  -15.541  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5     -0.36576 0.0200 27.6   -0.407  -0.3247 -18.266
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  0.00224 0.1090 28.9   -0.221   0.2260   0.020
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.47610 0.0981 28.8   -0.677  -0.2754  -4.852
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.36800 0.1020 29.2    0.160   0.5757   3.623
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.11034 0.0913 28.5   -0.297   0.0766  -1.208
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5) -0.47834 0.0308 23.5   -0.542  -0.4147 -15.541
+##  p.value
+##   <.0001
+##   0.9838
+##   <.0001
+##   0.0011
+##   0.2369
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7610,7 +6803,7 @@ summary(mod7_GDI)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + gdi.z.cm + gndr.c:gdi.z.cm + essround.c + gndr.c:essround.c +  
 ##     (gndr.c + essround.c + gndr.c:essround.c | cntry)
 ##    Data: diff_dat
@@ -7777,20 +6970,20 @@ pairs(change_in_diff_mod7_GDI,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3655 0.0209 21.5   -0.409   -0.322
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0644 0.1100 27.2   -0.161    0.290
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4158 0.1110 28.9   -0.643   -0.188
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4299 0.0998 25.5    0.224    0.635
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0503 0.0994 27.1   -0.254    0.154
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4802 0.0198 24.2   -0.521   -0.439
-##  t.ratio p.value
-##  -17.472  <.0001
-##    0.585  0.5633
-##   -3.741  0.0008
-##    4.305  0.0002
-##   -0.506  0.6168
-##  -24.306  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3655 0.0209 21.5   -0.409   -0.322 -17.472
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0644 0.1100 27.2   -0.161    0.290   0.585
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4158 0.1110 28.9   -0.643   -0.188  -3.741
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4299 0.0998 25.5    0.224    0.635   4.305
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0503 0.0994 27.1   -0.254    0.154  -0.506
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4802 0.0198 24.2   -0.521   -0.439 -24.306
+##  p.value
+##   <.0001
+##   0.5633
+##   0.0008
+##   0.0002
+##   0.6168
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7843,8 +7036,8 @@ mod8_GDI<-lmer(FM.z~gndr.c+gdi.z.cm+gndr.c:gdi.z.cm+
 ```
 
 ```
-## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to
-## converge with max|grad| = 0.00608738 (tol = 0.002, component 1)
+## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge
+## with max|grad| = 0.00608738 (tol = 0.002, component 1)
 ```
 
 ``` r
@@ -7988,20 +7181,20 @@ pairs(change_in_diff_mod8_GDI,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5     -0.37093 0.0190 23.9   -0.410  -0.3317
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  0.00287 0.0735 24.1   -0.149   0.1545
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.47552 0.0792 24.6   -0.639  -0.3122
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.37380 0.0652 27.2    0.240   0.5075
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.10459 0.0687 25.9   -0.246   0.0367
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5) -0.47839 0.0188 25.0   -0.517  -0.4397
-##  t.ratio p.value
-##  -19.524  <.0001
-##    0.039  0.9691
-##   -6.001  <.0001
-##    5.734  <.0001
-##   -1.522  0.1401
-##  -25.442  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5     -0.37093 0.0190 23.9   -0.410  -0.3317 -19.524
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  0.00287 0.0735 24.1   -0.149   0.1545   0.039
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.47552 0.0792 24.6   -0.639  -0.3122  -6.001
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.37380 0.0652 27.2    0.240   0.5075   5.734
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.10459 0.0687 25.9   -0.246   0.0367  -1.522
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5) -0.47839 0.0188 25.0   -0.517  -0.4397 -25.442
+##  p.value
+##   <.0001
+##   0.9691
+##   <.0001
+##   <.0001
+##   0.1401
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -8061,7 +7254,7 @@ summary(mod7_log_GDP)
 ```
 
 ```
-## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method [lmerModLmerTest]
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
 ## Formula: FM.z ~ gndr.c + log_gdp.z.cm + gndr.c:log_gdp.z.cm + essround.c +  
 ##     gndr.c:essround.c + (gndr.c + essround.c + gndr.c:essround.c |      cntry)
 ##    Data: diff_dat
@@ -8228,20 +7421,20 @@ pairs(change_in_diff_mod7_log_GDP,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3663 0.0200 19.7   -0.408   -0.324
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0663 0.1110 26.7   -0.161    0.294
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4125 0.1120 28.2   -0.642   -0.183
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4326 0.1020 24.7    0.223    0.642
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0462 0.1020 26.5   -0.255    0.162
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4788 0.0197 26.5   -0.519   -0.438
-##  t.ratio p.value
-##  -18.285  <.0001
-##    0.598  0.5546
-##   -3.685  0.0010
-##    4.251  0.0003
-##   -0.455  0.6525
-##  -24.326  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3663 0.0200 19.7   -0.408   -0.324 -18.285
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0663 0.1110 26.7   -0.161    0.294   0.598
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.4125 0.1120 28.2   -0.642   -0.183  -3.685
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.4326 0.1020 24.7    0.223    0.642   4.251
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0462 0.1020 26.5   -0.255    0.162  -0.455
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4788 0.0197 26.5   -0.519   -0.438 -24.326
+##  p.value
+##   <.0001
+##   0.5546
+##   0.0010
+##   0.0003
+##   0.6525
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -8294,8 +7487,8 @@ mod8_log_GDP<-lmer(FM.z~gndr.c+log_gdp.z.cm+gndr.c:log_gdp.z.cm+
 ```
 
 ```
-## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to
-## converge with max|grad| = 0.00387426 (tol = 0.002, component 1)
+## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge
+## with max|grad| = 0.00387426 (tol = 0.002, component 1)
 ```
 
 ``` r
@@ -8439,20 +7632,20 @@ pairs(change_in_diff_mod8_log_GDP,adjust="none",infer=c(T,T))
 ```
 
 ```
-##  contrast                                                 estimate     SE   df lower.CL upper.CL
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5       -0.379 0.0213 19.2  -0.4236  -0.3344
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   -0.106 0.1280 27.4  -0.3691   0.1568
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)    -0.568 0.1230 27.1  -0.8201  -0.3160
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)       0.273 0.1190 27.6   0.0295   0.5163
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       -0.189 0.1120 26.1  -0.4201   0.0421
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.462 0.0230 14.0  -0.5112  -0.4126
-##  t.ratio p.value
-##  -17.769  <.0001
-##   -0.828  0.4151
-##   -4.624  0.0001
-##    2.298  0.0294
-##   -1.681  0.1047
-##  -20.096  <.0001
+##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5       -0.379 0.0213 19.2  -0.4236  -0.3344 -17.769
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   -0.106 0.1280 27.4  -0.3691   0.1568  -0.828
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)    -0.568 0.1230 27.1  -0.8201  -0.3160  -4.624
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)       0.273 0.1190 27.6   0.0295   0.5163   2.298
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       -0.189 0.1120 26.1  -0.4201   0.0421  -1.681
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.462 0.0230 14.0  -0.5112  -0.4126 -20.096
+##  p.value
+##   <.0001
+##   0.4151
+##   0.0001
+##   0.0294
+##   0.1047
+##   <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -8513,34 +7706,37 @@ print(s,locale=FALSE)
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] stringr_1.5.2         tidyr_1.3.1           r2mlm_0.3.8           nlme_3.1-168         
+##  [1] apaTables_2.0.8       stringr_1.5.2         r2mlm_0.3.8           nlme_3.1-168         
 ##  [5] Hmisc_5.2-4           ggpubr_0.6.2          metafor_4.8-0         numDeriv_2016.8-1.1  
 ##  [9] metadat_1.4-0         lmerTest_3.1-3        ggflags_0.0.4         finalfit_1.1.0       
 ## [13] ggplot2_4.0.0         MetBrewer_0.2.0       vjihelpers_0.0.0.9000 emmeans_1.11.2-8     
-## [17] lme4_1.1-37           Matrix_1.7-3          dplyr_1.1.4           rio_1.2.4            
-## [21] multid_1.0.2.9000     knitr_1.50            rmarkdown_2.30       
+## [17] lme4_1.1-37           Matrix_1.7-3          multid_1.0.2.9000     tidyr_1.3.1          
+## [21] psych_2.5.6           dplyr_1.1.4           rio_1.2.4             knitr_1.50           
+## [25] rmarkdown_2.30       
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] mnormt_2.1.1       Rdpack_2.6.4       pROC_1.19.0.1      gridExtra_2.3      readxl_1.4.5      
-##   [6] rlang_1.1.6        magrittr_2.0.4     rockchalk_1.8.157  compiler_4.5.1     mgcv_1.9-3        
-##  [11] png_0.1-8          vctrs_0.6.5        quadprog_1.5-8     crayon_1.5.3       pkgconfig_2.0.3   
-##  [16] shape_1.4.6.1      fastmap_1.2.0      backports_1.5.0    labeling_0.4.3     pbivnorm_0.6.0    
-##  [21] nloptr_2.2.1       purrr_1.1.0        xfun_0.53          glmnet_4.1-10      jomo_2.7-6        
-##  [26] cachem_1.1.0       kutils_1.73        jsonlite_2.0.0     pan_1.9            jpeg_0.1-11       
-##  [31] psych_2.5.6        lavaan_0.6-20      parallel_4.5.1     broom_1.0.10       cluster_2.1.8.1   
-##  [36] R6_2.6.1           bslib_0.9.0        stringi_1.8.7      RColorBrewer_1.1-3 car_3.1-3         
-##  [41] boot_1.3-31        rpart_4.1.24       cellranger_1.1.0   jquerylib_0.1.4    estimability_1.5.1
-##  [46] Rcpp_1.1.0         iterators_1.0.14   base64enc_0.1-3    R.utils_2.13.0     splines_4.5.1     
-##  [51] nnet_7.3-20        tidyselect_1.2.1   rstudioapi_0.17.1  abind_1.4-8        yaml_2.3.10       
-##  [56] codetools_0.2-20   lattice_0.22-7     tibble_3.3.0       plyr_1.8.9         withr_3.0.2       
-##  [61] S7_0.2.0           evaluate_1.0.5     foreign_0.8-90     survival_3.8-3     zip_2.3.3         
-##  [66] pillar_1.11.1      carData_3.0-5      mice_3.18.0        stats4_4.5.1       checkmate_2.3.3   
-##  [71] foreach_1.5.2      reformulas_0.4.1   generics_0.1.4     grImport2_0.3-3    mathjaxr_1.8-0    
-##  [76] scales_1.4.0       minqa_1.2.8        xtable_1.8-4       glue_1.8.0         tools_4.5.1       
-##  [81] data.table_1.17.8  openxlsx_4.2.8     ggsignif_0.6.4     forcats_1.0.1      XML_3.99-0.19     
-##  [86] mvtnorm_1.3-3      cowplot_1.2.0      grid_4.5.1         rbibutils_2.3      colorspace_2.1-2  
-##  [91] htmlTable_2.4.3    Formula_1.2-5      cli_3.6.5          gtable_0.3.6       R.methodsS3_1.8.2 
-##  [96] rstatix_0.7.3      sass_0.4.10        digest_0.6.37      htmlwidgets_1.6.4  farver_2.1.2      
-## [101] htmltools_0.5.8.1  R.oo_1.27.1        lifecycle_1.0.4    mitml_0.4-5        MASS_7.3-65
+##   [1] mathjaxr_1.8-0     RColorBrewer_1.1-3 rstudioapi_0.17.1  jsonlite_2.0.0     shape_1.4.6.1     
+##   [6] magrittr_2.0.4     estimability_1.5.1 jomo_2.7-6         farver_2.1.2       nloptr_2.2.1      
+##  [11] vctrs_0.6.5        minqa_1.2.8        base64enc_0.1-3    rstatix_0.7.3      htmltools_0.5.8.1 
+##  [16] forcats_1.0.1      haven_2.5.5        broom_1.0.10       cellranger_1.1.0   Formula_1.2-5     
+##  [21] pROC_1.19.0.1      mitml_0.4-5        sass_0.4.10        bslib_0.9.0        htmlwidgets_1.6.4 
+##  [26] plyr_1.8.9         cachem_1.1.0       lifecycle_1.0.4    iterators_1.0.14   pkgconfig_2.0.3   
+##  [31] R6_2.6.1           fastmap_1.2.0      rbibutils_2.3      digest_0.6.37      colorspace_2.1-2  
+##  [36] labeling_0.4.3     mgcv_1.9-3         abind_1.4-8        compiler_4.5.1     withr_3.0.2       
+##  [41] htmlTable_2.4.3    S7_0.2.0           backports_1.5.0    carData_3.0-5      R.utils_2.13.0    
+##  [46] ggsignif_0.6.4     pan_1.9            MASS_7.3-65        tools_4.5.1        pbivnorm_0.6.0    
+##  [51] foreign_0.8-90     zip_2.3.3          nnet_7.3-20        R.oo_1.27.1        glue_1.8.0        
+##  [56] quadprog_1.5-8     grid_4.5.1         checkmate_2.3.3    cluster_2.1.8.1    generics_0.1.4    
+##  [61] gtable_0.3.6       tzdb_0.5.0         R.methodsS3_1.8.2  data.table_1.17.8  hms_1.1.4         
+##  [66] car_3.1-3          utf8_1.2.6         foreach_1.5.2      pillar_1.11.1      rockchalk_1.8.157 
+##  [71] splines_4.5.1      lattice_0.22-7     survival_3.8-3     kutils_1.73        tidyselect_1.2.1  
+##  [76] reformulas_0.4.1   gridExtra_2.3      grImport2_0.3-3    stats4_4.5.1       xfun_0.53         
+##  [81] stringi_1.8.7      yaml_2.3.10        boot_1.3-31        evaluate_1.0.5     codetools_0.2-20  
+##  [86] tibble_3.3.0       cli_3.6.5          rpart_4.1.24       xtable_1.8-4       Rdpack_2.6.4      
+##  [91] jquerylib_0.1.4    lavaan_0.6-20      Rcpp_1.1.0         readxl_1.4.5       png_0.1-8         
+##  [96] coda_0.19-4.1      XML_3.99-0.19      parallel_4.5.1     readr_2.1.5        jpeg_0.1-11       
+## [101] glmnet_4.1-10      mvtnorm_1.3-3      scales_1.4.0       crayon_1.5.3       openxlsx_4.2.8    
+## [106] purrr_1.1.0        writexl_1.5.4      rlang_1.1.6        cowplot_1.2.0      mnormt_2.1.1      
+## [111] mice_3.18.0
 ```
 
