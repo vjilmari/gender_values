@@ -1263,16 +1263,16 @@ r2mlm(mod1,bargraph = F)
 ##                      total
 ## fixed           0.03316947
 ## slope variation 0.00000000
-## mean variation  0.06588070
-## sigma2          0.90094982
+## mean variation  0.06588073
+## sigma2          0.90094980
 ## 
 ## $R2s
 ##          total
 ## f   0.03316947
 ## v   0.00000000
-## m   0.06588070
+## m   0.06588073
 ## fv  0.03316947
-## fvm 0.09905018
+## fvm 0.09905020
 ```
 
 ## mod2: Gender fixed and random effect
@@ -1309,8 +1309,8 @@ summary(mod2)
 ## 
 ## Fixed effects:
 ##             Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)  0.43153    0.04707 32.88411   9.168 1.41e-10 ***
-## gndr.c       0.36866    0.02085 31.15701  17.684  < 2e-16 ***
+## (Intercept)  0.43153    0.04707 32.88427   9.168 1.41e-10 ***
+## gndr.c       0.36866    0.02085 31.15708  17.684  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -1348,18 +1348,18 @@ r2mlm(mod2,bargraph = F)
 ```
 ## $Decompositions
 ##                       total
-## fixed           0.030843151
-## slope variation 0.002746729
-## mean variation  0.066181156
-## sigma2          0.900228964
+## fixed           0.030843160
+## slope variation 0.002746724
+## mean variation  0.066180943
+## sigma2          0.900229174
 ## 
 ## $R2s
 ##           total
-## f   0.030843151
-## v   0.002746729
-## m   0.066181156
-## fv  0.033589880
-## fvm 0.099771036
+## f   0.030843160
+## v   0.002746724
+## m   0.066180943
+## fv  0.033589884
+## fvm 0.099770826
 ```
 
 ``` r
@@ -1384,8 +1384,8 @@ lvl2_var_cond_lvl1(mod2,lvl1.var = "gndr.c",lvl1.values = c(0.5,-0.5))
 
 ```
 ##   lvl1.value lvl2.cond.var lvl2.cond.sd
-## 1        0.5    0.06593716    0.2567823
-## 2       -0.5    0.08510945    0.2917352
+## 1        0.5     0.0659369    0.2567818
+## 2       -0.5     0.0851092    0.2917348
 ```
 
 * Test for random effect correlation
@@ -1420,8 +1420,8 @@ summary(mod2_norecov)
 ## 
 ## Fixed effects:
 ##             Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)  0.43133    0.04707 32.88524   9.164 1.42e-10 ***
-## gndr.c       0.36830    0.02095 30.99607  17.582  < 2e-16 ***
+## (Intercept)  0.43133    0.04707 32.88514   9.164 1.42e-10 ***
+## gndr.c       0.36830    0.02095 30.99602  17.582  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -1501,10 +1501,10 @@ summary(mod2_GEI)
 ## 
 ## Fixed effects:
 ##                 Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)      0.42372    0.04248 31.88107   9.975 2.51e-11 ***
-## gndr.c           0.37147    0.01602 31.08402  23.192  < 2e-16 ***
-## gei.z.cm        -0.12727    0.04319 31.96551  -2.947  0.00595 ** 
-## gndr.c:gei.z.cm  0.08098    0.01668 34.75814   4.855 2.52e-05 ***
+## (Intercept)      0.42372    0.04248 31.88105   9.975 2.51e-11 ***
+## gndr.c           0.37147    0.01602 31.08401  23.192  < 2e-16 ***
+## gei.z.cm        -0.12727    0.04319 31.96548  -2.947  0.00595 ** 
+## gndr.c:gei.z.cm  0.08098    0.01668 34.75812   4.855 2.52e-05 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -1523,7 +1523,7 @@ getFE(mod2_GEI,round=3)
 ##                   Est.    SE     df      t     p     LL     UL
 ## (Intercept)      0.424 0.042 31.881  9.975 0.000  0.337  0.510
 ## gndr.c           0.371 0.016 31.084 23.192 0.000  0.339  0.404
-## gei.z.cm        -0.127 0.043 31.966 -2.947 0.006 -0.215 -0.039
+## gei.z.cm        -0.127 0.043 31.965 -2.947 0.006 -0.215 -0.039
 ## gndr.c:gei.z.cm  0.081 0.017 34.758  4.855 0.000  0.047  0.115
 ```
 
@@ -1548,16 +1548,16 @@ r2mlm(mod2_GEI,bargraph = F)
 ##                       total
 ## fixed           0.045621882
 ## slope variation 0.001394007
-## mean variation  0.052514715
-## sigma2          0.900469396
+## mean variation  0.052514734
+## sigma2          0.900469378
 ## 
 ## $R2s
 ##           total
 ## f   0.045621882
 ## v   0.001394007
-## m   0.052514715
-## fv  0.047015889
-## fvm 0.099530604
+## m   0.052514734
+## fv  0.047015888
+## fvm 0.099530622
 ```
 
 ### Deconstructed associations
@@ -1575,7 +1575,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 4.128967 secs
+## Time difference of 5.720189 secs
 ```
 
 ``` r
@@ -1626,7 +1626,7 @@ round(ddsc_mod2_GEI$results,3)
 ## r_xy2                        -0.292 0.149 31.977  -1.957   0.059   -0.595    0.012
 ## b_11                         -0.594 0.154 31.993  -3.845   0.001   -0.908   -0.279
 ## b_21                         -0.307 0.157 31.977  -1.957   0.059   -0.627    0.012
-## main_effect                  -0.127 0.043 31.966  -2.947   0.006   -0.215   -0.039
+## main_effect                  -0.127 0.043 31.965  -2.947   0.006   -0.215   -0.039
 ## moderator_effect              0.371 0.016 31.084  23.192   0.000    0.339    0.404
 ## interaction                   0.081 0.017 34.758   4.855   0.000    0.047    0.115
 ## q_b11_b21                    -0.366    NA     NA      NA      NA       NA       NA
@@ -1639,9 +1639,9 @@ round(ddsc_mod2_GEI$results,3)
 ## dadas_bscale                 -0.614 0.314 31.977  -1.957   0.970   -1.253    0.025
 ## dadas_rscale                 -0.583 0.298 31.977  -1.957   0.970   -1.190    0.024
 ## abs_diff                      0.081 0.017 34.758   4.855   0.000    0.047    0.115
-## abs_sum                       0.255 0.086 31.966   2.947   0.003    0.079    0.430
+## abs_sum                       0.255 0.086 31.965   2.947   0.003    0.079    0.430
 ## abs_diff_bscale               0.287 0.059 34.758   4.855   0.000    0.167    0.406
-## abs_sum_bscale                0.901 0.306 31.966   2.947   0.003    0.278    1.523
+## abs_sum_bscale                0.901 0.306 31.965   2.947   0.003    0.278    1.523
 ## abs_diff_rscale               0.335 0.061 35.499   5.522   0.000    0.212    0.458
 ## abs_sum_rscale                0.918 0.306 31.965   2.998   0.003    0.294    1.542
 ```
@@ -1988,10 +1988,10 @@ summary(mod2_GGGI)
 ## 
 ## Fixed effects:
 ##                  Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)       0.45372    0.04451 32.80692  10.193 1.07e-11 ***
-## gndr.c            0.35972    0.01827 29.19456  19.693  < 2e-16 ***
-## gggi.z.cm        -0.16007    0.04528 33.03273  -3.535 0.001231 ** 
-## gndr.c:gggi.z.cm  0.07756    0.01934 33.93245   4.010 0.000315 ***
+## (Intercept)       0.45372    0.04451 32.80697  10.193 1.07e-11 ***
+## gndr.c            0.35972    0.01827 29.19437  19.693  < 2e-16 ***
+## gggi.z.cm        -0.16007    0.04528 33.03278  -3.535 0.001231 ** 
+## gndr.c:gggi.z.cm  0.07756    0.01934 33.93223   4.010 0.000315 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -2009,7 +2009,7 @@ getFE(mod2_GGGI,round=3)
 ```
 ##                    Est.    SE     df      t     p     LL     UL
 ## (Intercept)       0.454 0.045 32.807 10.193 0.000  0.363  0.544
-## gndr.c            0.360 0.018 29.195 19.693 0.000  0.322  0.397
+## gndr.c            0.360 0.018 29.194 19.693 0.000  0.322  0.397
 ## gggi.z.cm        -0.160 0.045 33.033 -3.535 0.001 -0.252 -0.068
 ## gndr.c:gggi.z.cm  0.078 0.019 33.932  4.010 0.000  0.038  0.117
 ```
@@ -2034,17 +2034,17 @@ r2mlm(mod2_GGGI,bargraph = F)
 ## $Decompositions
 ##                       total
 ## fixed           0.048780368
-## slope variation 0.001824793
-## mean variation  0.059091651
-## sigma2          0.890303188
+## slope variation 0.001824803
+## mean variation  0.059091583
+## sigma2          0.890303247
 ## 
 ## $R2s
 ##           total
 ## f   0.048780368
-## v   0.001824793
-## m   0.059091651
-## fv  0.050605161
-## fvm 0.109696812
+## v   0.001824803
+## m   0.059091583
+## fv  0.050605170
+## fvm 0.109696753
 ```
 
 ### Deconstructed associations
@@ -2062,7 +2062,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 3.881737 secs
+## Time difference of 5.889006 secs
 ```
 
 ``` r
@@ -2114,7 +2114,7 @@ round(ddsc_mod2_GGGI$results,3)
 ## b_11                         -0.633 0.151 33.051  -4.179   0.000   -0.940   -0.325
 ## b_21                         -0.386 0.143 33.165  -2.696   0.011   -0.677   -0.095
 ## main_effect                  -0.160 0.045 33.033  -3.535   0.001   -0.252   -0.068
-## moderator_effect              0.360 0.018 29.195  19.693   0.000    0.322    0.397
+## moderator_effect              0.360 0.018 29.194  19.693   0.000    0.322    0.397
 ## interaction                   0.078 0.019 33.932   4.010   0.000    0.038    0.117
 ## q_b11_b21                    -0.339    NA     NA      NA      NA       NA       NA
 ## q_rxy1_rxy2                  -0.486    NA     NA      NA      NA       NA       NA
@@ -2460,10 +2460,10 @@ summary(mod2_GDI)
 ## 
 ## Fixed effects:
 ##                 Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)      0.43149    0.04466 32.91465   9.661 3.91e-11 ***
-## gndr.c           0.36853    0.02094 31.49110  17.597  < 2e-16 ***
-## gdi.z.cm         0.08695    0.04542 33.10364   1.915   0.0642 .  
-## gndr.c:gdi.z.cm  0.01273    0.02177 34.30683   0.585   0.5627    
+## (Intercept)      0.43149    0.04466 32.91464   9.661 3.91e-11 ***
+## gndr.c           0.36853    0.02094 31.49113  17.597  < 2e-16 ***
+## gdi.z.cm         0.08695    0.04542 33.10362   1.915   0.0642 .  
+## gndr.c:gdi.z.cm  0.01273    0.02177 34.30687   0.585   0.5627    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -2505,17 +2505,17 @@ r2mlm(mod2_GDI,bargraph = F)
 ```
 ## $Decompositions
 ##                       total
-## fixed           0.036043088
-## slope variation 0.002781442
-## mean variation  0.059667223
+## fixed           0.036043089
+## slope variation 0.002781438
+## mean variation  0.059667226
 ## sigma2          0.901508246
 ## 
 ## $R2s
 ##           total
-## f   0.036043088
-## v   0.002781442
-## m   0.059667223
-## fv  0.038824530
+## f   0.036043089
+## v   0.002781438
+## m   0.059667226
+## fv  0.038824527
 ## fvm 0.098491754
 ```
 
@@ -2534,7 +2534,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 4.106751 secs
+## Time difference of 5.780916 secs
 ```
 
 ``` r
@@ -2579,11 +2579,11 @@ round(ddsc_mod2_GDI$results,3)
 ```
 ##                            estimate    SE     df t.ratio p.value ci.lower ci.upper
 ## r_xy1y2                      -0.099 0.170 34.307  -0.585   0.563   -0.445    0.246
-## w_11                          0.081 0.050 33.124   1.609   0.117   -0.021    0.183
+## w_11                          0.081 0.050 33.123   1.609   0.117   -0.021    0.183
 ## w_21                          0.093 0.043 33.282   2.168   0.037    0.006    0.181
-## r_xy1                         0.303 0.189 33.124   1.609   0.117   -0.080    0.687
+## r_xy1                         0.303 0.189 33.123   1.609   0.117   -0.080    0.687
 ## r_xy2                         0.313 0.144 33.282   2.168   0.037    0.019    0.606
-## b_11                          0.286 0.178 33.124   1.609   0.117   -0.076    0.647
+## b_11                          0.286 0.178 33.123   1.609   0.117   -0.076    0.647
 ## b_21                          0.331 0.153 33.282   2.168   0.037    0.020    0.642
 ## main_effect                   0.087 0.045 33.104   1.915   0.064   -0.005    0.179
 ## moderator_effect              0.369 0.021 31.491  17.597   0.000    0.326    0.411
@@ -2594,9 +2594,9 @@ round(ddsc_mod2_GDI$results,3)
 ## interaction_vs_main          -0.074 0.057 33.238  -1.313   0.198   -0.189    0.041
 ## interaction_vs_main_bscale   -0.263 0.200 33.238  -1.313   0.198   -0.671    0.144
 ## interaction_vs_main_rscale   -0.299 0.220 33.218  -1.357   0.184   -0.747    0.149
-## dadas                        -0.161 0.100 33.124  -1.609   0.941   -0.365    0.043
-## dadas_bscale                 -0.572 0.355 33.124  -1.609   0.941   -1.295    0.151
-## dadas_rscale                 -0.607 0.377 33.124  -1.609   0.941   -1.374    0.161
+## dadas                        -0.161 0.100 33.123  -1.609   0.941   -0.365    0.043
+## dadas_bscale                 -0.572 0.355 33.123  -1.609   0.941   -1.295    0.151
+## dadas_rscale                 -0.607 0.377 33.123  -1.609   0.941   -1.374    0.161
 ## abs_diff                      0.013 0.022 34.307   0.585   0.281   -0.032    0.057
 ## abs_sum                       0.174 0.091 33.104   1.915   0.032   -0.011    0.359
 ## abs_diff_bscale               0.045 0.077 34.307   0.585   0.281   -0.112    0.202
@@ -2939,10 +2939,10 @@ summary(mod2_log_GDP)
 ## 
 ## Fixed effects:
 ##                     Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)          0.42882    0.04142 32.86765  10.353 7.06e-12 ***
-## gndr.c               0.36792    0.01710 32.04672  21.519  < 2e-16 ***
-## log_gdp.z.cm        -0.12926    0.04162 33.05324  -3.106 0.003882 ** 
-## gndr.c:log_gdp.z.cm  0.07189    0.01752 33.88851   4.103 0.000242 ***
+## (Intercept)          0.42882    0.04142 32.86745  10.353 7.06e-12 ***
+## gndr.c               0.36792    0.01710 32.04680  21.519  < 2e-16 ***
+## log_gdp.z.cm        -0.12926    0.04162 33.05303  -3.106 0.003882 ** 
+## gndr.c:log_gdp.z.cm  0.07189    0.01752 33.88859   4.103 0.000242 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -2959,7 +2959,7 @@ getFE(mod2_log_GDP,round=3)
 
 ```
 ##                       Est.    SE     df      t     p     LL     UL
-## (Intercept)          0.429 0.041 32.868 10.353 0.000  0.345  0.513
+## (Intercept)          0.429 0.041 32.867 10.353 0.000  0.345  0.513
 ## gndr.c               0.368 0.017 32.047 21.519 0.000  0.333  0.403
 ## log_gdp.z.cm        -0.129 0.042 33.053 -3.106 0.004 -0.214 -0.045
 ## gndr.c:log_gdp.z.cm  0.072 0.018 33.889  4.103 0.000  0.036  0.108
@@ -2984,18 +2984,18 @@ r2mlm(mod2_log_GDP,bargraph = F)
 ```
 ## $Decompositions
 ##                       total
-## fixed           0.045536953
-## slope variation 0.001695383
-## mean variation  0.050976363
-## sigma2          0.901791300
+## fixed           0.045536944
+## slope variation 0.001695379
+## mean variation  0.050976573
+## sigma2          0.901791104
 ## 
 ## $R2s
 ##           total
-## f   0.045536953
-## v   0.001695383
-## m   0.050976363
-## fv  0.047232337
-## fvm 0.098208700
+## f   0.045536944
+## v   0.001695379
+## m   0.050976573
+## fv  0.047232323
+## fvm 0.098208896
 ```
 
 ### Deconstructed associations
@@ -3021,7 +3021,7 @@ t2-t1
 ```
 
 ```
-## Time difference of 4.361959 secs
+## Time difference of 5.220146 secs
 ```
 
 ``` r
@@ -3066,11 +3066,11 @@ round(ddsc_mod2_log_GDP$results,3)
 ```
 ##                            estimate    SE     df t.ratio p.value ci.lower ci.upper
 ## r_xy1y2                      -0.562 0.137 33.889  -4.103   0.000   -0.840   -0.283
-## w_11                         -0.165 0.043 33.115  -3.864   0.000   -0.252   -0.078
+## w_11                         -0.165 0.043 33.116  -3.864   0.000   -0.252   -0.078
 ## w_21                         -0.093 0.042 33.016  -2.206   0.034   -0.179   -0.007
-## r_xy1                        -0.622 0.161 33.115  -3.864   0.000   -0.950   -0.295
+## r_xy1                        -0.622 0.161 33.116  -3.864   0.000   -0.950   -0.295
 ## r_xy2                        -0.313 0.142 33.016  -2.206   0.034   -0.601   -0.024
-## b_11                         -0.586 0.152 33.115  -3.864   0.000   -0.895   -0.277
+## b_11                         -0.586 0.152 33.116  -3.864   0.000   -0.895   -0.277
 ## b_21                         -0.331 0.150 33.016  -2.206   0.034   -0.636   -0.026
 ## main_effect                  -0.129 0.042 33.053  -3.106   0.004   -0.214   -0.045
 ## moderator_effect              0.368 0.017 32.047  21.519   0.000    0.333    0.403
@@ -3078,9 +3078,9 @@ round(ddsc_mod2_log_GDP$results,3)
 ## q_b11_b21                    -0.328    NA     NA      NA      NA       NA       NA
 ## q_rxy1_rxy2                  -0.405    NA     NA      NA      NA       NA       NA
 ## cross_over_point             -5.118    NA     NA      NA      NA       NA       NA
-## interaction_vs_main          -0.057 0.045 32.816  -1.282   0.209   -0.148    0.034
-## interaction_vs_main_bscale   -0.203 0.159 32.816  -1.282   0.209   -0.526    0.119
-## interaction_vs_main_rscale   -0.158 0.143 32.757  -1.108   0.276   -0.449    0.132
+## interaction_vs_main          -0.057 0.045 32.819  -1.282   0.209   -0.148    0.034
+## interaction_vs_main_bscale   -0.203 0.159 32.819  -1.282   0.209   -0.526    0.119
+## interaction_vs_main_rscale   -0.158 0.143 32.761  -1.108   0.276   -0.449    0.132
 ## dadas                        -0.187 0.085 33.016  -2.206   0.983   -0.359   -0.014
 ## dadas_bscale                 -0.662 0.300 33.016  -2.206   0.983   -1.273   -0.051
 ## dadas_rscale                 -0.626 0.284 33.016  -2.206   0.983   -1.203   -0.049
@@ -3088,8 +3088,8 @@ round(ddsc_mod2_log_GDP$results,3)
 ## abs_sum                       0.259 0.083 33.053   3.106   0.002    0.089    0.428
 ## abs_diff_bscale               0.255 0.062 33.889   4.103   0.000    0.129    0.381
 ## abs_sum_bscale                0.917 0.295 33.053   3.106   0.002    0.316    1.518
-## abs_diff_rscale               0.309 0.065 35.055   4.748   0.000    0.177    0.441
-## abs_sum_rscale                0.935 0.296 33.054   3.154   0.002    0.332    1.538
+## abs_diff_rscale               0.309 0.065 35.057   4.748   0.000    0.177    0.441
+## abs_sum_rscale                0.935 0.296 33.053   3.154   0.002    0.332    1.538
 ```
 
 ``` r
@@ -3460,18 +3460,18 @@ r2mlm(mod3,bargraph = F)
 ```
 ## $Decompositions
 ##                       total
-## fixed           0.036330941
-## slope variation 0.002813456
-## mean variation  0.066226634
-## sigma2          0.894628969
+## fixed           0.036330952
+## slope variation 0.002813451
+## mean variation  0.066226374
+## sigma2          0.894629223
 ## 
 ## $R2s
 ##           total
-## f   0.036330941
-## v   0.002813456
-## m   0.066226634
-## fv  0.039144397
-## fvm 0.105371031
+## f   0.036330952
+## v   0.002813451
+## m   0.066226374
+## fv  0.039144403
+## fvm 0.105370777
 ```
 
 ``` r
@@ -3516,7 +3516,7 @@ summary(mod4)
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev. Corr       
-##  cntry    (Intercept) 0.084348 0.29043             
+##  cntry    (Intercept) 0.084346 0.29042             
 ##           gndr.c      0.012948 0.11379  -0.36      
 ##           essround.c  0.002518 0.05018   0.47 -0.60
 ##  Residual             0.973759 0.98679             
@@ -3524,9 +3524,9 @@ summary(mod4)
 ## 
 ## Fixed effects:
 ##              Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)  0.433018   0.050939 32.669373   8.501 8.69e-10 ***
-## gndr.c       0.369860   0.021402 31.192877  17.281  < 2e-16 ***
-## essround.c  -0.021070   0.008991 26.006355  -2.344    0.027 *  
+## (Intercept)  0.433018   0.050938 32.670432   8.501 8.69e-10 ***
+## gndr.c       0.369860   0.021402 31.193605  17.282  < 2e-16 ***
+## essround.c  -0.021070   0.008991 26.006744  -2.344    0.027 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3542,9 +3542,9 @@ getFE(mod4,round=3)
 
 ```
 ##               Est.    SE     df      t     p     LL     UL
-## (Intercept)  0.433 0.051 32.669  8.501 0.000  0.329  0.537
-## gndr.c       0.370 0.021 31.193 17.281 0.000  0.326  0.413
-## essround.c  -0.021 0.009 26.006 -2.344 0.027 -0.040 -0.003
+## (Intercept)  0.433 0.051 32.670  8.501 0.000  0.329  0.537
+## gndr.c       0.370 0.021 31.194 17.282 0.000  0.326  0.413
+## essround.c  -0.021 0.009 26.007 -2.344 0.027 -0.040 -0.003
 ```
 
 ``` r
@@ -3569,18 +3569,18 @@ r2mlm(mod4,bargraph = F)
 ```
 ## $Decompositions
 ##                      total
-## fixed           0.03348391
-## slope variation 0.01937448
-## mean variation  0.07327551
-## sigma2          0.87386609
+## fixed           0.03348400
+## slope variation 0.01937420
+## mean variation  0.07327397
+## sigma2          0.87386783
 ## 
 ## $R2s
 ##          total
-## f   0.03348391
-## v   0.01937448
-## m   0.07327551
-## fv  0.05285839
-## fvm 0.12613391
+## f   0.03348400
+## v   0.01937420
+## m   0.07327397
+## fv  0.05285820
+## fvm 0.12613217
 ```
 
 ``` r
@@ -3628,7 +3628,7 @@ summary(mod5)
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev. Corr       
-##  cntry    (Intercept) 0.084390 0.29050             
+##  cntry    (Intercept) 0.084392 0.29050             
 ##           gndr.c      0.013460 0.11602  -0.37      
 ##           essround.c  0.002521 0.05021   0.47 -0.60
 ##  Residual             0.973481 0.98665             
@@ -3636,7 +3636,7 @@ summary(mod5)
 ## 
 ## Fixed effects:
 ##                     Estimate Std. Error         df t value Pr(>|t|)    
-## (Intercept)        4.337e-01  5.095e-02  3.268e+01   8.513 8.40e-10 ***
+## (Intercept)        4.337e-01  5.095e-02  3.268e+01   8.512 8.41e-10 ***
 ## gndr.c             3.689e-01  2.177e-02  3.147e+01  16.948  < 2e-16 ***
 ## essround.c        -2.114e-02  8.996e-03  2.606e+01  -2.350   0.0266 *  
 ## gndr.c:essround.c -1.143e-02  2.783e-03  3.048e+04  -4.105 4.05e-05 ***
@@ -3656,10 +3656,10 @@ getFE(mod5,round=3)
 
 ```
 ##                     Est.    SE        df      t     p     LL     UL
-## (Intercept)        0.434 0.051    32.679  8.513 0.000  0.330  0.537
-## gndr.c             0.369 0.022    31.467 16.948 0.000  0.325  0.413
-## essround.c        -0.021 0.009    26.064 -2.350 0.027 -0.040 -0.003
-## gndr.c:essround.c -0.011 0.003 30481.891 -4.105 0.000 -0.017 -0.006
+## (Intercept)        0.434 0.051    32.678  8.512 0.000  0.330  0.537
+## gndr.c             0.369 0.022    31.466 16.948 0.000  0.325  0.413
+## essround.c        -0.021 0.009    26.063 -2.350 0.027 -0.040 -0.003
+## gndr.c:essround.c -0.011 0.003 30481.885 -4.105 0.000 -0.017 -0.006
 ```
 
 ``` r
@@ -3684,18 +3684,18 @@ r2mlm(mod5,bargraph = F)
 ```
 ## $Decompositions
 ##                      total
-## fixed           0.03394044
-## slope variation 0.01950248
-## mean variation  0.07326518
-## sigma2          0.87329190
+## fixed           0.03394035
+## slope variation 0.01950294
+## mean variation  0.07326699
+## sigma2          0.87328972
 ## 
 ## $R2s
 ##          total
-## f   0.03394044
-## v   0.01950248
-## m   0.07326518
-## fv  0.05344292
-## fvm 0.12670810
+## f   0.03394035
+## v   0.01950294
+## m   0.07326699
+## fv  0.05344328
+## fvm 0.12671028
 ```
 
 ``` r
@@ -3742,8 +3742,8 @@ summary(mod6)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0845008 0.29069                   
-##           gndr.c            0.0139007 0.11790  -0.37            
+##  cntry    (Intercept)       0.0844957 0.29068                   
+##           gndr.c            0.0139004 0.11790  -0.37            
 ##           essround.c        0.0025323 0.05032   0.47 -0.61      
 ##           gndr.c:essround.c 0.0001655 0.01286  -0.45  0.06 -0.34
 ##  Residual                   0.9731515 0.98648                   
@@ -3751,10 +3751,10 @@ summary(mod6)
 ## 
 ## Fixed effects:
 ##                    Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)        0.433942   0.050985 32.673613   8.511 8.44e-10 ***
-## gndr.c             0.369217   0.022171 30.097544  16.653  < 2e-16 ***
-## essround.c        -0.021149   0.009015 25.999947  -2.346  0.02688 *  
-## gndr.c:essround.c -0.011538   0.003696 27.132972  -3.122  0.00424 ** 
+## (Intercept)        0.433942   0.050984 32.676507   8.511 8.43e-10 ***
+## gndr.c             0.369217   0.022171 30.098539  16.653  < 2e-16 ***
+## essround.c        -0.021149   0.009015 26.000738  -2.346  0.02687 *  
+## gndr.c:essround.c -0.011538   0.003696 27.133193  -3.122  0.00424 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3771,9 +3771,9 @@ getFE(mod6,round=3)
 
 ```
 ##                     Est.    SE     df      t     p     LL     UL
-## (Intercept)        0.434 0.051 32.674  8.511 0.000  0.330  0.538
-## gndr.c             0.369 0.022 30.098 16.653 0.000  0.324  0.414
-## essround.c        -0.021 0.009 26.000 -2.346 0.027 -0.040 -0.003
+## (Intercept)        0.434 0.051 32.677  8.511 0.000  0.330  0.538
+## gndr.c             0.369 0.022 30.099 16.653 0.000  0.324  0.414
+## essround.c        -0.021 0.009 26.001 -2.346 0.027 -0.040 -0.003
 ## gndr.c:essround.c -0.012 0.004 27.133 -3.122 0.004 -0.019 -0.004
 ```
 
@@ -3803,18 +3803,18 @@ r2mlm(mod6,bargraph = F)
 ```
 ## $Decompositions
 ##                      total
-## fixed           0.03399164
-## slope variation 0.01997811
-## mean variation  0.07330109
-## sigma2          0.87272915
+## fixed           0.03399181
+## slope variation 0.01997774
+## mean variation  0.07329707
+## sigma2          0.87273338
 ## 
 ## $R2s
 ##          total
-## f   0.03399164
-## v   0.01997811
-## m   0.07330109
-## fv  0.05396975
-## fvm 0.12727085
+## f   0.03399181
+## v   0.01997774
+## m   0.07329707
+## fv  0.05396955
+## fvm 0.12726662
 ```
 
 ``` r
@@ -3857,7 +3857,7 @@ change_mod6
 ## 
 ## gndr.c =  0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##         4.5  0.497 0.0711 29.5  0.35210    0.643   6.995  <.0001
+##         4.5  0.497 0.0711 29.5  0.35210    0.643   6.996  <.0001
 ##        -4.5  0.740 0.0527 26.6  0.63137    0.848  14.023  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
@@ -3875,7 +3875,7 @@ pairs(change_mod6,adjust="none",infer=c(T,T))
 ## 
 ## gndr.c =  0.5:
 ##  contrast                         estimate     SE   df lower.CL upper.CL t.ratio p.value
-##  essround.c4.5 - (essround.c-4.5)   -0.242 0.0794 25.6   -0.406  -0.0789  -3.050  0.0053
+##  essround.c4.5 - (essround.c-4.5)   -0.242 0.0794 25.6   -0.406  -0.0789  -3.051  0.0053
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -3895,7 +3895,7 @@ change_in_diff_mod6
 ```
 ##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
 ##    -0.5        4.5  0.180 0.0869 29.6  0.00249    0.358   2.072  0.0471
-##     0.5        4.5  0.497 0.0711 29.5  0.35210    0.643   6.995  <.0001
+##     0.5        4.5  0.497 0.0711 29.5  0.35210    0.643   6.996  <.0001
 ##    -0.5       -4.5  0.319 0.0485 24.8  0.21860    0.418   6.568  <.0001
 ##     0.5       -4.5  0.740 0.0527 26.6  0.63137    0.848  14.023  <.0001
 ## 
@@ -3910,10 +3910,10 @@ pairs(change_in_diff_mod6,adjust="none",infer=c(T,T))
 ```
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
 ##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5       -0.317 0.0281 22.7  -0.3755  -0.2591 -11.287
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   -0.138 0.0861 24.9  -0.3158   0.0389  -1.608
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   -0.138 0.0861 24.9  -0.3157   0.0389  -1.608
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)    -0.560 0.0953 27.1  -0.7550  -0.3641  -5.874
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)       0.179 0.0712 24.8   0.0321   0.3256   2.511
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       -0.242 0.0794 25.6  -0.4056  -0.0789  -3.050
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       -0.242 0.0794 25.6  -0.4056  -0.0789  -3.051
 ##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.421 0.0273 31.4  -0.4768  -0.3655 -15.417
 ##  p.value
 ##   <.0001
@@ -4154,7 +4154,7 @@ range(pred_cntry_dat$FM.z_mean)
 ```
 
 ```
-## [1] -0.4766659  1.2976351
+## [1] -0.4766656  1.2976353
 ```
 
 ``` r
@@ -4206,7 +4206,7 @@ pred_cntry_dat$obs_mean_wt_UL<-pred_cntry_dat$obs_mean_wt+qnorm(.975)*pred_cntry
 #my_colors <- met.brewer("Cassatt2")[c(8, 3)]
 my_colors <- met.brewer("Archambault")[c(6,2)]
 
-pdf("../results/country_specific_time_trends.pdf", width = 8, height = 6)
+pdf("../results/country_specific_time_trends_youth.pdf", width = 8, height = 6)
 
 for (ctry in countries) {
   print(
@@ -4218,65 +4218,14 @@ for (ctry in countries) {
       geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
       scale_color_manual(values = my_colors) +
       geom_flag(aes(country=tolower(ctry)))+
-      scale_y_continuous(limits = c(-1.1, 1.1)) +
+      scale_y_continuous(limits = c(-1.1, 1.6)) +
       scale_x_continuous(limits = c(2001, 2021), breaks = seq(2002, 2020, 2)) +
       ggtitle(paste("Country:", ctry))+
     ylab("Mean-level of value male-typicality")+
       theme(legend.title=element_blank())
   )
 }
-```
 
-```
-## Warning: Removed 8 rows containing non-finite outside the scale range (`stat_smooth()`).
-```
-
-```
-## Warning: Removed 8 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 7 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 8 rows containing missing values or values outside the scale range (`geom_flag()`).
-```
-
-```
-## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 1 row containing non-finite outside the scale range (`stat_smooth()`).
-```
-
-```
-## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_point()`).
-## Removed 1 row containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_flag()`).
-```
-
-```
-## Warning: Removed 6 rows containing non-finite outside the scale range (`stat_smooth()`).
-```
-
-```
-## Warning: Removed 6 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 5 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 6 rows containing missing values or values outside the scale range (`geom_flag()`).
-```
-
-``` r
 dev.off()
 ```
 
@@ -4313,7 +4262,7 @@ facet_plot<-
   geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
   scale_color_manual(values = my_colors) +
   #geom_flag(aes(country=tolower(ctry)))+
-  scale_y_continuous(limits = c(-1.1, 1.1)) +
+  scale_y_continuous(limits = c(-1.1, 1.6)) +
   scale_x_continuous(limits = c(2001, 2021), breaks = seq(2002, 2020, 2)) +
   #ggtitle(paste("Country:", ctry))+
   ylab("Mean-level of value male-typicality")+
@@ -4327,22 +4276,6 @@ facet_plot<-
 facet_plot
 ```
 
-```
-## Warning: Removed 15 rows containing non-finite outside the scale range (`stat_smooth()`).
-```
-
-```
-## Warning: Removed 15 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 14 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 15 rows containing missing values or values outside the scale range (`geom_flag()`).
-```
-
 ![](Analysis_youth_files/figure-html/unnamed-chunk-40-1.png)<!-- -->
 
 ``` r
@@ -4351,25 +4284,6 @@ png(filename =
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 600)
 facet_plot
-```
-
-```
-## Warning: Removed 15 rows containing non-finite outside the scale range (`stat_smooth()`).
-```
-
-```
-## Warning: Removed 15 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 14 rows containing missing values or values outside the scale range (`geom_point()`).
-```
-
-```
-## Warning: Removed 15 rows containing missing values or values outside the scale range (`geom_flag()`).
-```
-
-``` r
 dev.off()
 ```
 
@@ -4389,7 +4303,7 @@ getVC(mod6,round = 10)[3,"vcov"]/
 ```
 
 ```
-## [1] 15.30423
+## [1] 15.30413
 ```
 
 Country-specific coefficients for time effect
@@ -4602,22 +4516,22 @@ summary(mod6_GEI)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0840876 0.28998                   
-##           gndr.c            0.0066515 0.08156   0.14            
-##           essround.c        0.0015988 0.03998   0.19 -0.23      
+##  cntry    (Intercept)       0.0840866 0.28998                   
+##           gndr.c            0.0066514 0.08156   0.14            
+##           essround.c        0.0015987 0.03998   0.19 -0.23      
 ##           gndr.c:essround.c 0.0001819 0.01349  -0.44 -0.19 -0.35
 ##  Residual                   0.9613844 0.98050                   
 ## Number of obs: 61576, groups:  cntry, 32
 ## 
 ## Fixed effects:
 ##                             Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                 0.422983   0.051669 31.679510   8.186 2.56e-09 ***
-## gndr.c                      0.372023   0.016695 30.220606  22.284  < 2e-16 ***
-## essround.c                 -0.023276   0.007399 22.613065  -3.146  0.00459 ** 
-## gndr.c:essround.c          -0.012316   0.003860 26.373022  -3.191  0.00364 ** 
-## gndr.c:gei.z.cm             0.095852   0.017583 36.511061   5.452 3.61e-06 ***
-## essround.c:gei.z.cm        -0.024788   0.007684 24.723309  -3.226  0.00352 ** 
-## gndr.c:essround.c:gei.z.cm  0.001640   0.004374 32.940234   0.375  0.71008    
+## (Intercept)                 0.422983   0.051668 31.680030   8.187 2.56e-09 ***
+## gndr.c                      0.372023   0.016694 30.221037  22.284  < 2e-16 ***
+## essround.c                 -0.023276   0.007398 22.613470  -3.146  0.00459 ** 
+## gndr.c:essround.c          -0.012316   0.003860 26.372993  -3.191  0.00364 ** 
+## gndr.c:gei.z.cm             0.095853   0.017582 36.512385   5.452 3.61e-06 ***
+## essround.c:gei.z.cm        -0.024788   0.007684 24.723788  -3.226  0.00352 ** 
+## gndr.c:essround.c:gei.z.cm  0.001640   0.004374 32.940389   0.375  0.71010    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -4643,7 +4557,7 @@ getFE(mod6_GEI,round=2,p.round = 5)
 ## gndr.c:essround.c          -0.01 0.00 26.37 -3.19 0.00364 -0.02  0.00
 ## gndr.c:gei.z.cm             0.10 0.02 36.51  5.45 0.00000  0.06  0.13
 ## essround.c:gei.z.cm        -0.02 0.01 24.72 -3.23 0.00352 -0.04 -0.01
-## gndr.c:essround.c:gei.z.cm  0.00 0.00 32.94  0.37 0.71008 -0.01  0.01
+## gndr.c:essround.c:gei.z.cm  0.00 0.00 32.94  0.37 0.71010 -0.01  0.01
 ```
 
 ``` r
@@ -4672,7 +4586,7 @@ getVC(mod6_GEI)
 ```
 
 ```
-## [1] 36.8662
+## [1] 36.86588
 ```
 
 ``` r
@@ -4682,7 +4596,7 @@ getVC(mod6_GEI)
 ```
 
 ```
-## [1] -9.902397
+## [1] -9.90529
 ```
 
 ``` r
@@ -4734,7 +4648,7 @@ change_mod6_GEI
 ## gei.z.cm =  1:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
 ##         4.5  0.207 0.0734 32.9   0.0573    0.356   2.816  0.0082
-##        -4.5  0.639 0.0656 27.4   0.5047    0.774   9.740  <.0001
+##        -4.5  0.639 0.0656 27.4   0.5047    0.774   9.741  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -4755,7 +4669,7 @@ pairs(change_mod6_GEI,adjust="none",infer=c(T,T))
 ## 
 ## gei.z.cm =  1:
 ##  contrast                         estimate     SE   df lower.CL upper.CL t.ratio p.value
-##  essround.c4.5 - (essround.c-4.5)  -0.4326 0.0934 22.1   -0.626  -0.2390  -4.634  0.0001
+##  essround.c4.5 - (essround.c-4.5)  -0.4326 0.0934 22.1   -0.626  -0.2391  -4.634  0.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -4792,7 +4706,7 @@ change_in_diff_mod6_GEI
 ##  gndr.c essround.c   emmean     SE   df lower.CL upper.CL t.ratio p.value
 ##    -0.5        4.5 -0.00322 0.0791 32.7  -0.1641    0.158  -0.041  0.9677
 ##     0.5        4.5  0.41661 0.0711 32.9   0.2719    0.561   5.860  <.0001
-##    -0.5       -4.5  0.38131 0.0650 24.1   0.2472    0.515   5.865  <.0001
+##    -0.5       -4.5  0.38131 0.0650 24.1   0.2472    0.515   5.866  <.0001
 ##     0.5       -4.5  0.89723 0.0705 27.8   0.7529    1.042  12.734  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
@@ -4806,12 +4720,12 @@ pairs(change_in_diff_mod6_GEI,adjust="none",infer=c(T,T))
 ```
 ## gei.z.cm = -1:
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.2134 0.0393 32.3  -0.2935 -0.13325  -5.422
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0764 0.1070 25.2  -0.1440  0.29680   0.714
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.2626 0.1060 26.6  -0.4812 -0.04390  -2.465
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.2898 0.0966 26.8   0.0915  0.48809   2.999
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0492 0.0982 27.1  -0.2506  0.15220  -0.501
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.3390 0.0368 40.0  -0.4133 -0.26460  -9.212
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.2134 0.0393 32.3  -0.2935  -0.1332  -5.422
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)   0.0764 0.1070 25.2  -0.1440   0.2968   0.714
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.2626 0.1060 26.6  -0.4812  -0.0439  -2.466
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.2898 0.0966 26.8   0.0915   0.4881   2.999
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.0492 0.0982 27.1  -0.2506   0.1522  -0.501
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.3390 0.0368 40.0  -0.4133  -0.2646  -9.212
 ##  p.value
 ##   <.0001
 ##   0.4819
@@ -4822,12 +4736,12 @@ pairs(change_in_diff_mod6_GEI,adjust="none",infer=c(T,T))
 ## 
 ## gei.z.cm =  0:
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3166 0.0228 25.6  -0.3636 -0.26964 -13.869
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.1541 0.0722 21.3  -0.3041 -0.00399  -2.133
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.5815 0.0718 23.0  -0.7300 -0.43299  -8.099
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.1625 0.0653 22.6   0.0272  0.29785   2.487
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.2649 0.0652 22.6  -0.4000 -0.12984  -4.062
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4274 0.0253 29.4  -0.4791 -0.37575 -16.900
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3166 0.0228 25.6  -0.3636  -0.2696 -13.870
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.1541 0.0722 21.3  -0.3041  -0.0040  -2.133
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.5815 0.0718 23.0  -0.7300  -0.4330  -8.099
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.1625 0.0653 22.6   0.0272   0.2978   2.487
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.2649 0.0652 22.6  -0.4000  -0.1298  -4.062
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.4274 0.0253 29.4  -0.4791  -0.3758 -16.900
 ##  p.value
 ##   <.0001
 ##   0.0447
@@ -4838,12 +4752,12 @@ pairs(change_in_diff_mod6_GEI,adjust="none",infer=c(T,T))
 ## 
 ## gei.z.cm =  1:
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.4198 0.0325 24.9  -0.4867 -0.35298 -12.936
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.3845 0.1010 20.6  -0.5941 -0.17500  -3.821
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.9005 0.1010 22.5  -1.1099 -0.69101  -8.904
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.0353 0.0912 22.2  -0.1537  0.22428   0.387
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.4806 0.0916 21.9  -0.6707 -0.29053  -5.246
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.5159 0.0339 30.7  -0.5852 -0.44666 -15.199
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.4198 0.0325 24.9  -0.4867  -0.3530 -12.936
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.3845 0.1010 20.6  -0.5941  -0.1750  -3.821
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.9005 0.1010 22.5  -1.1099  -0.6910  -8.904
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.0353 0.0912 22.2  -0.1537   0.2243   0.387
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)      -0.4806 0.0916 21.9  -0.6707  -0.2905  -5.246
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)  -0.5159 0.0339 30.7  -0.5852  -0.4467 -15.199
 ##  p.value
 ##   <.0001
 ##   0.0010
@@ -4877,7 +4791,7 @@ diff_mod6_GEI
 ## 
 ## gei.z.cm =  0:
 ##  contrast   estimate     SE   df lower.CL upper.CL t.ratio p.value
-##  diff_ESS10    0.317 0.0228 25.6    0.270    0.364  13.869  <.0001
+##  diff_ESS10    0.317 0.0228 25.6    0.270    0.364  13.870  <.0001
 ##  diff_ESS1     0.427 0.0253 29.4    0.376    0.479  16.900  <.0001
 ## 
 ## gei.z.cm =  1:
@@ -4897,7 +4811,7 @@ pairs(diff_mod6_GEI,infer=c(T,T))
 ```
 ## gei.z.cm = -1:
 ##  contrast               estimate     SE   df lower.CL  upper.CL t.ratio p.value
-##  diff_ESS10 - diff_ESS1  -0.1256 0.0576 37.2   -0.242 -0.008842  -2.179  0.0357
+##  diff_ESS10 - diff_ESS1  -0.1256 0.0576 37.2   -0.242 -0.008840  -2.179  0.0357
 ## 
 ## gei.z.cm =  0:
 ##  contrast               estimate     SE   df lower.CL  upper.CL t.ratio p.value
@@ -4905,7 +4819,7 @@ pairs(diff_mod6_GEI,infer=c(T,T))
 ## 
 ## gei.z.cm =  1:
 ##  contrast               estimate     SE   df lower.CL  upper.CL t.ratio p.value
-##  diff_ESS10 - diff_ESS1  -0.0961 0.0468 25.2   -0.192  0.000285  -2.053  0.0506
+##  diff_ESS10 - diff_ESS1  -0.0961 0.0468 25.2   -0.192  0.000283  -2.053  0.0506
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -4943,8 +4857,8 @@ summary(mod6_GGGI)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0858329 0.29297                   
-##           gndr.c            0.0079734 0.08929  -0.16            
+##  cntry    (Intercept)       0.0858339 0.29297                   
+##           gndr.c            0.0079733 0.08929  -0.16            
 ##           essround.c        0.0011199 0.03347   0.41 -0.31      
 ##           gndr.c:essround.c 0.0003116 0.01765  -0.76  0.39 -0.57
 ##  Residual                   0.9618149 0.98072                   
@@ -4952,13 +4866,13 @@ summary(mod6_GGGI)
 ## 
 ## Fixed effects:
 ##                              Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                  0.459800   0.051477 32.556127   8.932 2.86e-10 ***
-## gndr.c                       0.363310   0.018342 29.341455  19.808  < 2e-16 ***
-## essround.c                  -0.025700   0.006577 24.175238  -3.907 0.000659 ***
-## gndr.c:essround.c           -0.007816   0.005379 25.704440  -1.453 0.158302    
-## gndr.c:gggi.z.cm             0.074092   0.019314 34.764050   3.836 0.000504 ***
-## essround.c:gggi.z.cm        -0.018275   0.006907 27.756113  -2.646 0.013264 *  
-## gndr.c:essround.c:gggi.z.cm -0.007892   0.005505 34.609245  -1.434 0.160674    
+## (Intercept)                  0.459800   0.051478 32.555608   8.932 2.86e-10 ***
+## gndr.c                       0.363310   0.018341 29.342007  19.808  < 2e-16 ***
+## essround.c                  -0.025700   0.006578 24.175205  -3.907 0.000659 ***
+## gndr.c:essround.c           -0.007816   0.005379 25.704393  -1.453 0.158302    
+## gndr.c:gggi.z.cm             0.074092   0.019314 34.764778   3.836 0.000504 ***
+## essround.c:gggi.z.cm        -0.018275   0.006907 27.756029  -2.646 0.013264 *  
+## gndr.c:essround.c:gggi.z.cm -0.007892   0.005505 34.609350  -1.434 0.160674    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -5013,7 +4927,7 @@ getVC(mod6_GGGI)
 ```
 
 ```
-## [1] 55.77553
+## [1] 55.77435
 ```
 
 ``` r
@@ -5023,7 +4937,7 @@ getVC(mod6_GGGI)
 ```
 
 ```
-## [1] -88.31373
+## [1] -88.31564
 ```
 
 ``` r
@@ -5127,7 +5041,7 @@ change_in_diff_mod6_GGGI
 ##    -0.5        4.5 0.1801 0.0768 26.1   0.0222    0.338   2.344  0.0269
 ##     0.5        4.5 0.5082 0.0620 26.0   0.3807    0.636   8.192  <.0001
 ##    -0.5       -4.5 0.3762 0.0481 22.8   0.2767    0.476   7.824  <.0001
-##     0.5       -4.5 0.7747 0.0544 24.7   0.6625    0.887  14.228  <.0001
+##     0.5       -4.5 0.7747 0.0545 24.7   0.6625    0.887  14.228  <.0001
 ## 
 ## gggi.z.cm =  1:
 ##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
@@ -5179,7 +5093,7 @@ pairs(change_in_diff_mod6_GGGI,adjust="none",infer=c(T,T))
 ## 
 ## gggi.z.cm =  1:
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3667 0.0435 29.2  -0.4557  -0.2777  -8.424
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3667 0.0435 29.2  -0.4557  -0.2777  -8.425
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.3251 0.0960 28.2  -0.5217  -0.1285  -3.386
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.8332 0.0919 29.0  -1.0211  -0.6453  -9.069
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.0416 0.0805 26.8  -0.1236   0.2069   0.517
@@ -5223,7 +5137,7 @@ diff_mod6_GGGI
 ## 
 ## gggi.z.cm =  1:
 ##  contrast   estimate     SE   df lower.CL upper.CL t.ratio p.value
-##  diff_ESS10    0.367 0.0435 29.2    0.278    0.456   8.424  <.0001
+##  diff_ESS10    0.367 0.0435 29.2    0.278    0.456   8.425  <.0001
 ##  diff_ESS1     0.508 0.0412 31.1    0.424    0.592  12.320  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
@@ -5283,22 +5197,22 @@ summary(mod6_GDI)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0861413 0.29350                   
+##  cntry    (Intercept)       0.0861424 0.29350                   
 ##           gndr.c            0.0140651 0.11860  -0.45            
-##           essround.c        0.0022845 0.04780   0.64 -0.63      
+##           essround.c        0.0022846 0.04780   0.64 -0.63      
 ##           gndr.c:essround.c 0.0001597 0.01264  -0.57  0.11 -0.38
 ##  Residual                   0.9731183 0.98647                   
 ## Number of obs: 63047, groups:  cntry, 33
 ## 
 ## Fixed effects:
 ##                             Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                 0.435674   0.051424 32.596306   8.472 9.56e-10 ***
-## gndr.c                      0.368193   0.022278 30.455535  16.527  < 2e-16 ***
-## essround.c                 -0.020731   0.008570 28.615098  -2.419 0.022156 *  
-## gndr.c:essround.c          -0.011502   0.003662 26.914066  -3.141 0.004065 ** 
-## gndr.c:gdi.z.cm             0.035256   0.021299 35.276477   1.655 0.106740    
-## essround.c:gdi.z.cm        -0.027909   0.007118 31.772357  -3.921 0.000441 ***
-## gndr.c:essround.c:gdi.z.cm  0.006173   0.004382 38.554966   1.409 0.166914    
+## (Intercept)                 0.435674   0.051424 32.595720   8.472 9.56e-10 ***
+## gndr.c                      0.368193   0.022278 30.455410  16.527  < 2e-16 ***
+## essround.c                 -0.020731   0.008570 28.614736  -2.419 0.022157 *  
+## gndr.c:essround.c          -0.011502   0.003662 26.914293  -3.141 0.004065 ** 
+## gndr.c:gdi.z.cm             0.035255   0.021299 35.276579   1.655 0.106742    
+## essround.c:gdi.z.cm        -0.027909   0.007118 31.772423  -3.921 0.000441 ***
+## gndr.c:essround.c:gdi.z.cm  0.006173   0.004382 38.554922   1.409 0.166916    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -5320,11 +5234,11 @@ getFE(mod6_GDI,round=2,p.round = 5)
 ##                             Est.   SE    df     t       p    LL    UL
 ## (Intercept)                 0.44 0.05 32.60  8.47 0.00000  0.33  0.54
 ## gndr.c                      0.37 0.02 30.46 16.53 0.00000  0.32  0.41
-## essround.c                 -0.02 0.01 28.62 -2.42 0.02216 -0.04  0.00
+## essround.c                 -0.02 0.01 28.61 -2.42 0.02216 -0.04  0.00
 ## gndr.c:essround.c          -0.01 0.00 26.91 -3.14 0.00407 -0.02  0.00
 ## gndr.c:gdi.z.cm             0.04 0.02 35.28  1.66 0.10674 -0.01  0.08
 ## essround.c:gdi.z.cm        -0.03 0.01 31.77 -3.92 0.00044 -0.04 -0.01
-## gndr.c:essround.c:gdi.z.cm  0.01 0.00 38.55  1.41 0.16691  0.00  0.02
+## gndr.c:essround.c:gdi.z.cm  0.01 0.00 38.55  1.41 0.16692  0.00  0.02
 ```
 
 ``` r
@@ -5353,7 +5267,7 @@ getVC(mod6_GDI)
 ```
 
 ```
-## [1] 9.785392
+## [1] 9.782262
 ```
 
 ``` r
@@ -5363,7 +5277,7 @@ getVC(mod6_GDI)
 ```
 
 ```
-## [1] 3.49522
+## [1] 3.494918
 ```
 
 ``` r
@@ -5456,25 +5370,25 @@ change_in_diff_mod6_GDI
 
 ```
 ## gdi.z.cm = -1:
-##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##    -0.5        4.5 0.3413 0.0988 39.3  0.14147    0.541   3.454  0.0013
-##     0.5        4.5 0.5947 0.0799 38.4  0.43295    0.756   7.441  <.0001
-##    -0.5       -4.5 0.1971 0.0521 33.0  0.09106    0.303   3.781  0.0006
-##     0.5       -4.5 0.6096 0.0599 33.9  0.48779    0.731  10.172  <.0001
+##  gndr.c essround.c emmean     SE   df  lower.CL upper.CL t.ratio p.value
+##    -0.5        4.5 0.3413 0.0988 39.3  0.141469    0.541   3.454  0.0013
+##     0.5        4.5 0.5947 0.0799 38.4  0.432948    0.756   7.441  <.0001
+##    -0.5       -4.5 0.1971 0.0521 33.0  0.091060    0.303   3.781  0.0006
+##     0.5       -4.5 0.6096 0.0599 33.9  0.487793    0.731  10.172  <.0001
 ## 
 ## gdi.z.cm =  0:
-##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##    -0.5        4.5 0.1842 0.0904 30.3 -0.00032    0.369   2.038  0.0504
-##     0.5        4.5 0.5006 0.0734 29.9  0.35075    0.650   6.824  <.0001
-##    -0.5       -4.5 0.3190 0.0413 26.4  0.23417    0.404   7.725  <.0001
-##     0.5       -4.5 0.7389 0.0452 28.0  0.64641    0.831  16.359  <.0001
+##  gndr.c essround.c emmean     SE   df  lower.CL upper.CL t.ratio p.value
+##    -0.5        4.5 0.1842 0.0904 30.3 -0.000322    0.369   2.038  0.0504
+##     0.5        4.5 0.5006 0.0734 29.9  0.350753    0.650   6.824  <.0001
+##    -0.5       -4.5 0.3190 0.0413 26.4  0.234171    0.404   7.725  <.0001
+##     0.5       -4.5 0.7389 0.0452 28.0  0.646413    0.831  16.359  <.0001
 ## 
 ## gdi.z.cm =  1:
-##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##    -0.5        4.5 0.0271 0.0982 38.3 -0.17160    0.226   0.276  0.7843
-##     0.5        4.5 0.4065 0.0793 37.5  0.24592    0.567   5.127  <.0001
-##    -0.5       -4.5 0.4408 0.0513 34.1  0.33658    0.545   8.593  <.0001
-##     0.5       -4.5 0.8683 0.0589 34.6  0.74866    0.988  14.743  <.0001
+##  gndr.c essround.c emmean     SE   df  lower.CL upper.CL t.ratio p.value
+##    -0.5        4.5 0.0271 0.0982 38.3 -0.171604    0.226   0.276  0.7843
+##     0.5        4.5 0.4065 0.0793 37.5  0.245923    0.567   5.127  <.0001
+##    -0.5       -4.5 0.4408 0.0513 34.1  0.336583    0.545   8.593  <.0001
+##     0.5       -4.5 0.8683 0.0589 34.6  0.748657    0.988  14.743  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -5623,8 +5537,8 @@ summary(mod6_log_GDP)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0846977 0.29103                   
-##           gndr.c            0.0088696 0.09418  -0.06            
+##  cntry    (Intercept)       0.0846969 0.29103                   
+##           gndr.c            0.0088697 0.09418  -0.06            
 ##           essround.c        0.0017459 0.04178   0.25 -0.40      
 ##           gndr.c:essround.c 0.0001783 0.01335  -0.54  0.10 -0.52
 ##  Residual                   0.9731343 0.98648                   
@@ -5632,13 +5546,13 @@ summary(mod6_log_GDP)
 ## 
 ## Fixed effects:
 ##                                 Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                     0.430328   0.051056 32.534072   8.429 1.09e-09 ***
-## gndr.c                          0.368056   0.018372 30.518370  20.034  < 2e-16 ***
-## essround.c                     -0.020992   0.007588 23.425489  -2.766  0.01087 *  
-## gndr.c:essround.c              -0.010503   0.003813 29.903840  -2.754  0.00991 ** 
-## gndr.c:log_gdp.z.cm             0.072694   0.018820 32.243106   3.863  0.00051 ***
-## essround.c:log_gdp.z.cm        -0.023175   0.007651 24.230907  -3.029  0.00576 ** 
-## gndr.c:essround.c:log_gdp.z.cm -0.004642   0.003867 31.816837  -1.201  0.23877    
+## (Intercept)                     0.430328   0.051056 32.534509   8.429 1.09e-09 ***
+## gndr.c                          0.368056   0.018372 30.518358  20.034  < 2e-16 ***
+## essround.c                     -0.020992   0.007588 23.425481  -2.766  0.01087 *  
+## gndr.c:essround.c              -0.010503   0.003813 29.904145  -2.754  0.00991 ** 
+## gndr.c:log_gdp.z.cm             0.072692   0.018820 32.243133   3.862  0.00051 ***
+## essround.c:log_gdp.z.cm        -0.023174   0.007651 24.231259  -3.029  0.00576 ** 
+## gndr.c:essround.c:log_gdp.z.cm -0.004642   0.003867 31.817459  -1.201  0.23877    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -5693,7 +5607,7 @@ getVC(mod6_log_GDP)
 ```
 
 ```
-## [1] 31.05432
+## [1] 31.05278
 ```
 
 ``` r
@@ -5703,7 +5617,7 @@ getVC(mod6_log_GDP)
 ```
 
 ```
-## [1] -7.774407
+## [1] -7.774906
 ```
 
 ``` r
@@ -5807,7 +5721,7 @@ change_in_diff_mod6_log_GDP
 ##    -0.5        4.5 0.1755 0.0741 25.7   0.0231    0.328   2.369  0.0257
 ##     0.5        4.5 0.4963 0.0633 26.6   0.3662    0.626   7.837  <.0001
 ##    -0.5       -4.5 0.3171 0.0532 20.5   0.2064    0.428   5.962  <.0001
-##     0.5       -4.5 0.7325 0.0583 22.3   0.6117    0.853  12.568  <.0001
+##     0.5       -4.5 0.7325 0.0583 22.3   0.6117    0.853  12.569  <.0001
 ## 
 ## log_gdp.z.cm =  1:
 ##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
@@ -5828,15 +5742,15 @@ pairs(change_in_diff_mod6_log_GDP,adjust="none",infer=c(T,T))
 ## log_gdp.z.cm = -1:
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
 ##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5     -0.26899 0.0392 31.9  -0.3489  -0.1890  -6.855
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  0.04602 0.1080 26.4  -0.1767   0.2687   0.424
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.27572 0.1110 27.2  -0.5028  -0.0486  -2.490
-##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.31501 0.0935 26.2   0.1229   0.5071   3.369
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  0.04601 0.1080 26.4  -0.1767   0.2687   0.424
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.27572 0.1110 27.2  -0.5028  -0.0487  -2.490
+##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.31500 0.0935 26.2   0.1229   0.5071   3.369
 ##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.00673 0.0962 25.5  -0.2048   0.1913  -0.070
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5) -0.32173 0.0366 38.1  -0.3958  -0.2477  -8.798
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5) -0.32174 0.0366 38.1  -0.3958  -0.2477  -8.798
 ##  p.value
 ##   <.0001
 ##   0.6747
-##   0.0192
+##   0.0191
 ##   0.0023
 ##   0.9448
 ##   <.0001
@@ -5847,7 +5761,7 @@ pairs(change_in_diff_mod6_log_GDP,adjust="none",infer=c(T,T))
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5) -0.14167 0.0753 22.9  -0.2975   0.0142  -1.881
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.55698 0.0767 24.1  -0.7152  -0.3987  -7.262
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.17913 0.0642 23.2   0.0464   0.3118   2.791
-##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.23619 0.0651 22.5  -0.3711  -0.1012  -3.626
+##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.23619 0.0651 22.5  -0.3711  -0.1013  -3.626
 ##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5) -0.41532 0.0244 30.6  -0.4650  -0.3656 -17.048
 ##  p.value
 ##   <.0001
@@ -5860,7 +5774,7 @@ pairs(change_in_diff_mod6_log_GDP,adjust="none",infer=c(T,T))
 ## log_gdp.z.cm =  1:
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
 ##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5     -0.37260 0.0347 21.6  -0.4447  -0.3005 -10.735
-##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5) -0.32935 0.1040 22.1  -0.5445  -0.1142  -3.173
+##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5) -0.32934 0.1040 22.1  -0.5445  -0.1142  -3.173
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)  -0.83825 0.1070 23.6  -1.0594  -0.6171  -7.830
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)     0.04325 0.0890 22.2  -0.1413   0.2278   0.486
 ##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)     -0.46565 0.0907 21.0  -0.6542  -0.2771  -5.136
@@ -5968,7 +5882,7 @@ summary(mod7_GEI)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0579036 0.24063                   
+##  cntry    (Intercept)       0.0579048 0.24063                   
 ##           gndr.c            0.0066635 0.08163   0.09            
 ##           essround.c        0.0025360 0.05036   0.16 -0.26      
 ##           gndr.c:essround.c 0.0001987 0.01409  -0.35 -0.12 -0.48
@@ -5977,12 +5891,12 @@ summary(mod7_GEI)
 ## 
 ## Fixed effects:
 ##                    Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)        0.421457   0.043064 31.523579   9.787 4.49e-11 ***
-## gndr.c             0.372494   0.016691 29.265581  22.317  < 2e-16 ***
-## gei.z.cm          -0.143711   0.042630 30.849089  -3.371  0.00203 ** 
-## essround.c        -0.023702   0.009173 24.464251  -2.584  0.01615 *  
-## gndr.c:gei.z.cm    0.077749   0.017233 37.097552   4.512 6.28e-05 ***
-## gndr.c:essround.c -0.011981   0.003849 24.569590  -3.112  0.00466 ** 
+## (Intercept)        0.421457   0.043064 31.522524   9.787 4.49e-11 ***
+## gndr.c             0.372494   0.016691 29.265642  22.317  < 2e-16 ***
+## gei.z.cm          -0.143709   0.042630 30.848288  -3.371  0.00203 ** 
+## essround.c        -0.023702   0.009173 24.464137  -2.584  0.01615 *  
+## gndr.c:gei.z.cm    0.077750   0.017233 37.097218   4.512 6.28e-05 ***
+## gndr.c:essround.c -0.011981   0.003849 24.569255  -3.112  0.00466 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -6197,10 +6111,10 @@ getFE(mod8_GEI)
 ## (Intercept)        0.42 0.04 31.97  9.97 0.000  0.34  0.51
 ## gndr.c             0.37 0.02 29.87 20.09 0.000  0.34  0.41
 ## gei.z.cm          -0.16 0.04 32.67 -3.70 0.001 -0.24 -0.07
-## essround.c        -0.02 0.01 25.02 -1.90 0.068 -0.05  0.00
-## gei.z.cmc         -0.07 0.08 20.87 -0.85 0.407 -0.23  0.10
-## gndr.c:gei.z.cm    0.07 0.01 42.80  5.00 0.000  0.04  0.10
-## gndr.c:essround.c -0.01 0.01 23.39 -1.38 0.181 -0.02  0.00
+## essround.c        -0.02 0.01 25.03 -1.90 0.068 -0.05  0.00
+## gei.z.cmc         -0.07 0.08 20.88 -0.85 0.407 -0.23  0.10
+## gndr.c:gei.z.cm    0.07 0.01 42.79  5.00 0.000  0.04  0.10
+## gndr.c:essround.c -0.01 0.01 23.40 -1.38 0.181 -0.02  0.00
 ## gndr.c:gei.z.cmc   0.00 0.04 32.35  0.05 0.958 -0.09  0.09
 ```
 
@@ -6276,7 +6190,7 @@ change_mod8_GEI
 ## 
 ## gndr.c =  0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##         4.5  0.488 0.0673 28.7   0.3507    0.626   7.257  <.0001
+##         4.5  0.488 0.0673 28.8   0.3507    0.626   7.257  <.0001
 ##        -4.5  0.733 0.0726 27.1   0.5838    0.882  10.094  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
@@ -6316,7 +6230,7 @@ change_in_diff_mod8_GEI
 ```
 ##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
 ##    -0.5        4.5  0.157 0.0705 28.2   0.0123    0.301   2.222  0.0345
-##     0.5        4.5  0.488 0.0673 28.7   0.3507    0.626   7.257  <.0001
+##     0.5        4.5  0.488 0.0673 28.8   0.3507    0.626   7.257  <.0001
 ##    -0.5       -4.5  0.318 0.0710 26.1   0.1719    0.464   4.475  0.0001
 ##     0.5       -4.5  0.733 0.0726 27.1   0.5838    0.882  10.094  <.0001
 ## 
@@ -6335,12 +6249,12 @@ pairs(change_in_diff_mod8_GEI,adjust="none",infer=c(T,T))
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)    -0.576 0.1090 25.0  -0.8015  -0.3507  -5.264
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)       0.170 0.1070 25.0  -0.0494   0.3904   1.597
 ##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       -0.244 0.1090 25.6  -0.4688  -0.0199  -2.239
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.415 0.0438 24.9  -0.5050  -0.3247  -9.481
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.415 0.0438 24.9  -0.5050  -0.3247  -9.482
 ##  p.value
 ##   <.0001
 ##   0.1634
 ##   <.0001
-##   0.1229
+##   0.1228
 ##   0.0341
 ##   <.0001
 ## 
@@ -6364,7 +6278,7 @@ diff_mod8_GEI
 ```
 ##  contrast   estimate     SE   df lower.CL upper.CL t.ratio p.value
 ##  diff_ESS10    0.332 0.0243 21.4    0.281    0.382  13.669  <.0001
-##  diff_ESS1     0.415 0.0438 24.9    0.325    0.505   9.481  <.0001
+##  diff_ESS1     0.415 0.0438 24.9    0.325    0.505   9.482  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -6418,8 +6332,8 @@ summary(mod7_GGGI)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0676907 0.26017                   
-##           gndr.c            0.0080869 0.08993  -0.13            
+##  cntry    (Intercept)       0.0676906 0.26017                   
+##           gndr.c            0.0080868 0.08993  -0.13            
 ##           essround.c        0.0016580 0.04072   0.33 -0.22      
 ##           gndr.c:essround.c 0.0002751 0.01659  -0.70  0.38 -0.38
 ##  Residual                   0.9617056 0.98067                   
@@ -6427,12 +6341,12 @@ summary(mod7_GGGI)
 ## 
 ## Fixed effects:
 ##                    Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)        0.455429   0.045894 31.642786   9.923 3.09e-11 ***
-## gndr.c             0.362649   0.018426 29.457905  19.681  < 2e-16 ***
-## gggi.z.cm         -0.122129   0.042655 32.682658  -2.863 0.007267 ** 
-## essround.c        -0.027424   0.007803 29.277979  -3.515 0.001454 ** 
-## gndr.c:gggi.z.cm   0.072668   0.019240 34.803721   3.777 0.000596 ***
-## gndr.c:essround.c -0.007968   0.005268 28.741444  -1.512 0.141340    
+## (Intercept)        0.455429   0.045894 31.642843   9.923 3.09e-11 ***
+## gndr.c             0.362649   0.018426 29.458094  19.682  < 2e-16 ***
+## gggi.z.cm         -0.122130   0.042655 32.682737  -2.863 0.007267 ** 
+## essround.c        -0.027424   0.007803 29.278029  -3.515 0.001454 ** 
+## gndr.c:gggi.z.cm   0.072668   0.019240 34.804002   3.777 0.000596 ***
+## gndr.c:essround.c -0.007967   0.005268 28.741571  -1.512 0.141341    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -6721,12 +6635,12 @@ change_mod8_GGGI
 ```
 ## gndr.c = -0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##         4.5  0.190 0.0783 24.9   0.0293    0.352   2.434  0.0224
+##         4.5  0.190 0.0783 24.9   0.0293    0.352   2.434  0.0225
 ##        -4.5  0.342 0.0592 17.0   0.2175    0.467   5.785  <.0001
 ## 
 ## gndr.c =  0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##         4.5  0.522 0.0671 23.2   0.3833    0.661   7.780  <.0001
+##         4.5  0.522 0.0671 23.1   0.3833    0.661   7.780  <.0001
 ##        -4.5  0.734 0.0671 18.9   0.5936    0.875  10.940  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
@@ -6765,8 +6679,8 @@ change_in_diff_mod8_GGGI
 
 ```
 ##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##    -0.5        4.5  0.190 0.0783 24.9   0.0293    0.352   2.434  0.0224
-##     0.5        4.5  0.522 0.0671 23.2   0.3833    0.661   7.780  <.0001
+##    -0.5        4.5  0.190 0.0783 24.9   0.0293    0.352   2.434  0.0225
+##     0.5        4.5  0.522 0.0671 23.1   0.3833    0.661   7.780  <.0001
 ##    -0.5       -4.5  0.342 0.0592 17.0   0.2175    0.467   5.785  <.0001
 ##     0.5       -4.5  0.734 0.0671 18.9   0.5936    0.875  10.940  <.0001
 ## 
@@ -6868,7 +6782,7 @@ summary(mod7_GDI)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance  Std.Dev. Corr             
-##  cntry    (Intercept)       0.0880294 0.29670                   
+##  cntry    (Intercept)       0.0880278 0.29669                   
 ##           gndr.c            0.0145897 0.12079  -0.47            
 ##           essround.c        0.0025337 0.05034   0.67 -0.64      
 ##           gndr.c:essround.c 0.0001708 0.01307  -0.60  0.13 -0.39
@@ -6877,12 +6791,12 @@ summary(mod7_GDI)
 ## 
 ## Fixed effects:
 ##                    Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)        0.435068   0.051979 28.937993   8.370 3.22e-09 ***
-## gndr.c             0.368478   0.022631 28.587167  16.282 5.37e-16 ***
-## gdi.z.cm           0.139171   0.039382 30.912860   3.534  0.00131 ** 
-## essround.c        -0.021074   0.008999 26.219772  -2.342  0.02705 *  
-## gndr.c:gdi.z.cm   -0.005425   0.019621 36.186499  -0.276  0.78374    
-## gndr.c:essround.c -0.011602   0.003706 26.737528  -3.131  0.00419 ** 
+## (Intercept)        0.435068   0.051978 28.938806   8.370 3.22e-09 ***
+## gndr.c             0.368478   0.022631 28.587386  16.282 5.37e-16 ***
+## gdi.z.cm           0.139170   0.039382 30.913813   3.534  0.00131 ** 
+## essround.c        -0.021074   0.008999 26.219986  -2.342  0.02705 *  
+## gndr.c:gdi.z.cm   -0.005425   0.019620 36.186717  -0.276  0.78374    
+## gndr.c:essround.c -0.011602   0.003706 26.737955  -3.131  0.00419 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -7090,12 +7004,12 @@ getFE(mod8_GDI)
 ##                    Est.   SE    df     t     p    LL    UL
 ## (Intercept)        0.43 0.05 31.78  8.49 0.000  0.33  0.54
 ## gndr.c             0.38 0.02 28.87 17.46 0.000  0.33  0.42
-## gdi.z.cm           0.02 0.04 23.59  0.43 0.671 -0.07  0.10
+## gdi.z.cm           0.02 0.04 23.58  0.43 0.671 -0.07  0.10
 ## essround.c        -0.02 0.01 25.79 -2.85 0.008 -0.03 -0.01
 ## gdi.z.cmc          0.05 0.06 21.62  0.91 0.373 -0.07  0.18
 ## gndr.c:gdi.z.cm    0.01 0.02 31.80  0.33 0.741 -0.03  0.05
-## gndr.c:essround.c -0.01 0.00 11.41 -3.68 0.003 -0.02 -0.01
-## gndr.c:gdi.z.cmc  -0.04 0.05  9.26 -0.87 0.405 -0.16  0.07
+## gndr.c:essround.c -0.01 0.00 11.44 -3.68 0.003 -0.02 -0.01
+## gndr.c:gdi.z.cmc  -0.04 0.05  9.27 -0.87 0.404 -0.16  0.07
 ```
 
 ``` r
@@ -7166,7 +7080,7 @@ change_mod8_GDI
 ## gndr.c = -0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
 ##         4.5  0.186 0.0805 29.7   0.0213    0.350   2.308  0.0281
-##        -4.5  0.301 0.0414 21.4   0.2154    0.387   7.279  <.0001
+##        -4.5  0.301 0.0414 21.4   0.2154    0.387   7.280  <.0001
 ## 
 ## gndr.c =  0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
@@ -7211,7 +7125,7 @@ change_in_diff_mod8_GDI
 ##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
 ##    -0.5        4.5  0.186 0.0805 29.7   0.0213    0.350   2.308  0.0281
 ##     0.5        4.5  0.505 0.0665 30.0   0.3693    0.641   7.593  <.0001
-##    -0.5       -4.5  0.301 0.0414 21.4   0.2154    0.387   7.279  <.0001
+##    -0.5       -4.5  0.301 0.0414 21.4   0.2154    0.387   7.280  <.0001
 ##     0.5       -4.5  0.734 0.0453 24.7   0.6403    0.827  16.194  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
@@ -7229,7 +7143,7 @@ pairs(change_in_diff_mod8_GDI,adjust="none",infer=c(T,T))
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)    -0.548 0.0762 27.0   -0.704  -0.3914  -7.189
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)       0.204 0.0488 24.6    0.103   0.3045   4.175
 ##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       -0.228 0.0613 26.1   -0.354  -0.1024  -3.726
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.432 0.0259 23.1   -0.486  -0.3787 -16.697
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.432 0.0259 23.2   -0.486  -0.3787 -16.696
 ##  p.value
 ##   <.0001
 ##   0.0792
@@ -7258,7 +7172,7 @@ diff_mod8_GDI
 ```
 ##  contrast   estimate     SE   df lower.CL upper.CL t.ratio p.value
 ##  diff_ESS10    0.319 0.0270 20.2    0.263    0.376  11.849  <.0001
-##  diff_ESS1     0.432 0.0259 23.1    0.379    0.486  16.697  <.0001
+##  diff_ESS1     0.432 0.0259 23.2    0.379    0.486  16.696  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7271,7 +7185,7 @@ pairs(diff_mod8_GDI,infer=c(T,T))
 
 ```
 ##  contrast               estimate     SE   df lower.CL upper.CL t.ratio p.value
-##  diff_ESS10 - diff_ESS1   -0.113 0.0307 11.4    -0.18  -0.0456  -3.678  0.0034
+##  diff_ESS10 - diff_ESS1   -0.113 0.0307 11.4    -0.18  -0.0456  -3.677  0.0034
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7312,7 +7226,7 @@ summary(mod7_log_GDP)
 ## 
 ## Random effects:
 ##  Groups   Name              Variance Std.Dev. Corr             
-##  cntry    (Intercept)       0.061145 0.24727                   
+##  cntry    (Intercept)       0.061146 0.24728                   
 ##           gndr.c            0.009165 0.09573  -0.09            
 ##           essround.c        0.002524 0.05024   0.27 -0.43      
 ##           gndr.c:essround.c 0.000165 0.01285  -0.56  0.06 -0.28
@@ -7321,12 +7235,12 @@ summary(mod7_log_GDP)
 ## 
 ## Fixed effects:
 ##                      Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)          0.432612   0.043530 31.703815   9.938 2.92e-11 ***
-## gndr.c               0.367975   0.018619 27.571269  19.763  < 2e-16 ***
-## log_gdp.z.cm        -0.130229   0.040983 31.490248  -3.178  0.00332 ** 
-## essround.c          -0.022167   0.009016 26.507068  -2.459  0.02078 *  
-## gndr.c:log_gdp.z.cm  0.052904   0.017738 34.382666   2.983  0.00523 ** 
-## gndr.c:essround.c   -0.011275   0.003681 28.809935  -3.063  0.00472 ** 
+## (Intercept)          0.432612   0.043530 31.702960   9.938 2.92e-11 ***
+## gndr.c               0.367975   0.018619 27.570186  19.763  < 2e-16 ***
+## log_gdp.z.cm        -0.130228   0.040983 31.488580  -3.178  0.00332 ** 
+## essround.c          -0.022167   0.009016 26.506393  -2.459  0.02078 *  
+## gndr.c:log_gdp.z.cm  0.052905   0.017738 34.383191   2.983  0.00523 ** 
+## gndr.c:essround.c   -0.011275   0.003681 28.807856  -3.063  0.00472 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -7405,7 +7319,7 @@ change_mod7_log_GDP
 ```
 ## gndr.c = -0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##         4.5  0.174 0.0729 25.7   0.0244    0.324   2.392  0.0244
+##         4.5  0.174 0.0729 25.7   0.0244    0.324   2.391  0.0244
 ##        -4.5  0.323 0.0493 22.5   0.2209    0.425   6.551  <.0001
 ## 
 ## gndr.c =  0.5:
@@ -7449,7 +7363,7 @@ change_in_diff_mod7_log_GDP
 
 ```
 ##  gndr.c essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
-##    -0.5        4.5  0.174 0.0729 25.7   0.0244    0.324   2.392  0.0244
+##    -0.5        4.5  0.174 0.0729 25.7   0.0244    0.324   2.391  0.0244
 ##     0.5        4.5  0.491 0.0624 24.8   0.3630    0.620   7.879  <.0001
 ##    -0.5       -4.5  0.323 0.0493 22.5   0.2209    0.425   6.551  <.0001
 ##     0.5       -4.5  0.742 0.0562 24.3   0.6259    0.858  13.207  <.0001
@@ -7469,7 +7383,7 @@ pairs(change_in_diff_mod7_log_GDP,adjust="none",infer=c(T,T))
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)    -0.567 0.0899 26.0  -0.7522  -0.3828  -6.315
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)       0.168 0.0761 25.3   0.0119   0.3250   2.215
 ##  gndr.c0.5 essround.c4.5 - (gndr.c0.5 essround.c-4.5)       -0.250 0.0801 25.9  -0.4149  -0.0856  -3.125
-##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.419 0.0245 29.2  -0.4687  -0.3687 -17.116
+##  (gndr.c-0.5 essround.c-4.5) - (gndr.c0.5 essround.c-4.5)   -0.419 0.0245 29.1  -0.4687  -0.3687 -17.116
 ##  p.value
 ##   <.0001
 ##   0.0937
@@ -7498,7 +7412,7 @@ diff_mod7_log_GDP
 ```
 ##  contrast   estimate     SE   df lower.CL upper.CL t.ratio p.value
 ##  diff_ESS10    0.317 0.0254 23.9    0.265    0.370  12.503  <.0001
-##  diff_ESS1     0.419 0.0245 29.2    0.369    0.469  17.116  <.0001
+##  diff_ESS1     0.419 0.0245 29.1    0.369    0.469  17.116  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7533,7 +7447,7 @@ mod8_log_GDP<-lmer(FM.z~gndr.c+log_gdp.z.cm+gndr.c:log_gdp.z.cm+
 ```
 
 ```
-## Warning: Model failed to converge with 2 negative eigenvalues: -3.1e+03 -1.5e+04
+## Warning: Model failed to converge with 1 negative eigenvalue: -8.0e+02
 ```
 
 ``` r
@@ -7625,7 +7539,7 @@ change_mod8_log_GDP
 ## gndr.c =  0.5:
 ##  essround.c emmean     SE   df lower.CL upper.CL t.ratio p.value
 ##         4.5  0.466 0.0593 28.5   0.3444    0.587   7.854  <.0001
-##        -4.5  0.787 0.0602 22.5   0.6625    0.912  13.067  <.0001
+##        -4.5  0.787 0.0602 22.5   0.6625    0.912  13.068  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7666,7 +7580,7 @@ change_in_diff_mod8_log_GDP
 ##    -0.5        4.5  0.120 0.0680 27.3  -0.0191    0.260   1.770  0.0879
 ##     0.5        4.5  0.466 0.0593 28.5   0.3444    0.587   7.854  <.0001
 ##    -0.5       -4.5  0.394 0.0543 17.2   0.2799    0.509   7.267  <.0001
-##     0.5       -4.5  0.787 0.0602 22.5   0.6625    0.912  13.067  <.0001
+##     0.5       -4.5  0.787 0.0602 22.5   0.6625    0.912  13.068  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95
@@ -7678,7 +7592,7 @@ pairs(change_in_diff_mod8_log_GDP,adjust="none",infer=c(T,T))
 
 ```
 ##  contrast                                                 estimate     SE   df lower.CL upper.CL t.ratio
-##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3455 0.0281 25.5   -0.403   -0.288 -12.300
+##  (gndr.c-0.5 essround.c4.5) - gndr.c0.5 essround.c4.5      -0.3455 0.0281 25.5   -0.403   -0.288 -12.299
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c-0.5 essround.c-4.5)  -0.2739 0.0831 20.3   -0.447   -0.101  -3.296
 ##  (gndr.c-0.5 essround.c4.5) - (gndr.c0.5 essround.c-4.5)   -0.6669 0.0897 22.4   -0.853   -0.481  -7.436
 ##  gndr.c0.5 essround.c4.5 - (gndr.c-0.5 essround.c-4.5)      0.0715 0.0736 19.8   -0.082    0.225   0.972
@@ -7688,7 +7602,7 @@ pairs(change_in_diff_mod8_log_GDP,adjust="none",infer=c(T,T))
 ##   <.0001
 ##   0.0036
 ##   <.0001
-##   0.3426
+##   0.3425
 ##   0.0007
 ##   <.0001
 ## 
@@ -7711,7 +7625,7 @@ diff_mod8_log_GDP
 
 ```
 ##  contrast   estimate     SE   df lower.CL upper.CL t.ratio p.value
-##  diff_ESS10    0.345 0.0281 25.5    0.288    0.403  12.300  <.0001
+##  diff_ESS10    0.345 0.0281 25.5    0.288    0.403  12.299  <.0001
 ##  diff_ESS1     0.393 0.0277 26.8    0.336    0.450  14.178  <.0001
 ## 
 ## Degrees-of-freedom method: satterthwaite 
@@ -7751,37 +7665,35 @@ print(s,locale=FALSE)
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] apaTables_2.0.8       stringr_1.5.2         r2mlm_0.3.8           nlme_3.1-168         
-##  [5] Hmisc_5.2-4           ggpubr_0.6.2          metafor_4.8-0         numDeriv_2016.8-1.1  
-##  [9] metadat_1.4-0         lmerTest_3.1-3        ggflags_0.0.4         finalfit_1.1.0       
-## [13] ggplot2_4.0.0         MetBrewer_0.2.0       vjihelpers_0.0.0.9000 emmeans_1.11.2-8     
-## [17] lme4_1.1-37           Matrix_1.7-3          multid_1.0.2.9000     tidyr_1.3.1          
-## [21] psych_2.5.6           dplyr_1.1.4           rio_1.2.4             knitr_1.50           
-## [25] rmarkdown_2.30       
+##  [1] apaTables_2.0.8       stringr_1.5.2         tidyr_1.3.1           r2mlm_0.3.8          
+##  [5] nlme_3.1-168          Hmisc_5.2-4           ggpubr_0.6.2          metafor_4.8-0        
+##  [9] numDeriv_2016.8-1.1   metadat_1.4-0         lmerTest_3.1-3        ggflags_0.0.4        
+## [13] finalfit_1.1.0        ggplot2_4.0.0         MetBrewer_0.2.0       vjihelpers_0.0.0.9000
+## [17] emmeans_1.11.2-8      lme4_1.1-37           Matrix_1.7-3          dplyr_1.1.4          
+## [21] rio_1.2.4             multid_1.0.2.9000     knitr_1.50            rmarkdown_2.30       
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] mathjaxr_1.8-0     RColorBrewer_1.1-3 rstudioapi_0.17.1  jsonlite_2.0.0     shape_1.4.6.1     
-##   [6] magrittr_2.0.4     estimability_1.5.1 jomo_2.7-6         farver_2.1.2       nloptr_2.2.1      
-##  [11] vctrs_0.6.5        minqa_1.2.8        base64enc_0.1-3    rstatix_0.7.3      htmltools_0.5.8.1 
-##  [16] forcats_1.0.1      haven_2.5.5        broom_1.0.10       cellranger_1.1.0   Formula_1.2-5     
-##  [21] pROC_1.19.0.1      mitml_0.4-5        sass_0.4.10        bslib_0.9.0        htmlwidgets_1.6.4 
-##  [26] plyr_1.8.9         cachem_1.1.0       lifecycle_1.0.4    iterators_1.0.14   pkgconfig_2.0.3   
-##  [31] R6_2.6.1           fastmap_1.2.0      rbibutils_2.3      digest_0.6.37      colorspace_2.1-2  
-##  [36] labeling_0.4.3     mgcv_1.9-3         abind_1.4-8        compiler_4.5.1     withr_3.0.2       
-##  [41] htmlTable_2.4.3    S7_0.2.0           backports_1.5.0    carData_3.0-5      R.utils_2.13.0    
-##  [46] ggsignif_0.6.4     pan_1.9            MASS_7.3-65        tools_4.5.1        pbivnorm_0.6.0    
-##  [51] foreign_0.8-90     zip_2.3.3          nnet_7.3-20        R.oo_1.27.1        glue_1.8.0        
-##  [56] quadprog_1.5-8     grid_4.5.1         checkmate_2.3.3    cluster_2.1.8.1    generics_0.1.4    
-##  [61] gtable_0.3.6       tzdb_0.5.0         R.methodsS3_1.8.2  data.table_1.17.8  hms_1.1.4         
-##  [66] car_3.1-3          utf8_1.2.6         foreach_1.5.2      pillar_1.11.1      rockchalk_1.8.157 
-##  [71] splines_4.5.1      lattice_0.22-7     survival_3.8-3     kutils_1.73        tidyselect_1.2.1  
-##  [76] reformulas_0.4.1   gridExtra_2.3      grImport2_0.3-3    stats4_4.5.1       xfun_0.53         
-##  [81] stringi_1.8.7      yaml_2.3.10        boot_1.3-31        evaluate_1.0.5     codetools_0.2-20  
-##  [86] tibble_3.3.0       cli_3.6.5          rpart_4.1.24       xtable_1.8-4       Rdpack_2.6.4      
-##  [91] jquerylib_0.1.4    lavaan_0.6-20      Rcpp_1.1.0         readxl_1.4.5       png_0.1-8         
-##  [96] coda_0.19-4.1      XML_3.99-0.19      parallel_4.5.1     readr_2.1.5        jpeg_0.1-11       
-## [101] glmnet_4.1-10      mvtnorm_1.3-3      scales_1.4.0       crayon_1.5.3       openxlsx_4.2.8    
-## [106] purrr_1.1.0        writexl_1.5.4      rlang_1.1.6        cowplot_1.2.0      mnormt_2.1.1      
-## [111] mice_3.18.0
+##   [1] mnormt_2.1.1       Rdpack_2.6.4       pROC_1.19.0.1      gridExtra_2.3      writexl_1.5.4     
+##   [6] readxl_1.4.5       rlang_1.1.6        magrittr_2.0.4     rockchalk_1.8.157  compiler_4.5.1    
+##  [11] mgcv_1.9-3         png_0.1-8          vctrs_0.6.5        quadprog_1.5-8     crayon_1.5.3      
+##  [16] pkgconfig_2.0.3    shape_1.4.6.1      fastmap_1.2.0      backports_1.5.0    labeling_0.4.3    
+##  [21] pbivnorm_0.6.0     utf8_1.2.6         nloptr_2.2.1       purrr_1.1.0        xfun_0.53         
+##  [26] glmnet_4.1-10      jomo_2.7-6         cachem_1.1.0       kutils_1.73        jsonlite_2.0.0    
+##  [31] pan_1.9            jpeg_0.1-11        psych_2.5.6        lavaan_0.6-20      parallel_4.5.1    
+##  [36] broom_1.0.10       cluster_2.1.8.1    R6_2.6.1           bslib_0.9.0        stringi_1.8.7     
+##  [41] RColorBrewer_1.1-3 car_3.1-3          boot_1.3-31        rpart_4.1.24       cellranger_1.1.0  
+##  [46] jquerylib_0.1.4    estimability_1.5.1 Rcpp_1.1.0         iterators_1.0.14   base64enc_0.1-3   
+##  [51] R.utils_2.13.0     splines_4.5.1      nnet_7.3-20        tidyselect_1.2.1   rstudioapi_0.17.1 
+##  [56] abind_1.4-8        yaml_2.3.10        codetools_0.2-20   lattice_0.22-7     tibble_3.3.0      
+##  [61] plyr_1.8.9         withr_3.0.2        S7_0.2.0           coda_0.19-4.1      evaluate_1.0.5    
+##  [66] foreign_0.8-90     survival_3.8-3     zip_2.3.3          pillar_1.11.1      carData_3.0-5     
+##  [71] mice_3.18.0        stats4_4.5.1       checkmate_2.3.3    foreach_1.5.2      reformulas_0.4.1  
+##  [76] generics_0.1.4     grImport2_0.3-3    mathjaxr_1.8-0     scales_1.4.0       minqa_1.2.8       
+##  [81] xtable_1.8-4       glue_1.8.0         tools_4.5.1        data.table_1.17.8  openxlsx_4.2.8    
+##  [86] ggsignif_0.6.4     forcats_1.0.1      XML_3.99-0.19      mvtnorm_1.3-3      cowplot_1.2.0     
+##  [91] grid_4.5.1         rbibutils_2.3      colorspace_2.1-2   htmlTable_2.4.3    Formula_1.2-5     
+##  [96] cli_3.6.5          gtable_0.3.6       R.methodsS3_1.8.2  rstatix_0.7.3      sass_0.4.10       
+## [101] digest_0.6.37      htmlwidgets_1.6.4  farver_2.1.2       htmltools_0.5.8.1  R.oo_1.27.1       
+## [106] lifecycle_1.0.4    mitml_0.4-5        MASS_7.3-65
 ```
 

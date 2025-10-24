@@ -2083,7 +2083,7 @@ pred_cntry_dat$obs_mean_wt_UL<-pred_cntry_dat$obs_mean_wt+qnorm(.975)*pred_cntry
 #my_colors <- met.brewer("Cassatt2")[c(8, 3)]
 my_colors <- met.brewer("Archambault")[c(6,2)]
 
-pdf("../results/country_specific_time_trends.pdf", width = 8, height = 6)
+pdf("../results/country_specific_time_trends_youth.pdf", width = 8, height = 6)
 
 for (ctry in countries) {
   print(
@@ -2095,7 +2095,7 @@ for (ctry in countries) {
       geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
       scale_color_manual(values = my_colors) +
       geom_flag(aes(country=tolower(ctry)))+
-      scale_y_continuous(limits = c(-1.1, 1.1)) +
+      scale_y_continuous(limits = c(-1.1, 1.6)) +
       scale_x_continuous(limits = c(2001, 2021), breaks = seq(2002, 2020, 2)) +
       ggtitle(paste("Country:", ctry))+
     ylab("Mean-level of value male-typicality")+
@@ -2135,7 +2135,7 @@ facet_plot<-
   geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
   scale_color_manual(values = my_colors) +
   #geom_flag(aes(country=tolower(ctry)))+
-  scale_y_continuous(limits = c(-1.1, 1.1)) +
+  scale_y_continuous(limits = c(-1.1, 1.6)) +
   scale_x_continuous(limits = c(2001, 2021), breaks = seq(2002, 2020, 2)) +
   #ggtitle(paste("Country:", ctry))+
   ylab("Mean-level of value male-typicality")+
