@@ -1,5 +1,5 @@
 ---
-title: "Analysis for Examining the Gender Equality Paradox in Values Using Universalism Value"
+title: "Analysis for Examining the Gender Equality Paradox in Values Using benevolence Value"
 output: 
   html_document: 
     toc: true
@@ -110,19 +110,19 @@ table(diff_dat$essround,diff_dat$cntry)
 range(table(diff_dat$cntry))
 
 # scale/standardize with SD pooled across all country-time-gender folds
-cntry.uni<-diff_dat %>% group_by(cntry,essround) %>%
-  summarise(uni.ctm=mean(uni,na.rm=T),
-            uni.ctsd=sd(uni,na.rm=T)) %>%
+cntry.ben<-diff_dat %>% group_by(cntry,essround) %>%
+  summarise(ben.ctm=mean(ben,na.rm=T),
+            ben.ctsd=sd(ben,na.rm=T)) %>%
   group_by(cntry) %>%
-  summarise(uni.cm=mean(uni.ctm),
-            uni.csd=mean(uni.ctsd)) 
+  summarise(ben.cm=mean(ben.ctm),
+            ben.csd=mean(ben.ctsd)) 
 
-grand_mean_uni<-mean(cntry.uni$uni.cm)
-grand_sd_uni<-mean(cntry.uni$uni.csd)
+grand_mean_ben<-mean(cntry.ben$ben.cm)
+grand_sd_ben<-mean(cntry.ben$ben.csd)
 
 # standardized
-diff_dat$uni.z<-(diff_dat$uni-grand_mean_uni)/grand_sd_uni
-hist(diff_dat$uni.z)
+diff_dat$ben.z<-(diff_dat$ben-grand_mean_ben)/grand_sd_ben
+hist(diff_dat$ben.z)
 
 ```
 
@@ -454,62 +454,62 @@ cntry_n_frame<-
   summarise('n ESS rounds' = mean(n_unique_essround),
             n=round(sum(pspwght),0))
 
-# value-based universalism
+# value-based benevolence
 
-cntry_uni_frame<-
+cntry_ben_frame<-
   diff_dat %>% group_by(cntry,essround) %>%
-  summarise('uni M' = weighted.mean(x=uni.z,w=pspwght),
-            'uni SD' = sqrt(wtd.var(uni.z,pspwght))) %>%
+  summarise('ben M' = weighted.mean(x=ben.z,w=pspwght),
+            'ben SD' = sqrt(wtd.var(ben.z,pspwght))) %>%
   group_by(cntry) %>%
-  summarise('uni M' = mean(x=`uni M`),
-            'uni SD'= mean(x=`uni SD`))
+  summarise('ben M' = mean(x=`ben M`),
+            'ben SD'= mean(x=`ben SD`))
 
-cntry_uni_women_frame<-
+cntry_ben_women_frame<-
   diff_dat %>%
   filter(gndr.c==-0.5) %>%
   group_by(cntry,essround) %>%
-  summarise('uni M' = weighted.mean(x=uni.z,w=pspwght),
-            'uni SD' = sqrt(wtd.var(uni.z,pspwght))) %>%
+  summarise('ben M' = weighted.mean(x=ben.z,w=pspwght),
+            'ben SD' = sqrt(wtd.var(ben.z,pspwght))) %>%
   group_by(cntry) %>%
-  summarise('uni M Women' = mean(x=`uni M`),
-            'uni SD Women'= mean(x=`uni SD`))
+  summarise('ben M Women' = mean(x=`ben M`),
+            'ben SD Women'= mean(x=`ben SD`))
 
-cntry_uni_men_frame<-
+cntry_ben_men_frame<-
   diff_dat %>%
   filter(gndr.c==0.5) %>%
   group_by(cntry,essround) %>%
-  summarise('uni M' = weighted.mean(x=uni.z,w=pspwght),
-            'uni SD' = sqrt(wtd.var(uni.z,pspwght))) %>%
+  summarise('ben M' = weighted.mean(x=ben.z,w=pspwght),
+            'ben SD' = sqrt(wtd.var(ben.z,pspwght))) %>%
   group_by(cntry) %>%
-  summarise('uni M Men' = mean(x=`uni M`),
-            'uni SD Men'= mean(x=`uni SD`))
+  summarise('ben M Men' = mean(x=`ben M`),
+            'ben SD Men'= mean(x=`ben SD`))
 
 
-# link n and uni datasets
+# link n and ben datasets
 
 desc_frame<-
   left_join(
     x=cntry_n_frame,
-    y=cntry_uni_frame,
+    y=cntry_ben_frame,
     by="cntry"
   )
 
 desc_frame<-
   left_join(
     x=desc_frame,
-    y=cntry_uni_women_frame,
+    y=cntry_ben_women_frame,
     by="cntry"
   )
 
 desc_frame<-
   left_join(
     x=desc_frame,
-    y=cntry_uni_men_frame,
+    y=cntry_ben_men_frame,
     by="cntry"
   )
 
 # Add country-specific differences
-desc_frame$D<-desc_frame$`uni M Men`-desc_frame$`uni M Women`
+desc_frame$D<-desc_frame$`ben M Men`-desc_frame$`ben M Women`
 
 desc_frame
 # add country-level measures
@@ -557,9 +557,9 @@ cntry_desc_tbl<-
     Country = CLDR,
     `n ESS rounds`,
     n,
-    `uni M`, `uni SD`,
-    `uni M Women`, `uni SD Women`,
-    `uni M Men`, `uni SD Men`,
+    `ben M`, `ben SD`,
+    `ben M Women`, `ben SD Women`,
+    `ben M Men`, `ben SD Men`,
     D,
     GEI = gei.cm,
     GGGI = gggi.cm,
@@ -580,7 +580,7 @@ cntry_desc_tbl<-
   )
 print(cntry_desc_tbl,n=33)
 
-export(cntry_desc_tbl,"../results/uni/cntry_desc_tbl.xlsx",overwrite=T)
+export(cntry_desc_tbl,"../results/ben/cntry_desc_tbl.xlsx",overwrite=T)
 ```
 
 ## Country-level correlations table
@@ -589,9 +589,9 @@ export(cntry_desc_tbl,"../results/uni/cntry_desc_tbl.xlsx",overwrite=T)
 cor_frame<-
   desc_frame %>%
   select(
-    VBMT=`uni M`,
-    VBMT_Women=`uni M Women`,
-    VBMT_Men=`uni M Men`,
+    VBMT=`ben M`,
+    VBMT_Women=`ben M Women`,
+    VBMT_Men=`ben M Men`,
     D = D,
     GEI = gei.cm,
     GGGI = gggi.cm,
@@ -605,7 +605,7 @@ cor_frame<-
 
 apa.cor.table(
   data=cor_frame,
-  filename = "../results/uni/CorTable1.doc",
+  filename = "../results/ben/CorTable1.doc",
   #table.number = NA,
   show.conf.interval = FALSE,
   show.sig.stars = F,
@@ -622,7 +622,7 @@ Following preregistration: https://osf.io/7cags?view_only=f3e97a78271e46bfafb9e2
 
 ```{r}
 
-mod0<-lmer(uni.z~(1|cntry),data=diff_dat,REML=F,weights = pspwght,
+mod0<-lmer(ben.z~(1|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod0)
 getVC(mod0)
@@ -633,7 +633,7 @@ r2mlm(mod0,bargraph = F)
 
 ```{r}
 
-mod1<-lmer(uni.z~gndr.c+(1|cntry),data=diff_dat,REML=F,weights = pspwght,
+mod1<-lmer(ben.z~gndr.c+(1|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod1)
 getFE(mod1,round=3)
@@ -647,7 +647,7 @@ r2mlm(mod1,bargraph = F)
 
 ```{r}
 
-mod2<-lmer(uni.z~gndr.c+(gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
+mod2<-lmer(ben.z~gndr.c+(gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod2)
 getFE(mod2,round=3)
@@ -660,7 +660,7 @@ lvl2_var_cond_lvl1(mod2,lvl1.var = "gndr.c",lvl1.values = c(0.5,-0.5))
 * Test for random effect correlation
 
 ```{r}
-mod2_norecov<-lmer(uni.z~gndr.c+(gndr.c||cntry),data=diff_dat,REML=F,weights = pspwght,
+mod2_norecov<-lmer(ben.z~gndr.c+(gndr.c||cntry),data=diff_dat,REML=F,weights = pspwght,
                    control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod2_norecov)
 getFE(mod2_norecov,round=3)
@@ -673,7 +673,7 @@ anova(mod2_norecov,mod2)
 ## mod2 with Gender-equality index (GEI)
 
 ```{r}
-mod2_GEI<-lmer(uni.z~gndr.c+gei.z.cm+gndr.c:gei.z.cm+
+mod2_GEI<-lmer(ben.z~gndr.c+gei.z.cm+gndr.c:gei.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod2_GEI)
@@ -719,11 +719,11 @@ round(ddsc_sem_GEI$variance_test,3)
 # refit reduced and full models with GGGI in original scale
 
 
-mod2_GEI_unstd<-lmer(uni.z~gndr.c+gei.cm+gndr.c:gei.cm+
+mod2_GEI_unstd<-lmer(ben.z~gndr.c+gei.cm+gndr.c:gei.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
-mod2_GEI_unstd_red<-lmer(uni.z~gndr.c+
+mod2_GEI_unstd_red<-lmer(ben.z~gndr.c+
                        (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                      control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
@@ -855,14 +855,14 @@ flag_points_GEI_long<-
              ))
 
 
-p1.uni.flags<-
+p1.ben.flags<-
   ggplot(p,aes(y=yvar,x=gei.cm,color=gndr.c))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("Gender Equality Index (Average 2002-2022)")+
   #ylim(c(min.y.pred,max.y.pred))+
   #xlim(c(0.60,1.00))+
-  ylab("Value universalism (Average 2002-2022)")+
+  ylab("Value benevolence (Average 2002-2022)")+
   scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "top",
         legend.title=element_blank(),
@@ -886,13 +886,13 @@ p1.uni.flags<-
   geom_flag(data=flag_points_GEI_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=gei.cm,y=mean_level))
 
-p2.uni.flags<-ggplot(p2,aes(y=yvar,x=gei.cm))+
+p2.ben.flags<-ggplot(p2,aes(y=yvar,x=gei.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("Gender Equality Index (Average 2002-2022)")+
   #xlim(c(0.60,1.00))+
   #ylim(c(min.y.narrow,max.y.narrow))+
-  ylab("Difference in value universalism")+
+  ylab("Difference in value benevolence")+
   #scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "right",
         legend.title=element_blank(),
@@ -911,13 +911,13 @@ p2.uni.flags<-ggplot(p2,aes(y=yvar,x=gei.cm))+
             aes(country=tolower(cntry),size=18,x=gei.cm,y=difference))
 
 pflag_comb<-
-  ggarrange(p1.uni.flags,p2.uni.flags,align = "v",
+  ggarrange(p1.ben.flags,p2.ben.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
 pflag_comb
 
 
 png(filename = 
-      "../results/uni/GEI_flags.png",
+      "../results/ben/GEI_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -928,7 +928,7 @@ dev.off()
 ## mod2 with Gender-equality index (GGGI)
 
 ```{r}
-mod2_GGGI<-lmer(uni.z~gndr.c+gggi.z.cm+gndr.c:gggi.z.cm+
+mod2_GGGI<-lmer(ben.z~gndr.c+gggi.z.cm+gndr.c:gggi.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod2_GGGI)
@@ -974,11 +974,11 @@ round(ddsc_sem_GGGI$variance_test,3)
 # refit reduced and full models with GGGI in original scale
 
 
-mod2_GGGI_unstd<-lmer(uni.z~gndr.c+gggi.cm+gndr.c:gggi.cm+
+mod2_GGGI_unstd<-lmer(ben.z~gndr.c+gggi.cm+gndr.c:gggi.cm+
                        (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                      control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
-mod2_GGGI_unstd_red<-lmer(uni.z~gndr.c+
+mod2_GGGI_unstd_red<-lmer(ben.z~gndr.c+
                            (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                          control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
@@ -1110,14 +1110,14 @@ flag_points_GGGI_long<-
              ))
 
 
-p1.uni.flags<-
+p1.ben.flags<-
   ggplot(p,aes(y=yvar,x=gggi.cm,color=gndr.c))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("Global Gender Gap Index (Average 2002-2022)")+
   #ylim(c(min.y.pred,max.y.pred))+
   #xlim(c(0.60,1.00))+
-  ylab("Value universalism (Average 2002-2022)")+
+  ylab("Value benevolence (Average 2002-2022)")+
   scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "top",
         legend.title=element_blank(),
@@ -1141,13 +1141,13 @@ p1.uni.flags<-
   geom_flag(data=flag_points_GGGI_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=gggi.cm,y=mean_level))
 
-p2.uni.flags<-ggplot(p2,aes(y=yvar,x=gggi.cm))+
+p2.ben.flags<-ggplot(p2,aes(y=yvar,x=gggi.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("Global Gender Gap Index (Average 2002-2022)")+
   #xlim(c(0.60,1.00))+
   #ylim(c(min.y.narrow,max.y.narrow))+
-  ylab("Difference in value universalism")+
+  ylab("Difference in value benevolence")+
   #scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "right",
         legend.title=element_blank(),
@@ -1166,13 +1166,13 @@ p2.uni.flags<-ggplot(p2,aes(y=yvar,x=gggi.cm))+
             aes(country=tolower(cntry),size=18,x=gggi.cm,y=difference))
 
 pflag_comb<-
-  ggarrange(p1.uni.flags,p2.uni.flags,align = "v",
+  ggarrange(p1.ben.flags,p2.ben.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
 pflag_comb
 
 
 png(filename = 
-      "../results/uni/GGGI_flags_new.png",
+      "../results/ben/GGGI_flags_new.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1183,7 +1183,7 @@ dev.off()
 ## mod2 with Gender-equality index (GDI)
 
 ```{r}
-mod2_GDI<-lmer(uni.z~gndr.c+gdi.z.cm+gndr.c:gdi.z.cm+
+mod2_GDI<-lmer(ben.z~gndr.c+gdi.z.cm+gndr.c:gdi.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod2_GDI)
@@ -1228,11 +1228,11 @@ round(ddsc_sem_GDI$variance_test,3)
 # start with obtaining predicted values for means and differences
 
 
-mod2_GDI_unstd<-lmer(uni.z~gndr.c+gdi.cm+gndr.c:gdi.cm+
+mod2_GDI_unstd<-lmer(ben.z~gndr.c+gdi.cm+gndr.c:gdi.cm+
                        (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                      control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
-mod2_GDI_unstd_red<-lmer(uni.z~gndr.c+
+mod2_GDI_unstd_red<-lmer(ben.z~gndr.c+
                            (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                          control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
@@ -1364,14 +1364,14 @@ flag_points_GDI_long<-
              ))
 
 
-p1.uni.flags<-
+p1.ben.flags<-
   ggplot(p,aes(y=yvar,x=gdi.cm,color=gndr.c))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("Gender Development Index (Average 2002-2022)")+
   #ylim(c(min.y.pred,max.y.pred))+
   #xlim(c(0.60,1.00))+
-  ylab("Value universalism (Average 2002-2022)")+
+  ylab("Value benevolence (Average 2002-2022)")+
   scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "top",
         legend.title=element_blank(),
@@ -1395,16 +1395,16 @@ p1.uni.flags<-
   geom_flag(data=flag_points_GDI_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=gdi.cm,y=mean_level))
 
-#p1.uni.flags
+#p1.ben.flags
 
 
-p2.uni.flags<-ggplot(p2,aes(y=yvar,x=gdi.cm))+
+p2.ben.flags<-ggplot(p2,aes(y=yvar,x=gdi.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("Gender Development Index (Average 2002-2022)")+
   #xlim(c(0.60,1.00))+
   #ylim(c(min.y.narrow,max.y.narrow))+
-  ylab("Difference in value universalism")+
+  ylab("Difference in value benevolence")+
   #scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "right",
         legend.title=element_blank(),
@@ -1422,17 +1422,17 @@ p2.uni.flags<-ggplot(p2,aes(y=yvar,x=gdi.cm))+
   geom_flag(data=flag_points_GDI,show.legend=F,
             aes(country=tolower(cntry),size=18,x=gdi.cm,y=difference))
 
-#p2.uni.flags
+#p2.ben.flags
 
 
 pflag_comb<-
-  ggarrange(p1.uni.flags,p2.uni.flags,align = "v",
+  ggarrange(p1.ben.flags,p2.ben.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
 pflag_comb
 
 
 png(filename = 
-      "../results/uni/GDI_flags.png",
+      "../results/ben/GDI_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1445,7 +1445,7 @@ dev.off()
 * Logarithm of GDP per capita, PPP (constant 2017 international $)
 
 ```{r}
-mod2_log_GDP<-lmer(uni.z~gndr.c+log_gdp.z.cm+
+mod2_log_GDP<-lmer(ben.z~gndr.c+log_gdp.z.cm+
                      gndr.c:log_gdp.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -1490,12 +1490,12 @@ round(ddsc_sem_log_GDP$variance_test,3)
 # start with obtaining predicted values for means and differences
 
 
-mod2_log_GDP_unstd<-lmer(uni.z~gndr.c+log_gdp.cm+
+mod2_log_GDP_unstd<-lmer(ben.z~gndr.c+log_gdp.cm+
                            gndr.c:log_gdp.cm+
                        (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                      control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
-mod2_log_GDP_unstd_red<-lmer(uni.z~gndr.c+
+mod2_log_GDP_unstd_red<-lmer(ben.z~gndr.c+
                            (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
                          control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 
@@ -1627,14 +1627,14 @@ flag_points_log_GDP_long<-
              ))
 
 
-p1.uni.flags<-
+p1.ben.flags<-
   ggplot(p,aes(y=yvar,x=log_gdp.cm,color=gndr.c))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("log(GDP per capita) (Average 2002-2022)")+
   #ylim(c(min.y.pred,max.y.pred))+
   #xlim(c(0.60,1.00))+
-  ylab("Value universalism (Average 2002-2022)")+
+  ylab("Value benevolence (Average 2002-2022)")+
   scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "top",
         legend.title=element_blank(),
@@ -1658,13 +1658,13 @@ p1.uni.flags<-
   geom_flag(data=flag_points_log_GDP_long,show.legend=F,
             aes(country=tolower(cntry),size=14,x=log_gdp.cm,y=mean_level))
 
-p2.uni.flags<-ggplot(p2,aes(y=yvar,x=log_gdp.cm))+
+p2.ben.flags<-ggplot(p2,aes(y=yvar,x=log_gdp.cm))+
   geom_point(size=3)+
   geom_errorbar(aes(ymin=LCL, ymax=UCL),alpha=0.2)+
   xlab("log(GDP per capita) (Average 2002-2022)")+
   #xlim(c(0.60,1.00))+
   #ylim(c(min.y.narrow,max.y.narrow))+
-  ylab("Difference in value universalism")+
+  ylab("Difference in value benevolence")+
   #scale_color_manual(values=met.brewer("Archambault")[c(6,2)])+
   theme(legend.position = "right",
         legend.title=element_blank(),
@@ -1684,13 +1684,13 @@ p2.uni.flags<-ggplot(p2,aes(y=yvar,x=log_gdp.cm))+
 
 
 pflag_comb<-
-  ggarrange(p1.uni.flags,p2.uni.flags,align = "v",
+  ggarrange(p1.ben.flags,p2.ben.flags,align = "v",
             ncol=1,nrow=2,heights=c(2,1))
 pflag_comb
 
 
 png(filename = 
-      "../results/uni/log_GDP_flags.png",
+      "../results/ben/log_GDP_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1701,7 +1701,7 @@ dev.off()
 ## mod3: fixed effect of time (Ess round)
 
 ```{r}
-mod3<-lmer(uni.z~gndr.c+essround.c+(gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
+mod3<-lmer(ben.z~gndr.c+essround.c+(gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod3)
 getFE(mod3,round=3)
@@ -1713,7 +1713,7 @@ anova(mod2,mod3)
 ## mod4: random effect of time (Ess round)
 
 ```{r}
-mod4<-lmer(uni.z~gndr.c+essround.c+(gndr.c+essround.c|cntry),
+mod4<-lmer(ben.z~gndr.c+essround.c+(gndr.c+essround.c|cntry),
            data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod4)
@@ -1726,7 +1726,7 @@ anova(mod2,mod3,mod4)
 ## mod5: fixed interaction between time and gender
 
 ```{r}
-mod5<-lmer(uni.z~gndr.c+essround.c+
+mod5<-lmer(ben.z~gndr.c+essround.c+
              gndr.c:essround.c+(gndr.c+essround.c|cntry),
            data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -1740,7 +1740,7 @@ anova(mod4,mod5)
 ## mod6: random interaction between time and gender
 
 ```{r}
-mod6<-lmer(uni.z~gndr.c+essround.c+
+mod6<-lmer(ben.z~gndr.c+essround.c+
              gndr.c:essround.c+(gndr.c+essround.c+gndr.c:essround.c|cntry),
            data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -1847,10 +1847,10 @@ for(i in 1:nrow(p_mod6)){
       gndr.c==gndr_i) %>%
     dplyr::summarize(#n=n(),
       obs_n_wt=sum(pspwght),
-      obs_mean_wt=weighted.mean(x=uni.z,w=pspwght),
-      obs_sd_wt=sqrt(wtd.var(uni.z,pspwght)),
-      obs_mean=mean(uni.z),
-      obs_sd=sd(uni.z),
+      obs_mean_wt=weighted.mean(x=ben.z,w=pspwght),
+      obs_sd_wt=sqrt(wtd.var(ben.z,pspwght)),
+      obs_mean=mean(ben.z),
+      obs_sd=sd(ben.z),
       obs_n=n()) 
   
   p_mod6[i,"obs_mean"]<-temp_diff_dat[,"obs_mean"]
@@ -1890,7 +1890,7 @@ p_time_trends<-
   scale_color_manual(values = my_colors) +
   scale_y_continuous(limits = c(-1.1, 1.1)) +
   scale_x_continuous(limits = c(2001, 2021), breaks = seq(2002, 2020, 2))+
-  ylab("Mean-level of value universalism")+
+  ylab("Mean-level of value benevolence")+
   theme(legend.title=element_blank(),
         legend.text  = element_text(size = 16),
         axis.title.x = element_text(size = 18, face = "bold"),   
@@ -1901,7 +1901,7 @@ p_time_trends<-
 p_time_trends
 
 png(filename = 
-      "../results/uni/time_trends.png",
+      "../results/ben/time_trends.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 p_time_trends
@@ -1945,7 +1945,7 @@ for(unique_cntry in countries) {
 pred_cntry_dat<-do.call(rbind.data.frame,pred_list)
 
 # model based predictions for each time x country point
-pred_cntry_dat$uni.z_mean<-predict(mod6,newdata=pred_cntry_dat)
+pred_cntry_dat$ben.z_mean<-predict(mod6,newdata=pred_cntry_dat)
 
 pred_cntry_dat$essround=pred_cntry_dat$essround.c+5.5
 pred_cntry_dat$year<-
@@ -1967,7 +1967,7 @@ pred_cntry_dat$gender<-
     pred_cntry_dat$gndr.c==-0.5~"women",
   )
 
-range(pred_cntry_dat$uni.z_mean)
+range(pred_cntry_dat$ben.z_mean)
 
 # add observed statistics in addition to model-based estimates
 pred_cntry_dat$obs_mean<-NA
@@ -1989,10 +1989,10 @@ for(i in 1:nrow(pred_cntry_dat)){
            gndr.c==gndr_i) %>%
     dplyr::summarize(#n=n(),
       obs_n_wt=sum(pspwght),
-      obs_mean_wt=weighted.mean(x=uni.z,w=pspwght),
-      obs_sd_wt=sqrt(wtd.var(uni.z,pspwght)),
-      obs_mean=mean(uni.z),
-      obs_sd=sd(uni.z),
+      obs_mean_wt=weighted.mean(x=ben.z,w=pspwght),
+      obs_sd_wt=sqrt(wtd.var(ben.z,pspwght)),
+      obs_mean=mean(ben.z),
+      obs_sd=sd(ben.z),
       obs_n=n()) 
   
   pred_cntry_dat[i,"obs_mean"]<-temp_diff_dat[,"obs_mean"]
@@ -2017,12 +2017,12 @@ pred_cntry_dat$obs_mean_wt_UL<-pred_cntry_dat$obs_mean_wt+qnorm(.975)*pred_cntry
 #my_colors <- met.brewer("Cassatt2")[c(8, 3)]
 my_colors <- met.brewer("Archambault")[c(6,2)]
 
-pdf("../results/uni/country_specific_time_trends.pdf", width = 8, height = 6)
+pdf("../results/ben/country_specific_time_trends.pdf", width = 8, height = 6)
 
 for (ctry in countries) {
   print(
     ggplot(pred_cntry_dat[pred_cntry_dat$cntry == ctry, ], 
-           aes(x = year, y = uni.z_mean, color = gender)) +
+           aes(x = year, y = ben.z_mean, color = gender)) +
       geom_smooth(method = "lm",formula = "y ~ x", se = FALSE) +
       geom_point(size=8) +
       geom_point(aes(x=year,y=obs_mean_wt),size=8,shape = 1,alpha=.50)+
@@ -2032,7 +2032,7 @@ for (ctry in countries) {
       scale_y_continuous(limits = c(-1.1, 1.1)) +
       scale_x_continuous(limits = c(2001, 2021), breaks = seq(2002, 2020, 2)) +
       ggtitle(paste("Country:", ctry))+
-    ylab("Mean-level of value universalism")+
+    ylab("Mean-level of value benevolence")+
       theme(legend.title=element_blank())
   )
 }
@@ -2062,7 +2062,7 @@ my_colors <- met.brewer("Archambault")[c(2,6)]
 
 facet_plot<-
   ggplot(pred_cntry_dat, 
-         aes(x = year, y = uni.z_mean, color = gender)) +
+         aes(x = year, y = ben.z_mean, color = gender)) +
   geom_smooth(method = "lm", se = FALSE, formula="y~x") +
   geom_point(size=3.5) +
   geom_point(aes(x=year,y=obs_mean_wt),size=3.5,shape = 1,alpha=.70)+
@@ -2072,7 +2072,7 @@ facet_plot<-
   scale_y_continuous(limits = c(-1.1, 1.1)) +
   scale_x_continuous(limits = c(2001, 2021), breaks = seq(2002, 2020, 2)) +
   #ggtitle(paste("Country:", ctry))+
-  ylab("Mean-level of value universalism")+
+  ylab("Mean-level of value benevolence")+
   xlab("Year")+
   theme(legend.title=element_blank(),legend.position = "top",
         axis.text.x = element_text(angle = 45,size = 6,hjust=1))+
@@ -2083,7 +2083,7 @@ facet_plot<-
 facet_plot
 
 png(filename = 
-      "../results/uni/country_time_trend_facets.png",
+      "../results/ben/country_time_trend_facets.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 600)
 facet_plot
@@ -2146,7 +2146,7 @@ cntry_specific_changes %>%
 ```{r}
 
 
-mod6_GEI<-lmer(uni.z~gndr.c+essround.c+
+mod6_GEI<-lmer(ben.z~gndr.c+essround.c+
              gndr.c:essround.c+
                gei.z.cm:gndr.c+gei.z.cm:essround.c+gei.z.cm:gndr.c:essround.c+
                (gndr.c+essround.c+gndr.c:essround.c|cntry),
@@ -2209,7 +2209,7 @@ pairs(diff_mod6_GEI,infer=c(T,T))
 #### Country-level predictors: GGGI
 
 ```{r}
-mod6_GGGI<-lmer(uni.z~gndr.c+essround.c+
+mod6_GGGI<-lmer(ben.z~gndr.c+essround.c+
              gndr.c:essround.c+
                gggi.z.cm:gndr.c+gggi.z.cm:essround.c+gggi.z.cm:gndr.c:essround.c+
                (gndr.c+essround.c+gndr.c:essround.c|cntry),
@@ -2273,7 +2273,7 @@ pairs(diff_mod6_GGGI,infer=c(T,T))
 ```{r}
 
 
-mod6_GDI<-lmer(uni.z~gndr.c+essround.c+
+mod6_GDI<-lmer(ben.z~gndr.c+essround.c+
              gndr.c:essround.c+
                gdi.z.cm:gndr.c+gdi.z.cm:essround.c+gdi.z.cm:gndr.c:essround.c+
                (gndr.c+essround.c+gndr.c:essround.c|cntry),
@@ -2337,7 +2337,7 @@ pairs(diff_mod6_GDI,infer=c(T,T))
 ```{r}
 
 
-mod6_log_GDP<-lmer(uni.z~gndr.c+essround.c+
+mod6_log_GDP<-lmer(ben.z~gndr.c+essround.c+
              gndr.c:essround.c+
                log_gdp.z.cm:gndr.c+log_gdp.z.cm:essround.c+log_gdp.z.cm:gndr.c:essround.c+
                (gndr.c+essround.c+gndr.c:essround.c|cntry),
