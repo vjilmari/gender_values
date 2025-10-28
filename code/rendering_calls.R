@@ -44,7 +44,7 @@ purl(input="code/Analysis.Rmd",
      output="code/Analysis.R",
      documentation = 2)
 
-## Analysis youth
+## Analysis_youth
 
 render(input = "code/Analysis_youth.Rmd",
        envir = new.env())

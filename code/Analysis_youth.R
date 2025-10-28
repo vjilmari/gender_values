@@ -6,7 +6,7 @@
 #'     keep_md: true
 #' ---
 #' 
-## ----setup, include=FALSE------------------------------------------------------------------------------
+## ----setup, include=FALSE-------------------------------------------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 #' 
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #' * devtools::install_github("vjilmari/vjihelpers")
 #' * install.packages("ggflags", repos = c("https://jimjam-slam.r-universe.dev","https://cloud.r-project.org")) 
 #' 
-## ----message=FALSE-------------------------------------------------------------------------------------
+## ----message=FALSE--------------------------------------------------------------------------------------------------------------------------
 
 library(multid)
 library(rio)
@@ -43,14 +43,14 @@ library(apaTables)
 #' 
 #' * Loads the preprocessed European Social Survey data file made within "Preparations_ESS" code
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 load("../data/fdat.rdata")
 
 
 #' 
 #' * Include ISO data for country-names
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # read country names
 ISO<-read.csv2("../data/ISO.csv")
 
@@ -60,7 +60,7 @@ ISO<-read.csv2("../data/ISO.csv")
 #' 
 #' * exclude participants with missing values or gender
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 value.vars<-
   c("con","tra",
   "ben","uni",
@@ -80,7 +80,7 @@ fdat<-fdat %>%
 #' 
 #' * Use 100 men and women from each country x time data fold for training set
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # set seed number for reproducibility in training/testing split
 set.seed(13032023)
 # check the cross-validation fold sizes
@@ -97,7 +97,7 @@ value_typ<-
 #' 
 #' ### Training sample size
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 # n folds in the training phase
 length(unique(fdat$cntry_time))
@@ -107,14 +107,14 @@ length(unique(fdat$cntry_time))*200
 #' 
 #' ### Coefficients for value variables in training set
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 round(coefficients(value_typ$cv.mod,s = "lambda.min"),2)
 plot(value_typ$cv.mod)
 
 #' 
 #' ### Description of gender differences/prediction in testing dataset
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # save to summary tab
 sum_tab<-value_typ$D
 # print the country X time -fold results
@@ -147,7 +147,7 @@ cor(sum_tab$sd.1,sum_tab$sd.0)
 #' * use the testing partition of the data set (diff_dat)
 #' * basic descriptives
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 diff_dat<-
   value_typ$preds
@@ -193,7 +193,7 @@ hist(diff_dat$FM.z)
 #' * GEI = Reverse-coded Gender Inequality Index (GII)
 #' 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 GII<-read.csv("../data/GII.csv")
 
 # Obtain GII only for ESS countries
@@ -287,7 +287,7 @@ diff_dat<-
 #' 
 #' * GDI = Gender Development Index
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 GDI<-read.csv("../data/GDI.csv")
 
 # Obtain GDI only for ESS countries
@@ -353,7 +353,7 @@ diff_dat<-
 #' * log_GDP = Logarithm of GDP per capita, PPP (constant 2017 international $)
 #' 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 GDP<-read.csv("../data/GDP_processed.csv")
 
 # Obtain GDP only for ESS countries
@@ -437,7 +437,7 @@ diff_dat<-
 #' * GGGI = Global Gender Gap Index
 #' 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 GGGI<-import("../data/GGGI.xlsx")
 
 # check if all ESS countries are in the log_GGGI data
@@ -507,7 +507,7 @@ diff_dat<-
 #' 
 #' ## Country-specific descriptives
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 # sample sizes from weights
 
@@ -570,8 +570,10 @@ desc_frame<-
     by="cntry"
   )
 
-desc_frame
+# Add country-specific differences
+desc_frame$D<-desc_frame$`FM M Men`-desc_frame$`FM M Women`
 
+desc_frame
 # add country-level measures
 
 desc_frame<-
@@ -620,6 +622,7 @@ cntry_desc_tbl<-
     `FM M`, `FM SD`,
     `FM M Women`, `FM SD Women`,
     `FM M Men`, `FM SD Men`,
+    D,
     GEI = gei.cm,
     GGGI = gggi.cm,
     GDI = gdi.cm,
@@ -637,20 +640,21 @@ cntry_desc_tbl<-
       .fns  = ~ round_tidy(.x, 0)
     )
   )
-cntry_desc_tbl
+print(cntry_desc_tbl,n=33)
 
-#export(cntry_desc_tbl,"../results/cntry_desc_tbl.xlsx",overwrite=T)
+export(cntry_desc_tbl,"../results/youth/cntry_desc_tbl.xlsx",overwrite=T)
 
 #' 
 #' ## Country-level correlations table
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 cor_frame<-
   desc_frame %>%
   select(
     VBMT=`FM M`,
     VBMT_Women=`FM M Women`,
     VBMT_Men=`FM M Men`,
+    D = D,
     GEI = gei.cm,
     GGGI = gggi.cm,
     GDI = gdi.cm,
@@ -661,15 +665,14 @@ cor_frame<-
   ) %>%
   select(-GDP)
 
-#apa.cor.table(
-#  data=cor_frame,
-#  filename = "../results/CorTable1.doc",
-#  #table.number = NA,
-#  show.conf.interval = FALSE,
-#  show.sig.stars = F,
-#  landscape = F
-#)
-
+apa.cor.table(
+  data=cor_frame,
+  filename = "../results/youth/CorTable1.doc",
+  #table.number = NA,
+  show.conf.interval = FALSE,
+  show.sig.stars = F,
+  landscape = F
+)
 
 #' 
 #' 
@@ -677,14 +680,14 @@ cor_frame<-
 #' 
 #' ## Data subset
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 diff_dat<-diff_dat %>%
   filter(agea>17 & agea <30)
 
 #' 
 #' ## mod0: Random intercept model
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 mod0<-lmer(FM.z~(1|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -695,7 +698,7 @@ r2mlm(mod0,bargraph = F)
 #' 
 #' ## mod1: Gender fixed effect
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 mod1<-lmer(FM.z~gndr.c+(1|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -709,7 +712,7 @@ r2mlm(mod1,bargraph = F)
 #' 
 #' * Include random effect correlation by default
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 mod2<-lmer(FM.z~gndr.c+(gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -723,7 +726,7 @@ lvl2_var_cond_lvl1(mod2,lvl1.var = "gndr.c",lvl1.values = c(0.5,-0.5))
 #' 
 #' * Test for random effect correlation
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod2_norecov<-lmer(FM.z~gndr.c+(gndr.c||cntry),data=diff_dat,REML=F,weights = pspwght,
                    control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod2_norecov)
@@ -736,7 +739,7 @@ anova(mod2_norecov,mod2)
 #' 
 #' ## mod2 with Gender-equality index (GEI)
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod2_GEI<-lmer(FM.z~gndr.c+gei.z.cm+gndr.c:gei.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -748,7 +751,7 @@ r2mlm(mod2_GEI,bargraph = F)
 #' 
 #' ### Deconstructed associations
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 t1<-Sys.time()
 ddsc_mod2_GEI<-
   ddsc_ml(model = mod2_GEI,
@@ -774,7 +777,7 @@ round(ddsc_sem_GEI$variance_test,3)
 #' 
 #' ### Figure 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 # plot the results
 
@@ -981,7 +984,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/GEI_flags_youth.png",
+      "../results/youth/GEI_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -991,7 +994,7 @@ dev.off()
 #' 
 #' ## mod2 with Gender-equality index (GGGI)
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod2_GGGI<-lmer(FM.z~gndr.c+gggi.z.cm+gndr.c:gggi.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -1003,7 +1006,7 @@ r2mlm(mod2_GGGI,bargraph = F)
 #' 
 #' ### Deconstructed associations
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 t1<-Sys.time()
 ddsc_mod2_GGGI<-
   ddsc_ml(model = mod2_GGGI,
@@ -1030,7 +1033,7 @@ round(ddsc_sem_GGGI$variance_test,3)
 #' 
 #' ### Figure
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # plot the results
 
 # start with obtaining predicted values for means and differences
@@ -1236,7 +1239,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/GGGI_flags_new_youth.png",
+      "../results/youth/GGGI_flags_new.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1246,7 +1249,7 @@ dev.off()
 #' 
 #' ## mod2 with Gender-equality index (GDI)
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod2_GDI<-lmer(FM.z~gndr.c+gdi.z.cm+gndr.c:gdi.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -1258,7 +1261,7 @@ r2mlm(mod2_GDI,bargraph = F)
 #' 
 #' ### Deconstructed associations
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 t1<-Sys.time()
 ddsc_mod2_GDI<-
   ddsc_ml(model = mod2_GDI,
@@ -1286,7 +1289,7 @@ round(ddsc_sem_GDI$variance_test,3)
 #' 
 #' ### Figure
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # plot the results
 
 # start with obtaining predicted values for means and differences
@@ -1496,7 +1499,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/GDI_flags_youth.png",
+      "../results/youth/GDI_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1508,7 +1511,7 @@ dev.off()
 #' 
 #' * Logarithm of GDP per capita, PPP (constant 2017 international $)
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod2_log_GDP<-lmer(FM.z~gndr.c+log_gdp.z.cm+
                      gndr.c:log_gdp.z.cm+
                  (gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
@@ -1521,7 +1524,7 @@ r2mlm(mod2_log_GDP,bargraph = F)
 #' 
 #' ### Deconstructed associations
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 t1<-Sys.time()
 ddsc_mod2_log_GDP<-
   ddsc_ml(model = mod2_log_GDP,
@@ -1548,7 +1551,7 @@ round(ddsc_sem_log_GDP$variance_test,3)
 #' 
 #' ### Figure
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # plot the results
 
 # start with obtaining predicted values for means and differences
@@ -1754,7 +1757,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/log_GDP_flags_youth.png",
+      "../results/youth/log_GDP_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1764,7 +1767,7 @@ dev.off()
 #' 
 #' ## mod3: fixed effect of time (Ess round)
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod3<-lmer(FM.z~gndr.c+essround.c+(gndr.c|cntry),data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
 summary(mod3)
@@ -1776,7 +1779,7 @@ anova(mod2,mod3)
 #' 
 #' ## mod4: random effect of time (Ess round)
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod4<-lmer(FM.z~gndr.c+essround.c+(gndr.c+essround.c|cntry),
            data=diff_dat,REML=F,weights = pspwght,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e7)))
@@ -1789,7 +1792,7 @@ anova(mod2,mod3,mod4)
 #' 
 #' ## mod5: fixed interaction between time and gender
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod5<-lmer(FM.z~gndr.c+essround.c+
              gndr.c:essround.c+(gndr.c+essround.c|cntry),
            data=diff_dat,REML=F,weights = pspwght,
@@ -1803,7 +1806,7 @@ anova(mod4,mod5)
 #' 
 #' ## mod6: random interaction between time and gender
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod6<-lmer(FM.z~gndr.c+essround.c+
              gndr.c:essround.c+(gndr.c+essround.c+gndr.c:essround.c|cntry),
            data=diff_dat,REML=F,weights = pspwght,
@@ -1817,7 +1820,7 @@ anova(mod4,mod5,mod6)
 #' 
 #' ### Trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # gender specific change over time
 
 change_mod6<-emmeans(mod6,specs="essround.c",by="gndr.c",
@@ -1858,7 +1861,7 @@ pairs(diff_mod6,infer=c(T,T))
 #' 
 #' ### Figure for time trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # Figure for average patterns
 
 # Model-based development for men and women
@@ -1967,7 +1970,7 @@ p_time_trends<-
 p_time_trends
 
 png(filename = 
-      "../results/time_trends_youth.png",
+      "../results/youth/time_trends.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 p_time_trends
@@ -1979,7 +1982,7 @@ dev.off()
 #' 
 #' ### Figures for country-specific time trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 # COUNTRY-SPECIFIC TIME x GENDER TRENDS
 
@@ -2083,7 +2086,7 @@ pred_cntry_dat$obs_mean_wt_UL<-pred_cntry_dat$obs_mean_wt+qnorm(.975)*pred_cntry
 #my_colors <- met.brewer("Cassatt2")[c(8, 3)]
 my_colors <- met.brewer("Archambault")[c(6,2)]
 
-pdf("../results/country_specific_time_trends_youth.pdf", width = 8, height = 6)
+pdf("../results/youth/country_specific_time_trends.pdf", width = 8, height = 6)
 
 for (ctry in countries) {
   print(
@@ -2110,7 +2113,7 @@ dev.off()
 #' 
 #' ### Figure for country-specific trends in panels
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 #ISO<-read.csv2("../data/ISO.csv")
 
 pred_cntry_dat<-left_join(
@@ -2149,7 +2152,7 @@ facet_plot<-
 facet_plot
 
 png(filename = 
-      "../results/country_time_trend_facets_youth.png",
+      "../results/youth/country_time_trend_facets.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 600)
 facet_plot
@@ -2161,7 +2164,7 @@ dev.off()
 #' 
 #' Ratio of variances for time main effect and gendered time effect
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 getVC(mod6,round = 10)[3,"vcov"]/
   getVC(mod6,round = 10)[4,"vcov"]
 
@@ -2169,7 +2172,7 @@ getVC(mod6,round = 10)[3,"vcov"]/
 #' 
 #' Country-specific coefficients for time effect
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 cntry_specific_changes<-
   coefficients(mod6)$cntry %>%
   mutate(change_per_year=essround.c/2,
@@ -2209,7 +2212,7 @@ cntry_specific_changes %>%
 #' 
 #' #### Country-level predictors: GEI
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 
 mod6_GEI<-lmer(FM.z~gndr.c+essround.c+
@@ -2274,7 +2277,7 @@ pairs(diff_mod6_GEI,infer=c(T,T))
 #' 
 #' #### Country-level predictors: GGGI
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod6_GGGI<-lmer(FM.z~gndr.c+essround.c+
              gndr.c:essround.c+
                gggi.z.cm:gndr.c+gggi.z.cm:essround.c+gggi.z.cm:gndr.c:essround.c+
@@ -2336,7 +2339,7 @@ pairs(diff_mod6_GGGI,infer=c(T,T))
 #' 
 #' #### Country-level predictors: GDI
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 
 mod6_GDI<-lmer(FM.z~gndr.c+essround.c+
@@ -2400,7 +2403,7 @@ pairs(diff_mod6_GDI,infer=c(T,T))
 #' 
 #' #### Country-level predictors: log_GDP
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 
 
 mod6_log_GDP<-lmer(FM.z~gndr.c+essround.c+
@@ -2469,7 +2472,7 @@ pairs(diff_mod6_log_GDP,infer=c(T,T))
 #' 
 #' * Then fit a model that adds time-specific within-country fluctuations from country's average gender-equality (fixed and random) and compare to a model without these parameters.
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod7_GEI<-lmer(FM.z~gndr.c+gei.z.cm+gndr.c:gei.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2486,7 +2489,7 @@ anova(mod2_GEI,mod7_GEI)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 change_mod7_GEI<-emmeans(mod7_GEI,specs="essround.c",by="gndr.c",
                               at=list(gndr.c=c(-0.5,0.5),
                                       essround.c=rev(range(diff_dat$essround.c)),
@@ -2524,7 +2527,7 @@ pairs(diff_mod7_GEI,infer=c(T,T))
 
 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod8_GEI<-lmer(FM.z~gndr.c+gei.z.cm+gndr.c:gei.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2540,7 +2543,7 @@ anova(mod2_GEI,mod7_GEI,mod8_GEI)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # gender specific change over time
 
 change_mod8_GEI<-emmeans(mod8_GEI,specs="essround.c",by="gndr.c",
@@ -2585,7 +2588,7 @@ pairs(diff_mod8_GEI,infer=c(T,T))
 #' 
 #' * Then fit a model that adds time-specific within-country fluctuations from country's average gender-equality (fixed and random) and compare to a model without these parameters.
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod7_GGGI<-lmer(FM.z~gndr.c+gggi.z.cm+gndr.c:gggi.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2602,7 +2605,7 @@ anova(mod2_GGGI,mod7_GGGI)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 change_mod7_GGGI<-emmeans(mod7_GGGI,specs="essround.c",by="gndr.c",
                               at=list(gndr.c=c(-0.5,0.5),
                                       essround.c=rev(range(diff_dat$essround.c)),
@@ -2640,7 +2643,7 @@ pairs(diff_mod7_GGGI,infer=c(T,T))
 
 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod8_GGGI<-lmer(FM.z~gndr.c+gggi.z.cm+gndr.c:gggi.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2656,7 +2659,7 @@ anova(mod2_GGGI,mod7_GGGI,mod8_GGGI)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # gender specific change over time
 
 change_mod8_GGGI<-emmeans(mod8_GGGI,specs="essround.c",by="gndr.c",
@@ -2701,7 +2704,7 @@ pairs(diff_mod8_GGGI,infer=c(T,T))
 #' 
 #' * Then fit a model that adds time-specific within-country fluctuations from country's average gender-equality (fixed and random) and compare to a model without these parameters.
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod7_GDI<-lmer(FM.z~gndr.c+gdi.z.cm+gndr.c:gdi.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2718,7 +2721,7 @@ anova(mod2_GDI,mod7_GDI)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 change_mod7_GDI<-emmeans(mod7_GDI,specs="essround.c",by="gndr.c",
                               at=list(gndr.c=c(-0.5,0.5),
                                       essround.c=rev(range(diff_dat$essround.c)),
@@ -2756,7 +2759,7 @@ pairs(diff_mod7_GDI,infer=c(T,T))
 
 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod8_GDI<-lmer(FM.z~gndr.c+gdi.z.cm+gndr.c:gdi.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2772,7 +2775,7 @@ anova(mod2_GDI,mod7_GDI,mod8_GDI)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # gender specific change over time
 
 change_mod8_GDI<-emmeans(mod8_GDI,specs="essround.c",by="gndr.c",
@@ -2817,7 +2820,7 @@ pairs(diff_mod8_GDI,infer=c(T,T))
 #' 
 #' * Then fit a model that adds time-specific within-country fluctuations from country's average gender-equality (fixed and random) and compare to a model without these parameters.
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod7_log_GDP<-lmer(FM.z~gndr.c+log_gdp.z.cm+gndr.c:log_gdp.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2834,7 +2837,7 @@ anova(mod2_log_GDP,mod7_log_GDP)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 change_mod7_log_GDP<-emmeans(mod7_log_GDP,specs="essround.c",by="gndr.c",
                               at=list(gndr.c=c(-0.5,0.5),
                                       essround.c=rev(range(diff_dat$essround.c)),
@@ -2872,7 +2875,7 @@ pairs(diff_mod7_log_GDP,infer=c(T,T))
 
 
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 mod8_log_GDP<-lmer(FM.z~gndr.c+log_gdp.z.cm+gndr.c:log_gdp.z.cm+
                       essround.c+
                       gndr.c:essround.c+
@@ -2888,7 +2891,7 @@ anova(mod2_log_GDP,mod7_log_GDP,mod8_log_GDP)
 #' 
 #' ### Examine trends
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 # gender specific change over time
 
 change_mod8_log_GDP<-emmeans(mod8_log_GDP,specs="essround.c",by="gndr.c",
@@ -2929,7 +2932,7 @@ pairs(diff_mod8_log_GDP,infer=c(T,T))
 #' 
 #' # Session information
 #' 
-## ------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------------------------
 s<-sessionInfo()
 print(s,locale=FALSE)
 

@@ -570,8 +570,10 @@ desc_frame<-
     by="cntry"
   )
 
-desc_frame
+# Add country-specific differences
+desc_frame$D<-desc_frame$`FM M Men`-desc_frame$`FM M Women`
 
+desc_frame
 # add country-level measures
 
 desc_frame<-
@@ -620,6 +622,7 @@ cntry_desc_tbl<-
     `FM M`, `FM SD`,
     `FM M Women`, `FM SD Women`,
     `FM M Men`, `FM SD Men`,
+    D,
     GEI = gei.cm,
     GGGI = gggi.cm,
     GDI = gdi.cm,
@@ -637,9 +640,9 @@ cntry_desc_tbl<-
       .fns  = ~ round_tidy(.x, 0)
     )
   )
-cntry_desc_tbl
+print(cntry_desc_tbl,n=33)
 
-#export(cntry_desc_tbl,"../results/cntry_desc_tbl.xlsx",overwrite=T)
+export(cntry_desc_tbl,"../results/youth/cntry_desc_tbl.xlsx",overwrite=T)
 ```
 
 ## Country-level correlations table
@@ -651,6 +654,7 @@ cor_frame<-
     VBMT=`FM M`,
     VBMT_Women=`FM M Women`,
     VBMT_Men=`FM M Men`,
+    D = D,
     GEI = gei.cm,
     GGGI = gggi.cm,
     GDI = gdi.cm,
@@ -661,15 +665,14 @@ cor_frame<-
   ) %>%
   select(-GDP)
 
-#apa.cor.table(
-#  data=cor_frame,
-#  filename = "../results/CorTable1.doc",
-#  #table.number = NA,
-#  show.conf.interval = FALSE,
-#  show.sig.stars = F,
-#  landscape = F
-#)
-
+apa.cor.table(
+  data=cor_frame,
+  filename = "../results/youth/CorTable1.doc",
+  #table.number = NA,
+  show.conf.interval = FALSE,
+  show.sig.stars = F,
+  landscape = F
+)
 ```
 
 
@@ -981,7 +984,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/GEI_flags_youth.png",
+      "../results/youth/GEI_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1236,7 +1239,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/GGGI_flags_new_youth.png",
+      "../results/youth/GGGI_flags_new.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1496,7 +1499,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/GDI_flags_youth.png",
+      "../results/youth/GDI_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1754,7 +1757,7 @@ pflag_comb
 
 
 png(filename = 
-      "../results/log_GDP_flags_youth.png",
+      "../results/youth/log_GDP_flags.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 pflag_comb
@@ -1967,7 +1970,7 @@ p_time_trends<-
 p_time_trends
 
 png(filename = 
-      "../results/time_trends_youth.png",
+      "../results/youth/time_trends.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 300)
 p_time_trends
@@ -2083,7 +2086,7 @@ pred_cntry_dat$obs_mean_wt_UL<-pred_cntry_dat$obs_mean_wt+qnorm(.975)*pred_cntry
 #my_colors <- met.brewer("Cassatt2")[c(8, 3)]
 my_colors <- met.brewer("Archambault")[c(6,2)]
 
-pdf("../results/country_specific_time_trends_youth.pdf", width = 8, height = 6)
+pdf("../results/youth/country_specific_time_trends.pdf", width = 8, height = 6)
 
 for (ctry in countries) {
   print(
@@ -2149,7 +2152,7 @@ facet_plot<-
 facet_plot
 
 png(filename = 
-      "../results/country_time_trend_facets_youth.png",
+      "../results/youth/country_time_trend_facets.png",
     units = "cm",
     width = 21.0,height=29.7*(3/4),res = 600)
 facet_plot
