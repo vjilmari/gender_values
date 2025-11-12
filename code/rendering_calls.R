@@ -97,3 +97,13 @@ render(input = "code/Analysis_stimulation.Rmd",
 purl(input="code/Analysis_stimulation.Rmd",
      output="code/Analysis_stimulation.R",
      documentation = 2)
+
+## Analysis_power_youth
+
+render(input = "code/Analysis_power_youth.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_power_youth.Rmd",
+     output="code/Analysis_power_youth.R",
+     documentation = 2)
+
