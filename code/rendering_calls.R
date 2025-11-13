@@ -107,3 +107,39 @@ purl(input="code/Analysis_power_youth.Rmd",
      output="code/Analysis_power_youth.R",
      documentation = 2)
 
+## Analysis_universalism_youth
+
+render(input = "code/Analysis_universalism_youth.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_universalism_youth.Rmd",
+     output="code/Analysis_universalism_youth.R",
+     documentation = 2)
+
+## Analysis_benevolence_youth
+
+render(input = "code/Analysis_benevolence_youth.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_benevolence_youth.Rmd",
+     output="code/Analysis_benevolence_youth.R",
+     documentation = 2)
+
+## Analysis_achievement_youth
+
+render(input = "code/Analysis_achievement_youth.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_achievement_youth.Rmd",
+     output="code/Analysis_achievement_youth.R",
+     documentation = 2)
+
+
+## Analysis_stimulation_youth
+
+render(input = "code/Analysis_stimulation_youth.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_stimulation_youth.Rmd",
+     output="code/Analysis_stimulation_youth.R",
+     documentation = 2)
