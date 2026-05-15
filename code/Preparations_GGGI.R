@@ -6,7 +6,7 @@
 #'     keep_md: true
 #' ---
 #' 
-## ----setup, include=FALSE-----------------------------------------------------------------------
+## ----setup, include=FALSE-------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 #' 
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #' 
 #' # Packages
 #' 
-## ----message=FALSE------------------------------------------------------------------------------
+## ----message=FALSE--------------------------------------------------------------------------------------
 library(rio)
 library(dplyr)
 library(tidyr)
@@ -23,7 +23,7 @@ library(psych)
 #' 
 #' # Read Data
 #' 
-## -----------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 GGGI_d<-import("../data/qogdata_03_10_2025.xlsx")
 
 # read also ISO to obtain ISO2 codes
@@ -32,7 +32,7 @@ ISO<-read.csv2("../data/ISO.csv")
 #' 
 #' ## GGGI (Global Gender Gap Index)
 #' 
-## -----------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 # select relevant variables
 GGGI_d<-GGGI_d %>%
   dplyr::select(cname,year,ccodealp,gggi_ggi)
@@ -58,24 +58,24 @@ GGGI_wide <- left_join(x=GGGI_wide,
 table(GGGI_d$year)
 names(GGGI_wide)
 
-# calculate GGGI mean across the time period 2002-2022 including the middle years
+# calculate GGGI mean across the time period 2002-2023 including the middle years
 
-GGGI_vars_2002_2022<-
-  paste0("gggi_",2002:2022)
-GGGI_vars_2002_2022
+GGGI_vars_2002_2023<-
+  paste0("gggi_",2002:2023)
+GGGI_vars_2002_2023
 
 
-table(GGGI_vars_2002_2022 %in% names(GGGI_wide))
+table(GGGI_vars_2002_2023 %in% names(GGGI_wide))
 # which variables are not available
-GGGI_vars_2002_2022[!(GGGI_vars_2002_2022 %in% names(GGGI_wide))]
+GGGI_vars_2002_2023[!(GGGI_vars_2002_2023 %in% names(GGGI_wide))]
 # code only available ones
-GGGI_vars_2002_2022_available<-
-  GGGI_vars_2002_2022[(GGGI_vars_2002_2022 %in% names(GGGI_wide))]
+GGGI_vars_2002_2023_available<-
+  GGGI_vars_2002_2023[(GGGI_vars_2002_2023 %in% names(GGGI_wide))]
 
-GGGI_wide$GGGI_2002_2022_avg<-
-  rowMeans(GGGI_wide[,GGGI_vars_2002_2022_available],na.rm=T)
+GGGI_wide$GGGI_2002_2023_avg<-
+  rowMeans(GGGI_wide[,GGGI_vars_2002_2023_available],na.rm=T)
   
-describe(GGGI_wide$GGGI_2002_2022_avg)
+describe(GGGI_wide$GGGI_2002_2023_avg)
 rio::export(data.frame(GGGI_wide),"../data/GGGI.xlsx",overwrite=T)
 
 

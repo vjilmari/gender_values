@@ -83,32 +83,32 @@ names(GGGI_wide)
 ```
 
 ``` r
-# calculate GGGI mean across the time period 2002-2022 including the middle years
+# calculate GGGI mean across the time period 2002-2023 including the middle years
 
-GGGI_vars_2002_2022<-
-  paste0("gggi_",2002:2022)
-GGGI_vars_2002_2022
+GGGI_vars_2002_2023<-
+  paste0("gggi_",2002:2023)
+GGGI_vars_2002_2023
 ```
 
 ```
 ##  [1] "gggi_2002" "gggi_2003" "gggi_2004" "gggi_2005" "gggi_2006" "gggi_2007" "gggi_2008" "gggi_2009"
 ##  [9] "gggi_2010" "gggi_2011" "gggi_2012" "gggi_2013" "gggi_2014" "gggi_2015" "gggi_2016" "gggi_2017"
-## [17] "gggi_2018" "gggi_2019" "gggi_2020" "gggi_2021" "gggi_2022"
+## [17] "gggi_2018" "gggi_2019" "gggi_2020" "gggi_2021" "gggi_2022" "gggi_2023"
 ```
 
 ``` r
-table(GGGI_vars_2002_2022 %in% names(GGGI_wide))
+table(GGGI_vars_2002_2023 %in% names(GGGI_wide))
 ```
 
 ```
 ## 
 ## FALSE  TRUE 
-##     4    17
+##     4    18
 ```
 
 ``` r
 # which variables are not available
-GGGI_vars_2002_2022[!(GGGI_vars_2002_2022 %in% names(GGGI_wide))]
+GGGI_vars_2002_2023[!(GGGI_vars_2002_2023 %in% names(GGGI_wide))]
 ```
 
 ```
@@ -117,18 +117,18 @@ GGGI_vars_2002_2022[!(GGGI_vars_2002_2022 %in% names(GGGI_wide))]
 
 ``` r
 # code only available ones
-GGGI_vars_2002_2022_available<-
-  GGGI_vars_2002_2022[(GGGI_vars_2002_2022 %in% names(GGGI_wide))]
+GGGI_vars_2002_2023_available<-
+  GGGI_vars_2002_2023[(GGGI_vars_2002_2023 %in% names(GGGI_wide))]
 
-GGGI_wide$GGGI_2002_2022_avg<-
-  rowMeans(GGGI_wide[,GGGI_vars_2002_2022_available],na.rm=T)
+GGGI_wide$GGGI_2002_2023_avg<-
+  rowMeans(GGGI_wide[,GGGI_vars_2002_2023_available],na.rm=T)
   
-describe(GGGI_wide$GGGI_2002_2022_avg)
+describe(GGGI_wide$GGGI_2002_2023_avg)
 ```
 
 ```
 ##    vars   n mean   sd median trimmed  mad  min  max range  skew kurtosis se
-## X1    1 157 0.69 0.06   0.69    0.69 0.05 0.43 0.86  0.43 -0.53     1.95  0
+## X1    1 159 0.69 0.06   0.69    0.69 0.05 0.43 0.86  0.43 -0.53     1.89  0
 ```
 
 ``` r

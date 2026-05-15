@@ -410,31 +410,31 @@ table(GGGI_d$year)</code></pre>
 <pre><code>##  [1] &quot;cname&quot;     &quot;ccodealp&quot;  &quot;gggi_2005&quot; &quot;gggi_2006&quot; &quot;gggi_2007&quot; &quot;gggi_2008&quot; &quot;gggi_2009&quot; &quot;gggi_2010&quot;
 ##  [9] &quot;gggi_2011&quot; &quot;gggi_2012&quot; &quot;gggi_2013&quot; &quot;gggi_2014&quot; &quot;gggi_2015&quot; &quot;gggi_2016&quot; &quot;gggi_2017&quot; &quot;gggi_2019&quot;
 ## [17] &quot;gggi_2020&quot; &quot;gggi_2021&quot; &quot;gggi_2022&quot; &quot;gggi_2023&quot; &quot;ISO2&quot;</code></pre>
-<pre class="r"><code># calculate GGGI mean across the time period 2002-2022 including the middle years
+<pre class="r"><code># calculate GGGI mean across the time period 2002-2023 including the middle years
 
-GGGI_vars_2002_2022&lt;-
-  paste0(&quot;gggi_&quot;,2002:2022)
-GGGI_vars_2002_2022</code></pre>
+GGGI_vars_2002_2023&lt;-
+  paste0(&quot;gggi_&quot;,2002:2023)
+GGGI_vars_2002_2023</code></pre>
 <pre><code>##  [1] &quot;gggi_2002&quot; &quot;gggi_2003&quot; &quot;gggi_2004&quot; &quot;gggi_2005&quot; &quot;gggi_2006&quot; &quot;gggi_2007&quot; &quot;gggi_2008&quot; &quot;gggi_2009&quot;
 ##  [9] &quot;gggi_2010&quot; &quot;gggi_2011&quot; &quot;gggi_2012&quot; &quot;gggi_2013&quot; &quot;gggi_2014&quot; &quot;gggi_2015&quot; &quot;gggi_2016&quot; &quot;gggi_2017&quot;
-## [17] &quot;gggi_2018&quot; &quot;gggi_2019&quot; &quot;gggi_2020&quot; &quot;gggi_2021&quot; &quot;gggi_2022&quot;</code></pre>
-<pre class="r"><code>table(GGGI_vars_2002_2022 %in% names(GGGI_wide))</code></pre>
+## [17] &quot;gggi_2018&quot; &quot;gggi_2019&quot; &quot;gggi_2020&quot; &quot;gggi_2021&quot; &quot;gggi_2022&quot; &quot;gggi_2023&quot;</code></pre>
+<pre class="r"><code>table(GGGI_vars_2002_2023 %in% names(GGGI_wide))</code></pre>
 <pre><code>## 
 ## FALSE  TRUE 
-##     4    17</code></pre>
+##     4    18</code></pre>
 <pre class="r"><code># which variables are not available
-GGGI_vars_2002_2022[!(GGGI_vars_2002_2022 %in% names(GGGI_wide))]</code></pre>
+GGGI_vars_2002_2023[!(GGGI_vars_2002_2023 %in% names(GGGI_wide))]</code></pre>
 <pre><code>## [1] &quot;gggi_2002&quot; &quot;gggi_2003&quot; &quot;gggi_2004&quot; &quot;gggi_2018&quot;</code></pre>
 <pre class="r"><code># code only available ones
-GGGI_vars_2002_2022_available&lt;-
-  GGGI_vars_2002_2022[(GGGI_vars_2002_2022 %in% names(GGGI_wide))]
+GGGI_vars_2002_2023_available&lt;-
+  GGGI_vars_2002_2023[(GGGI_vars_2002_2023 %in% names(GGGI_wide))]
 
-GGGI_wide$GGGI_2002_2022_avg&lt;-
-  rowMeans(GGGI_wide[,GGGI_vars_2002_2022_available],na.rm=T)
+GGGI_wide$GGGI_2002_2023_avg&lt;-
+  rowMeans(GGGI_wide[,GGGI_vars_2002_2023_available],na.rm=T)
   
-describe(GGGI_wide$GGGI_2002_2022_avg)</code></pre>
+describe(GGGI_wide$GGGI_2002_2023_avg)</code></pre>
 <pre><code>##    vars   n mean   sd median trimmed  mad  min  max range  skew kurtosis se
-## X1    1 157 0.69 0.06   0.69    0.69 0.05 0.43 0.86  0.43 -0.53     1.95  0</code></pre>
+## X1    1 159 0.69 0.06   0.69    0.69 0.05 0.43 0.86  0.43 -0.53     1.89  0</code></pre>
 <pre class="r"><code>rio::export(data.frame(GGGI_wide),&quot;../data/GGGI.xlsx&quot;,overwrite=T)</code></pre>
 </div>
 </div>
