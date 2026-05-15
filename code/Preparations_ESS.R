@@ -7,23 +7,29 @@
 #' date: "`r Sys.Date()`"
 #' ---
 #' 
-## ----setup, include=FALSE---------------------------------------------------------------------------
+## ----setup, include=FALSE-------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 #' 
 #' # Packages
 #' 
-## ----message=FALSE----------------------------------------------------------------------------------
+## ----message=FALSE--------------------------------------------------------------------------------------
 library(rio)
 library(dplyr)
 
 #' 
 #' # Read Data
 #' 
-## ---------------------------------------------------------------------------------------------------
-# this reads directly from the zip
-#d<-import("../data/ESS-Data-Wizard-subset-2023-03-15.zip")
-d<-import("../data/ESS-data_subset.zip")
+#' This reads directly from the zip
+#' 
+## -------------------------------------------------------------------------------------------------------
+
+zip_path <- "../data/ESS-data_subset.zip"
+tmp_dir  <- tempdir()
+
+unzip(zip_path, files = "Datafile-subset.sav", exdir = tmp_dir, overwrite = TRUE)
+
+d <- import(file.path(tmp_dir, "Datafile-subset.sav"))
 
 table(d$essround,useNA="always")
 table(d$cntry,useNA="always")
@@ -31,7 +37,7 @@ table(d$cntry,useNA="always")
 #' 
 #' # Calculate the number of waves per each country
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 gd<-data.frame(cntry=unique(d$cntry))
 gd$waves<-NA
 
@@ -53,7 +59,7 @@ table(d$waves,useNA="always")
 #' 
 #' # Gender
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 
 # code binary gender variable
 attributes(d$gndr)
@@ -68,7 +74,7 @@ table(d$gndr.c,useNA="always")
 #' 
 #' # Childlessness
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 # first based only on the single variable
 # this variable has a large number of missing values
 # because it is a follow up question
@@ -141,15 +147,15 @@ prop.table(table(d$childless3))
 #' 
 #' # essround
 #' 
-## ---------------------------------------------------------------------------------------------------
-# center around midpoint
-d$essround.c<-d$essround-5.5
+## -------------------------------------------------------------------------------------------------------
+# center around midpoint (first round + last round)/2 = (1+11)/2 = 6
+d$essround.c<-d$essround-6
 table(d$essround.c)
 
 #' 
 #' # Age
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 attributes(d$agea)
 
 d$age.c<-scale(d$agea,center = T,scale=T)
@@ -167,7 +173,7 @@ table(d$essround,
 #' 
 #' # Education
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 attributes(d$eduyrs)
 table(d$eduyrs,useNA="always")
 
@@ -176,7 +182,7 @@ d$eduyrs.c<-scale(d$eduyrs,center = T,scale=T)
 #' 
 #' # Religiosity
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 attributes(d$rlgdgr)
 table(d$rlgdgr,useNA="always")
 d$rlgdgr.c<-scale(d$rlgdgr,center=T,scale=T)
@@ -197,14 +203,14 @@ d<-
 #' 
 #' # Country x time datasets
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 d$cntry_time<-paste0(d$cntry,"_",d$essround)
 table(d$cntry_time,useNA="always")
 
 #' 
 #' # Same-gender partnership
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 # must be done separately for ESS1
 
 # use a function that checks if there are 
@@ -252,31 +258,82 @@ table(d$same_gndr_partner,useNA="always")
 #' 
 #' # Values
 #' 
-## ---------------------------------------------------------------------------------------------------
-## reverse code all value items first
+#' For rounds 1-10 the variable names are the same. For round 11, the variables have an additional "a" at the end. First merge them to same variables.
+#' 
+## -------------------------------------------------------------------------------------------------------
+table(d$essround,is.na(d$impdiff)) 
+table(d$essround,is.na(d$impdiffa))
 
-d$impdiff.R<-7-d$impdiff
-d$impenv.R<-7-d$impenv
-d$impfree.R<-7-d$impfree
-d$impfun.R<-7-d$impfun
-d$imprich.R<-7-d$imprich
-d$impsafe.R<-7-d$impsafe
-d$imptrad.R<-7-d$imptrad
-d$ipadvnt.R<-7-d$ipadvnt
-d$ipbhprp.R<-7-d$ipbhprp
-d$ipcrtiv.R<-7-d$ipcrtiv
-d$ipeqopt.R<-7-d$ipeqopt
-d$ipfrule.R<-7-d$ipfrule
-d$ipgdtim.R<-7-d$ipgdtim
-d$iphlppl.R<-7-d$iphlppl
-d$iplylfr.R<-7-d$iplylfr
-d$ipmodst.R<-7-d$ipmodst
-d$iprspot.R<-7-d$iprspot
-d$ipshabt.R<-7-d$ipshabt
-d$ipstrgv.R<-7-d$ipstrgv
-d$ipsuces.R<-7-d$ipsuces
-d$ipudrst.R<-7-d$ipudrst
+table(!is.na(d$impdiff),!is.na(d$impdiffa))
 
+value_items <- c(
+  "impdiff",
+  "impenv",
+  "impfree",
+  "impfun",
+  "imprich",
+  "impsafe",
+  "imptrad",
+  "ipadvnt",
+  "ipbhprp",
+  "ipcrtiv",
+  "ipeqopt",
+  "ipfrule",
+  "ipgdtim",
+  "iphlppl",
+  "iplylfr",
+  "ipmodst",
+  "iprspot",
+  "ipshabt",
+  "ipstrgv",
+  "ipsuces",
+  "ipudrst"
+)
+
+#' 
+## -------------------------------------------------------------------------------------------------------
+
+for (x in value_items) {
+  var_a   <- paste0(x, "a")
+  var_out <- paste0(x, "_comb")
+  d[[var_out]] <- ifelse(!is.na(d[[var_a]]), d[[var_a]], d[[x]])
+}
+
+table(d$essround,is.na(d$impdiff_comb))
+
+
+#' 
+#' 
+#' 
+## -------------------------------------------------------------------------------------------------------
+## reverse code all value items
+
+d$impdiff.R<-7-d$impdiff_comb
+d$impenv.R<-7-d$impenv_comb
+d$impfree.R<-7-d$impfree_comb
+d$impfun.R<-7-d$impfun_comb
+d$imprich.R<-7-d$imprich_comb
+d$impsafe.R<-7-d$impsafe_comb
+d$imptrad.R<-7-d$imptrad_comb
+d$ipadvnt.R<-7-d$ipadvnt_comb
+d$ipbhprp.R<-7-d$ipbhprp_comb
+d$ipcrtiv.R<-7-d$ipcrtiv_comb
+d$ipeqopt.R<-7-d$ipeqopt_comb
+d$ipfrule.R<-7-d$ipfrule_comb
+d$ipgdtim.R<-7-d$ipgdtim_comb
+d$iphlppl.R<-7-d$iphlppl_comb
+d$iplylfr.R<-7-d$iplylfr_comb
+d$ipmodst.R<-7-d$ipmodst_comb
+d$iprspot.R<-7-d$iprspot_comb
+d$ipshabt.R<-7-d$ipshabt_comb
+d$ipstrgv.R<-7-d$ipstrgv_comb
+d$ipsuces.R<-7-d$ipsuces_comb
+d$ipudrst.R<-7-d$ipudrst_comb
+
+#' 
+#' Calculate the ten value aggregates from the combined and reverse scored items
+#' 
+## -------------------------------------------------------------------------------------------------------
 # conformity
 attributes(d$ipfrule)
 attributes(d$ipbhprp)
@@ -331,7 +388,6 @@ attributes(d$iprspot)
 d$pow<-rowMeans(d[,c("imprich.R","iprspot.R")],na.rm=T)
 
 # security
-# impsafe and ipstrgv
 
 attributes(d$impsafe)
 attributes(d$ipstrgv)
@@ -340,7 +396,7 @@ d$sec<-rowMeans(d[,c("impsafe.R","ipstrgv.R")],na.rm=T)
 #' 
 #' ## Within-country standardized values
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 
 # center individual scores around country mean-levels on values
 cntry_values<-d %>%
@@ -389,7 +445,7 @@ d$sec.cz<-(d$sec-d$sec.cm)/d$sec.csd
 #' 
 #' ## Within-country standardized value items
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 
 cntry_items<-d %>%
   group_by(cntry) %>%
@@ -470,7 +526,7 @@ d$ipudrst.R.cz<-(d$ipudrst.R-d$ipudrst.R.cm)/d$ipudrst.R.csd
 #' 
 #' # Marriage
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 attributes(d$marital)
 table(d$marital,useNA="always")
 
@@ -492,7 +548,7 @@ d$married.c<-d$married-0.5
 #' 
 #' # Domicile
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 attributes(d$domicil)
 table(d$domicil,useNA="always")
 d$rural=case_when(
@@ -509,7 +565,7 @@ table(d$rural.c,useNA="always")
 #' 
 #' # Variable selection
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 
 fdat<-d %>%
   dplyr::select(
@@ -532,13 +588,13 @@ fdat<-d %>%
 #' 
 #' # Data export
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 save(fdat,file="../data/fdat.rdata")
 
 #' 
 #' # Session information
 #' 
-## ---------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 s<-sessionInfo()
 print(s,locale=F)
 
