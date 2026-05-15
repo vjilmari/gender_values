@@ -410,29 +410,29 @@ GII_d &lt;- left_join(x=GII_d,
                    y=ISO[,c(&quot;ISO2&quot;,&quot;ISO3&quot;)],
                    by=c(&quot;iso3&quot;=&quot;ISO3&quot;))
 
-# calculate GII mean across the time period 2002-2022 including the middle years
+# calculate GII mean across the time period 2002-2023 including the middle years
 
-GII_vars_2002_2022&lt;-
-  paste0(&quot;gii_&quot;,2002:2022)
-GII_vars_2002_2022</code></pre>
+GII_vars_2002_2023&lt;-
+  paste0(&quot;gii_&quot;,2002:2023)
+GII_vars_2002_2023</code></pre>
 <pre><code>##  [1] &quot;gii_2002&quot; &quot;gii_2003&quot; &quot;gii_2004&quot; &quot;gii_2005&quot; &quot;gii_2006&quot; &quot;gii_2007&quot; &quot;gii_2008&quot; &quot;gii_2009&quot; &quot;gii_2010&quot;
 ## [10] &quot;gii_2011&quot; &quot;gii_2012&quot; &quot;gii_2013&quot; &quot;gii_2014&quot; &quot;gii_2015&quot; &quot;gii_2016&quot; &quot;gii_2017&quot; &quot;gii_2018&quot; &quot;gii_2019&quot;
-## [19] &quot;gii_2020&quot; &quot;gii_2021&quot; &quot;gii_2022&quot;</code></pre>
-<pre class="r"><code>table(GII_vars_2002_2022 %in% names(GII_d))</code></pre>
+## [19] &quot;gii_2020&quot; &quot;gii_2021&quot; &quot;gii_2022&quot; &quot;gii_2023&quot;</code></pre>
+<pre class="r"><code>table(GII_vars_2002_2023 %in% names(GII_d))</code></pre>
 <pre><code>## 
 ## TRUE 
-##   21</code></pre>
-<pre class="r"><code>GII_d$gii_2002_2022_avg&lt;-
-  rowMeans(GII_d[,GII_vars_2002_2022],na.rm=T)
+##   22</code></pre>
+<pre class="r"><code>GII_d$gii_2002_2023_avg&lt;-
+  rowMeans(GII_d[,GII_vars_2002_2023],na.rm=T)
   
 
-describe(GII_d$gii_2002_2022_avg)</code></pre>
+describe(GII_d$gii_2002_2023_avg)</code></pre>
 <pre><code>##    vars   n mean   sd median trimmed  mad  min  max range  skew kurtosis   se
 ## X1    1 183 0.39 0.19   0.41    0.39 0.23 0.04 0.82  0.79 -0.17    -1.09 0.01</code></pre>
 <pre class="r"><code># reverse code
 
-GII_d$gei_2002_2022_avg&lt;-(1-GII_d$gii_2002_2022_avg)
-describe(GII_d$gei_2002_2022_avg)</code></pre>
+GII_d$gei_2002_2023_avg&lt;-(1-GII_d$gii_2002_2023_avg)
+describe(GII_d$gei_2002_2023_avg)</code></pre>
 <pre><code>##    vars   n mean   sd median trimmed  mad  min  max range skew kurtosis   se
 ## X1    1 183 0.61 0.19   0.59    0.61 0.23 0.18 0.96  0.79 0.17    -1.09 0.01</code></pre>
 <pre class="r"><code>GII_d</code></pre>
@@ -514,32 +514,32 @@ describe(GII_d$gei_2002_2022_avg)</code></pre>
 ## 23    0.518    0.522    0.509    0.530    0.538    0.498    0.502    0.505    0.480    0.459    0.492
 ## 24    0.460    0.456    0.447    0.446    0.441    0.445    0.441    0.436    0.432    0.422    0.401
 ## 25       NA       NA       NA       NA       NA       NA       NA       NA    0.312    0.286    0.286
-##    gii_2019 gii_2020 gii_2021 gii_2022 gii_2023 ISO2 gii_2002_2022_avg gei_2002_2022_avg
-## 1     0.676    0.674    0.642    0.665    0.661   AF        0.68733333         0.3126667
-## 2     0.131    0.125    0.109    0.107    0.107   AL        0.19385714         0.8061429
-## 3     0.385    0.383    0.442    0.443    0.443   DZ        0.46533333         0.5346667
+##    gii_2019 gii_2020 gii_2021 gii_2022 gii_2023 ISO2 gii_2002_2023_avg gei_2002_2023_avg
+## 1     0.676    0.674    0.642    0.665    0.661   AF        0.68568750         0.3143125
+## 2     0.131    0.125    0.109    0.107    0.107   AL        0.18990909         0.8100909
+## 3     0.385    0.383    0.442    0.443    0.443   DZ        0.46431818         0.5356818
 ## 4        NA       NA       NA       NA       NA   AD               NaN               NaN
-## 5     0.536    0.533    0.532    0.524    0.515   AO        0.54330769         0.4566923
-## 6        NA       NA    0.225    0.224    0.240   AG        0.22450000         0.7755000
-## 7     0.283    0.285    0.272    0.262    0.264   AR        0.34433333         0.6556667
-## 8     0.216    0.207    0.185    0.180    0.180   AM        0.31647619         0.6835238
-## 9     0.079    0.072    0.065    0.056    0.056   AU        0.11495238         0.8850476
-## 10    0.052    0.048    0.042    0.038    0.033   AT        0.08938095         0.9106190
-## 11    0.314    0.332    0.315    0.317    0.315   AZ        0.33857143         0.6614286
-## 12    0.335    0.326    0.329    0.327    0.325   BS        0.35780952         0.6421905
-## 13    0.191    0.189    0.191    0.177    0.165   BH        0.25085000         0.7491500
-## 14    0.520    0.500    0.494    0.487    0.487   BD        0.59852381         0.4014762
-## 15    0.316    0.302    0.303    0.298    0.297   BB        0.33866667         0.6613333
-## 16    0.096    0.094    0.092    0.088    0.080   BY        0.13828571         0.8617143
-## 17    0.047    0.044    0.042    0.038    0.031   BE        0.07747619         0.9225238
-## 18    0.461    0.469    0.436    0.436    0.428   BZ        0.44595238         0.5540476
-## 19    0.636    0.638    0.634    0.640    0.573   BJ        0.64685714         0.3531429
-## 20    0.265    0.266    0.266    0.283    0.278   BT        0.34869231         0.6513077
-## 21    0.429    0.431    0.423    0.421    0.419   BO        0.47742857         0.5225714
+## 5     0.536    0.533    0.532    0.524    0.515   AO        0.54128571         0.4587143
+## 6        NA       NA    0.225    0.224    0.240   AG        0.22966667         0.7703333
+## 7     0.283    0.285    0.272    0.262    0.264   AR        0.34068182         0.6593182
+## 8     0.216    0.207    0.185    0.180    0.180   AM        0.31027273         0.6897273
+## 9     0.079    0.072    0.065    0.056    0.056   AU        0.11227273         0.8877273
+## 10    0.052    0.048    0.042    0.038    0.033   AT        0.08681818         0.9131818
+## 11    0.314    0.332    0.315    0.317    0.315   AZ        0.33750000         0.6625000
+## 12    0.335    0.326    0.329    0.327    0.325   BS        0.35631818         0.6436818
+## 13    0.191    0.189    0.191    0.177    0.165   BH        0.24676190         0.7532381
+## 14    0.520    0.500    0.494    0.487    0.487   BD        0.59345455         0.4065455
+## 15    0.316    0.302    0.303    0.298    0.297   BB        0.33677273         0.6632273
+## 16    0.096    0.094    0.092    0.088    0.080   BY        0.13563636         0.8643636
+## 17    0.047    0.044    0.042    0.038    0.031   BE        0.07536364         0.9246364
+## 18    0.461    0.469    0.436    0.436    0.428   BZ        0.44513636         0.5548636
+## 19    0.636    0.638    0.634    0.640    0.573   BJ        0.64350000         0.3565000
+## 20    0.265    0.266    0.266    0.283    0.278   BT        0.34364286         0.6563571
+## 21    0.429    0.431    0.423    0.421    0.419   BO        0.47477273         0.5252273
 ## 22    0.153    0.144    0.138    0.158    0.157   BA        0.15700000         0.8430000
-## 23    0.466    0.497    0.495    0.492    0.490   BW        0.50285714         0.4971429
-## 24    0.398    0.411    0.405    0.390    0.390   BR        0.44104762         0.5589524
-## 25    0.286    0.276    0.272    0.276    0.257   BN        0.28485714         0.7151429
+## 23    0.466    0.497    0.495    0.492    0.490   BW        0.50227273         0.4977273
+## 24    0.398    0.411    0.405    0.390    0.390   BR        0.43872727         0.5612727
+## 25    0.286    0.276    0.272    0.276    0.257   BN        0.28137500         0.7186250
 ##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 181 rows ]</code></pre>
 <pre class="r"><code>rio::export(data.frame(GII_d),&quot;../data/GII.csv&quot;,overwrite=T)</code></pre>
 </div>
@@ -557,25 +557,25 @@ GDI_d &lt;- left_join(x=GDI_d,
                    y=ISO[,c(&quot;ISO2&quot;,&quot;ISO3&quot;)],
                    by=c(&quot;iso3&quot;=&quot;ISO3&quot;))
 
-# calculate GDI mean across the time period 2002-2022 including the middle years
+# calculate GDI mean across the time period 2002-2023 including the middle years
 
-GDI_vars_2002_2022&lt;-
-  paste0(&quot;gdi_&quot;,2002:2022)
-GDI_vars_2002_2022</code></pre>
+GDI_vars_2002_2023&lt;-
+  paste0(&quot;gdi_&quot;,2002:2023)
+GDI_vars_2002_2023</code></pre>
 <pre><code>##  [1] &quot;gdi_2002&quot; &quot;gdi_2003&quot; &quot;gdi_2004&quot; &quot;gdi_2005&quot; &quot;gdi_2006&quot; &quot;gdi_2007&quot; &quot;gdi_2008&quot; &quot;gdi_2009&quot; &quot;gdi_2010&quot;
 ## [10] &quot;gdi_2011&quot; &quot;gdi_2012&quot; &quot;gdi_2013&quot; &quot;gdi_2014&quot; &quot;gdi_2015&quot; &quot;gdi_2016&quot; &quot;gdi_2017&quot; &quot;gdi_2018&quot; &quot;gdi_2019&quot;
-## [19] &quot;gdi_2020&quot; &quot;gdi_2021&quot; &quot;gdi_2022&quot;</code></pre>
-<pre class="r"><code>table(GDI_vars_2002_2022 %in% names(GDI_d))</code></pre>
+## [19] &quot;gdi_2020&quot; &quot;gdi_2021&quot; &quot;gdi_2022&quot; &quot;gdi_2023&quot;</code></pre>
+<pre class="r"><code>table(GDI_vars_2002_2023 %in% names(GDI_d))</code></pre>
 <pre><code>## 
 ## TRUE 
-##   21</code></pre>
-<pre class="r"><code>GDI_d$gdi_2002_2022_avg&lt;-
-  rowMeans(GDI_d[,GDI_vars_2002_2022],na.rm=T)
+##   22</code></pre>
+<pre class="r"><code>GDI_d$gdi_2002_2023_avg&lt;-
+  rowMeans(GDI_d[,GDI_vars_2002_2023],na.rm=T)
 
 
-describe(GDI_d$gdi_2002_2022_avg)</code></pre>
-<pre><code>##    vars   n mean   sd median trimmed  mad  min  max range  skew kurtosis   se
-## X1    1 195 0.94 0.07   0.96    0.94 0.05 0.55 1.04  0.48 -1.59     4.15 0.01</code></pre>
+describe(GDI_d$gdi_2002_2023_avg)</code></pre>
+<pre><code>##    vars   n mean   sd median trimmed  mad  min  max range  skew kurtosis se
+## X1    1 195 0.94 0.07   0.96    0.95 0.05 0.55 1.04  0.49 -1.64     4.57  0</code></pre>
 <pre class="r"><code>rio::export(data.frame(GDI_d),&quot;../data/GDI.csv&quot;,overwrite=T)</code></pre>
 </div>
 </div>

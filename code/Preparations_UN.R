@@ -6,7 +6,7 @@
 #'     keep_md: true
 #' ---
 #' 
-## ----setup, include=FALSE-----------------------------------------------------------------------
+## ----setup, include=FALSE-------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 #' 
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #' 
 #' # Packages
 #' 
-## ----message=FALSE------------------------------------------------------------------------------
+## ----message=FALSE--------------------------------------------------------------------------------------
 library(rio)
 library(dplyr)
 library(psych)
@@ -22,7 +22,7 @@ library(psych)
 #' 
 #' # Read Data
 #' 
-## -----------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 UN_d<-read.csv("../data/HDR25_Composite_indices_complete_time_series.csv")
 
 # read also ISO to obtain ISO2 codes
@@ -35,7 +35,7 @@ ISO<-read.csv2("../data/ISO.csv")
 #' 
 #' ## GII/GEI (Gender inequality index, reverse coded as gender equality index)
 #' 
-## -----------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 # variable names
 GII_vars<-names(UN_d)[grepl("gii",names(UN_d)) & !grepl("gii_rank",names(UN_d))]
 
@@ -48,31 +48,31 @@ GII_d <- left_join(x=GII_d,
                    y=ISO[,c("ISO2","ISO3")],
                    by=c("iso3"="ISO3"))
 
-# calculate GII mean across the time period 2002-2022 including the middle years
+# calculate GII mean across the time period 2002-2023 including the middle years
 
-GII_vars_2002_2022<-
-  paste0("gii_",2002:2022)
-GII_vars_2002_2022
+GII_vars_2002_2023<-
+  paste0("gii_",2002:2023)
+GII_vars_2002_2023
 
-table(GII_vars_2002_2022 %in% names(GII_d))
+table(GII_vars_2002_2023 %in% names(GII_d))
 
-GII_d$gii_2002_2022_avg<-
-  rowMeans(GII_d[,GII_vars_2002_2022],na.rm=T)
+GII_d$gii_2002_2023_avg<-
+  rowMeans(GII_d[,GII_vars_2002_2023],na.rm=T)
   
 
-describe(GII_d$gii_2002_2022_avg)
+describe(GII_d$gii_2002_2023_avg)
 
 # reverse code
 
-GII_d$gei_2002_2022_avg<-(1-GII_d$gii_2002_2022_avg)
-describe(GII_d$gei_2002_2022_avg)
+GII_d$gei_2002_2023_avg<-(1-GII_d$gii_2002_2023_avg)
+describe(GII_d$gei_2002_2023_avg)
 GII_d
 rio::export(data.frame(GII_d),"../data/GII.csv",overwrite=T)
 
 #' 
 #' ## GDI (Gender development index)
 #' 
-## -----------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------
 # variable names
 GDI_vars<-names(UN_d)[grepl("gdi",names(UN_d)) & !grepl("gdi_group",names(UN_d))]
 
@@ -85,19 +85,19 @@ GDI_d <- left_join(x=GDI_d,
                    y=ISO[,c("ISO2","ISO3")],
                    by=c("iso3"="ISO3"))
 
-# calculate GDI mean across the time period 2002-2022 including the middle years
+# calculate GDI mean across the time period 2002-2023 including the middle years
 
-GDI_vars_2002_2022<-
-  paste0("gdi_",2002:2022)
-GDI_vars_2002_2022
+GDI_vars_2002_2023<-
+  paste0("gdi_",2002:2023)
+GDI_vars_2002_2023
 
-table(GDI_vars_2002_2022 %in% names(GDI_d))
+table(GDI_vars_2002_2023 %in% names(GDI_d))
 
-GDI_d$gdi_2002_2022_avg<-
-  rowMeans(GDI_d[,GDI_vars_2002_2022],na.rm=T)
+GDI_d$gdi_2002_2023_avg<-
+  rowMeans(GDI_d[,GDI_vars_2002_2023],na.rm=T)
 
 
-describe(GDI_d$gdi_2002_2022_avg)
+describe(GDI_d$gdi_2002_2023_avg)
 
 rio::export(data.frame(GDI_d),"../data/GDI.csv",overwrite=T)
 
