@@ -2673,6 +2673,40 @@ pred_cntry_dat$obs_mean_wt_se<-pred_cntry_dat$obs_sd_wt/sqrt(pred_cntry_dat$obs_
 pred_cntry_dat$obs_mean_wt_LL<-pred_cntry_dat$obs_mean_wt+qnorm(.025)*pred_cntry_dat$obs_mean_wt_se
 pred_cntry_dat$obs_mean_wt_UL<-pred_cntry_dat$obs_mean_wt+qnorm(.975)*pred_cntry_dat$obs_mean_wt_se
 
+# add GEI to figures
+
+
+index_year_dat<-
+  diff_dat_cntry_year %>%
+  filter(gndr.c==0.5) %>%
+  select(cntry,year,gei,gggi,gdi,log_gdp)
+
+pred_cntry_dat<-
+  left_join(x=pred_cntry_dat,
+            y=index_year_dat,
+            by=c("cntry","year"))
+
+
+# 1) Define scale for GEI
+#df_ctry <- pred_cntry_dat[pred_cntry_dat$cntry == ctry, ]
+
+gei_min <- min(pred_cntry_dat$gei, na.rm = TRUE)
+gei_max <- max(pred_cntry_dat$gei, na.rm = TRUE)
+
+# Primary axis range
+y_min <- -1.1
+y_max <-  1.1
+
+# Funktion to transform GEI to primary y-axis
+scale_gei_to_y <- function(x) {
+  (x - gei_min) / (gei_max - gei_min) * (y_max - y_min) + y_min
+}
+
+# Reverse function: primary axis to GEI 
+scale_y_to_gei <- function(x) {
+  (x - y_min) / (y_max - y_min) * (gei_max - gei_min) + gei_min
+}
+
 # save the plots to same pdf-file
 
 #my_colors <- met.brewer("Cassatt2")[c(8, 3)]
@@ -2682,20 +2716,36 @@ pdf("../results/country_specific_time_trends.pdf", width = 8, height = 6)
 
 for (ctry in countries) {
   print(
-    ggplot(pred_cntry_dat[pred_cntry_dat$cntry == ctry, ], 
-           aes(x = year, y = FM.z_mean, color = gender)) +
-      geom_smooth(method = "lm",formula = "y ~ x", se = FALSE) +
-      geom_point(size=8) +
-      geom_point(aes(x=year,y=obs_mean_wt),size=8,shape = 1,alpha=.50)+
-      geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
-      scale_color_manual(values = my_colors) +
-      geom_flag(aes(country=tolower(ctry)))+
-      scale_y_continuous(limits = c(-1.1, 1.1)) +
-      scale_x_continuous(limits = c(2001, 2024),
-                         breaks = c(seq(2002, 2020, 2),2023)) +
-      ggtitle(paste("Country:", ctry))+
-    ylab("Mean-level of value male-typicality")+
-      theme(legend.title=element_blank())
+    ggplot(pred_cntry_dat[pred_cntry_dat$cntry == ctry, ],
+       aes(x = year, y = FM.z_mean, color = gender)) +
+  geom_smooth(method = "lm", formula = "y ~ x", se = FALSE) +
+  geom_point(size = 8) +
+  geom_point(aes(x = year, y = obs_mean_wt), size = 8, shape = 1, alpha = .50) +
+  geom_errorbar(aes(ymin = obs_mean_wt_LL, ymax = obs_mean_wt_UL), alpha = .50) +
+  geom_line(aes(y = scale_gei_to_y(gei),
+                linetype = "GEI"),   
+            color = "black",         
+            linewidth = 1.2) +
+  scale_color_manual(values = my_colors) +
+  scale_linetype_manual(          
+    name   = NULL,                
+    values = c("GEI" = "solid"),
+    labels = c("GEI" = "GEI")
+  ) +
+  geom_flag(aes(country = tolower(ctry))) +
+  scale_y_continuous(
+    limits = c(y_min, y_max),
+    name   = "Mean-level of value male-typicality",
+    sec.axis = sec_axis(~ scale_y_to_gei(.),
+                        name = "Gender Equality Index (GEI)")
+  ) +
+  scale_x_continuous(
+    limits = c(2001, 2024),
+    breaks = c(seq(2002, 2020, 2), 2023)
+  ) +
+  ggtitle(paste("Country:", ctry)) +
+  theme(legend.title = element_blank())
+
   )
 }
 
@@ -2715,10 +2765,6 @@ pred_cntry_dat<-left_join(
   by=c("cntry"="ISO2")
 )
 
-#mod6_cntry_coefs
-
-#round((mod6_cntry_coefs$`gndr.c:year.c`/2)*18,2)
-
 #my_colors <- met.brewer("Cassatt2")[c(8, 3)]
 my_colors <- met.brewer("Archambault")[c(2,6)]
 
@@ -2729,9 +2775,23 @@ facet_plot<-
   geom_point(size=3.5) +
   geom_point(aes(x=year,y=obs_mean_wt),size=3.5,shape = 1,alpha=.70)+
   geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
+  geom_line(aes(y = scale_gei_to_y(gei),
+                linetype = "GEI"),   
+            color = "black",         
+            linewidth = 1.2) +
   scale_color_manual(values = my_colors) +
+  scale_linetype_manual(          
+    name   = NULL,                
+    values = c("GEI" = "solid"),
+    labels = c("GEI" = "GEI")
+  ) +
   #geom_flag(aes(country=tolower(ctry)))+
-  scale_y_continuous(limits = c(-1.1, 1.1)) +
+  scale_y_continuous(
+    limits = c(y_min, y_max),
+    name   = "Mean-level of value male-typicality",
+    sec.axis = sec_axis(~ scale_y_to_gei(.),
+                        name = "Gender Equality Index (GEI)")
+  ) +
   scale_x_continuous(limits = c(2001, 2024),
                      breaks = c(seq(2002, 2020, 2),2023)) +
   #ggtitle(paste("Country:", ctry))+
@@ -2752,14 +2812,6 @@ png(filename =
 facet_plot
 dev.off()
 
-# wider for presentation purposes
-
-png(filename = 
-      "../results/country_time_trend_facets_presentation.png",
-    units = "cm",
-    width = 1.5*21.0,height=29.7*(3/4),res = 600)
-facet_plot
-dev.off()
 
 ```
 
