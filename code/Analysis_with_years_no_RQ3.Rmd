@@ -763,6 +763,17 @@ apa.cor.table(
   landscape = F
 )
 ```
+## Intraclass coefficient for gender
+
+```{r}
+fit_gndr_cntry<-
+  glmer(gndr.bin~(1|cntry),
+        data=diff_dat,family=binomial(link="logit"))
+summary(fit_gndr_cntry)
+tau=VarCorr(fit_gndr_cntry)$cntry[1]
+(ICC_gndr=tau/(tau+pi^2/3))
+
+```
 
 
 # Analysis
