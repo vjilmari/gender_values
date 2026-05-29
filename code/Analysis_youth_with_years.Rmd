@@ -2552,6 +2552,29 @@ p_mod6$obs_mean_wt_LL<-p_mod6$obs_mean_wt+
 p_mod6$obs_mean_wt_UL<-p_mod6$obs_mean_wt+
   qnorm(.975)*p_mod6$obs_mean_wt_se
 
+# texts for the figure
+
+## obtain texts for the figure
+
+time_slopes<-data.frame(pairs(change_mod6,adjust="none",infer=c(T,T)))
+time_slope_text_men<-
+  paste0("Linear change from 2002 to 2023 = ",round_tidy(time_slopes[2,"estimate"],2),
+         ", 95% CI [",round_tidy(time_slopes[2,"lower.CL"],2),
+         ", ", round_tidy(time_slopes[2,"upper.CL"],2),"], p = ",
+         round_tidy(time_slopes[2,"p.value"],3))
+
+time_slope_text_women<-
+  paste0("Linear change from 2002 to 2023 = ",round_tidy(time_slopes[1,"estimate"],2),
+         ", 95% CI [",round_tidy(time_slopes[1,"lower.CL"],2),
+         ", ", round_tidy(time_slopes[1,"upper.CL"],2),"], p = ",
+         round_tidy(time_slopes[1,"p.value"],3))
+
+time_slope_texts<-data.frame(
+  gndr.c=c("Women","Men"),
+  year=c(2002,2002),
+  yvar=c(-0.15,0.85),
+  label=c(time_slope_text_women,time_slope_text_men)
+)
 
 # Figure
 
@@ -2565,6 +2588,13 @@ p_time_trends<-
   geom_point(size=8) +
   geom_point(aes(x=year,y=obs_mean_wt),size=8,shape = 1,alpha=.50)+
   geom_errorbar(aes(ymin=obs_mean_wt_LL, ymax=obs_mean_wt_UL),alpha = .50)+
+  geom_text(
+    data = time_slope_texts,
+    aes(x = year, y = yvar, color = gndr.c,label=label),
+    #inherit.aes = FALSE,
+    hjust = 0,
+    size = 4
+  ) +
   scale_color_manual(values = my_colors) +
   scale_y_continuous(limits = c(-1.1, 1.1)) +
   scale_x_continuous(limits = c(2001, 2024),
