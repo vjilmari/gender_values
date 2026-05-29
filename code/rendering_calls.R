@@ -35,6 +35,15 @@ purl(input="code/Preparations_GDP.Rmd",
      output="code/Preparations_GDP.R",
      documentation = 2)
 
+## Invariance examinations
+
+render(input = "code/Invariance.Rmd",
+       envir = new.env())
+
+purl(input="code/Invariance.Rmd",
+     output="code/Invariance.R",
+     documentation = 2)
+
 ## Analysis
 
 render(input = "code/Analysis.Rmd",
