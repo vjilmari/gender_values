@@ -1,0 +1,232 @@
+---
+title: "Post-hoc power analysis for cross-level interaction versus simple slopes"
+output: 
+  html_document: 
+    toc: true
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+To simplify, country-level double-entry data will be used for these purposes. This data matches with Table 1 except no rounding is taking place. 
+
+# Packages
+
+```{r}
+library(lme4)
+library(rio)
+library(multid)
+library(emmeans)
+library(MASS)
+library(matrixcalc)
+```
+
+# Data
+
+Get country-level data frame to obtain the parameter estimates of interest for simulation.
+
+```{r}
+d<-import("../results/cntry_lvl_data.xlsx")
+```
+
+# Parameter estimates
+
+```{r}
+# correlation between GGGI and VBMT men
+(r_x_y1<-cor(d$gggi.cm,d$`FM M Men`))
+# correlation between GGGI and VBMT women
+(r_x_y2<-cor(d$gggi.cm,d$`FM M Women`))
+# correlation between VBMT men and VBMT women
+(r_y1_y2<-cor(d$`FM M Men`,d$`FM M Women`))
+# standard deviation of VBMT men
+(sd_y1<-sd(d$`FM M Men`))
+# standard deviation of VBMT women
+(sd_y2<-sd(d$`FM M Women`))
+# standard deviation of GGGI
+(sd_x<-sd(d$gggi.cm))
+
+```
+# Difference score correlation as deconstructed
+
+```{r}
+# correlation between GGGI and Difference between men and women in VBMT
+(r_x_y1_y2<-cor(d$gggi.cm,d$D))
+# calculated from the above parameters
+(r_x_y1*sd_y1-r_x_y2*sd_y2)/sqrt(sd_y1^2+sd_y2^2-2*r_y1_y2*sd_y1*sd_y2)
+```
+
+These two produce the same number as per Ilmarinen & Lönnqvist (2024)
+
+# Calculate q-estimates
+
+```{r}
+# q directly from correlations (not on the same scale because y1 and y2 are standardized separately)
+(q<-atanh(r_x_y1)-atanh(r_x_y2))
+# q based on slopes that are on the same scale (q_b; y1 and y2 have common standardizer)
+# pooled SD
+(pooled_sd<-sqrt((sd_y1^2+sd_y2^2)/2))
+# SDs harmonized with the pooled SD
+(hsd_y1<-sd_y1/pooled_sd)
+(hsd_y2<-sd_y2/pooled_sd)
+# pooling the harmonized SDs should give SD = 1
+sqrt((hsd_y1^2+hsd_y2^2)/2)
+# scale the correlations to standardized simple slope estimates
+(hr_x_y1<-r_x_y1*hsd_y1)
+(hr_x_y2<-r_x_y2*hsd_y2)
+# calculate q_b from the standardized simple slopes
+(q_b<-atanh(hr_x_y1)-atanh(hr_x_y2))
+
+```
+# run a structural path model
+
+```{r}
+# needs some renaming
+d$Men<-d$`FM M Men`
+d$Women<-d$`FM M Women`
+d$VBMT<-d$`FM M`
+
+spm<-ddsc_sem(data=d,x="gggi.cm",y1="Men",y2="Women")
+round(spm$results,3)
+
+```
+
+Identical estimates to the one's calculated above.
+
+# run a multi-level double entry model
+
+```{r}
+# construct a long-format double entry data
+long_d<-
+  data.frame(
+    VBMT=c(d$Men,d$Women),
+    gggi.cm=c(d$gggi.cm,d$gggi.cm),
+    gndr.c=c(rep(0.5,nrow(d)),rep(-0.5,nrow(d))),
+    cntry=c(d$cntry,d$cntry)
+    
+  )
+
+# standardize gggi.cm
+long_d$gggi.z<-(long_d$gggi.cm-mean(d$gggi.cm))/sd_x
+
+# standardize also VBMT with the pooled SD, do not center
+long_d$VBMT.z<-(long_d$VBMT)/pooled_sd
+
+
+mlm<-ddsc_ml(data=long_d,predictor="gggi.z",moderator = "gndr.c",
+             moderator_values = c(0.5,-0.5),DV = "VBMT.z",lvl2_unit = "cntry")
+round(mlm$results,3)
+# check also the model output
+fit_mlm<-mlm$model
+summary(fit_mlm)
+# calculate simple slopes
+emtrends(fit_mlm,var="gggi.z",specs="gndr.c",at=list(gndr.c=c(0.5,-0.5)),infer=c(T,T))
+
+```
+
+The deconstructed analysis again provides identical estimates to the above models.
+
+
+
+# Power simulation
+
+Run a power simulation from a population which has the same q, q_b, r_x_y1, r_x_y2, sd_y1, sd_y2, sd_x, sd in VBMT between countries, but different r_y1_y2 (correlation between men and women mean-levels). Show that there is more power to detect the cross-level interaction as opposed to the simple slopes of b_11 and b_21 when the correlation is high as it now is in these data (.94)
+
+## Original parameters
+
+```{r}
+
+# covariance matrix
+(covmat<-cov(d[,c("gggi.cm","VBMT","Men","Women")]))
+# correlation matrix
+(cormat<-cor(d[,c("gggi.cm","VBMT","Men","Women")]))
+# mean vector
+(mu=c(mean(d$gggi.cm),mean(d$VBMT),mean(d$Men),mean(d$Women)))
+# sd vector
+(sds=c(sd(d$gggi.cm),sd(d$VBMT),sd(d$Men),sd(d$Women)))
+# sample size
+n=nrow(d)
+
+# save to a list of covariance matrices
+cov_mat_list<-list()
+cov_mat_list[[1]]<-covmat
+```
+
+## Alternative parameters
+
+Change only the covariance between y1 and y2 to lower values: .90, .80, .70, .60, and so on, until .00. Keep the other covariances, variances, etc.
+
+Covariation is a product of correlation and standard deviations: r_y1_y2 x sd_y1 x sd_y2
+
+```{r}
+(alt_r_y1_y2<-rev(seq(from=.00,to=.90,by=.10)))
+
+for (i in 1:length(alt_r_y1_y2)){
+  alt_covmat<-covmat
+  alt_covmat["Men","Women"]<-alt_r_y1_y2[i]*sd_y1*sd_y2
+  alt_covmat["Women","Men"]<-alt_r_y1_y2[i]*sd_y1*sd_y2
+  cov_mat_list[[1+i]]<-alt_covmat
+}
+
+cov_mat_list
+
+# check if each of these are positive definite
+for(i in 1:length(alt_r_y1_y2)){
+  print(c(i,is.positive.definite(cov_mat_list[[i]])))
+}
+
+is.positive.definite(cov_mat_list[[2]])
+
+```
+
+## Power analysis
+
+run 1000 repeats with data generated from each covariance matrix and otherwise equal parameters. Run the double-entry model, and chech the power to detect cross-level interaction and both simple slopes
+
+```{r}
+
+
+n.sims=10
+
+for(i in 1:n.sims){
+  # generate data based on covariance matrix and mean vector
+  sim_dat<-data.frame(mvrnorm(n=n,mu = mu,Sigma = cov_mat_list[[i]]))
+  # add country (specific countries do not matter here)
+  sim_dat$cntry<-d$cntry
+  # add general between country variability to means of men and women
+  sim_sd_btw<-rnorm(n=n,sd=sd_btw)
+  sim_dat$Men<-
+  sim_dat$gggi.z<-(sim_dat$gggi.cm-mean(sim_dat$gggi.cm))/sd(sim_dat$gggi.cm)
+  sim_pooled_sd<-sqrt((sd(sim_dat$Men)^2+sd(sim_dat$Women)^2)/2)
+  
+  sim_dat$Men.z<-sim_dat$Men/sim_pooled_sd
+  sim_dat$Women.z<-sim_dat$Women/sim_pooled_sd
+  
+  # construct a long-format double entry data
+  sim_long_d<-
+  data.frame(
+    VBMT.z=c(sim_dat$Men.z,sim_dat$Women.z),
+    gggi.z=c(sim_dat$gggi.z,sim_dat$gggi.z),
+    gndr.c=c(rep(0.5,nrow(d)),rep(-0.5,nrow(d))),
+    cntry=c(sim_dat$cntry,sim_dat$cntry)
+    
+  )
+
+
+  sim_mlm<-ddsc_ml(data=sim_long_d,predictor="gggi.z",moderator = "gndr.c",
+             moderator_values = c(0.5,-0.5),DV = "VBMT.z",lvl2_unit = "cntry")
+  round(sim_mlm$results,3)
+  # check also the model output
+  fit_sim_mlm<-sim_mlm$model
+  summary(fit_sim_mlm)
+  # calculate simple slopes
+  emtrends(fit_sim_mlm,var="gggi.z",specs="gndr.c",at=list(gndr.c=c(0.5,-0.5)),infer=c(T,T))
+
+  
+
+}
+
+```
+
+
