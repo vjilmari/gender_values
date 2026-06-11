@@ -271,3 +271,21 @@ render(input = "code/Analysis_stimulation_youth.Rmd",
 purl(input="code/Analysis_stimulation_youth.Rmd",
      output="code/Analysis_stimulation_youth.R",
      documentation = 2)
+
+## VBMT_reliability
+
+render(input = "code/VBMT_reliability.Rmd",
+       envir = new.env())
+
+purl(input="code/VBMT_reliability.Rmd",
+     output="code/VBMT_reliability.R",
+     documentation = 2)
+
+## cl_interaction_and_simple_slope_power
+
+render(input = "code/cl_interaction_and_simple_slope_power.Rmd",
+       envir = new.env())
+
+purl(input="code/cl_interaction_and_simple_slope_power.Rmd",
+     output="code/cl_interaction_and_simple_slope_power.R",
+     documentation = 2)
