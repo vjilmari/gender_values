@@ -578,11 +578,7 @@ fdat<-d %>%
     married,married.c,
     rural,rural.c,
     same_gndr_partner,
-    con,tra,ben,uni,sdi,sti,hed,ach,pow,sec,
-    con.cz,tra.cz,ben.cz,uni.cz,sdi.cz,sti.cz,hed.cz,ach.cz,pow.cz,sec.cz,
-    impdiff.R.cz,impenv.R.cz,impfree.R.cz,impfun.R.cz,imprich.R.cz,impsafe.R.cz,imptrad.R.cz,
-    ipadvnt.R.cz,ipbhprp.R.cz,ipcrtiv.R.cz,ipeqopt.R.cz,ipfrule.R.cz,ipgdtim.R.cz,iphlppl.R.cz,
-    iplylfr.R.cz,ipmodst.R.cz,iprspot.R.cz,ipshabt.R.cz,ipstrgv.R.cz,ipsuces.R.cz,ipudrst.R.cz
+    con,tra,ben,uni,sdi,sti,hed,ach,pow,sec
   )
 
 #' 
