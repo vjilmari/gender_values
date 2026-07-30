@@ -1,5 +1,5 @@
 ---
-title: "Post-hoc power analysis for cross-level interaction versus simple slopes"
+title: "Constructing country-level models from Table 1"
 output: 
   html_document: 
     toc: true
