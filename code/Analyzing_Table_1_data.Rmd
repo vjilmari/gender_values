@@ -1,5 +1,5 @@
 ---
-title: "Constructing country-level models from Table 1"
+title: "Constructing country-level models  from Table 1"
 output: 
   html_document: 
     toc: true
