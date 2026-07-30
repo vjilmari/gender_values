@@ -53,125 +53,6 @@ purl(input="code/Analysis.Rmd",
      output="code/Analysis.R",
      documentation = 2)
 
-## Analysis_with_years (instead of essrounds)
-
-render(input = "code/Analysis_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_with_years.Rmd",
-     output="code/Analysis_with_years.R",
-     documentation = 2)
-
-## Analysis_power_with_years (instead of essrounds)
-
-render(input = "code/Analysis_power_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_power_with_years.Rmd",
-     output="code/Analysis_power_with_years.R",
-     documentation = 2)
-
-## Analysis_benevolence_with_years (instead of essrounds)
-
-render(input = "code/Analysis_benevolence_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_benevolence_with_years.Rmd",
-     output="code/Analysis_benevolence_with_years.R",
-     documentation = 2)
-
-## Analysis_achievement_with_years (instead of essrounds)
-
-render(input = "code/Analysis_achievement_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_achievement_with_years.Rmd",
-     output="code/Analysis_achievement_with_years.R",
-     documentation = 2)
-
-## Analysis_universalism_with_years (instead of essrounds)
-
-render(input = "code/Analysis_universalism_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_universalism_with_years.Rmd",
-     output="code/Analysis_universalism_with_years.R",
-     documentation = 2)
-
-## Analysis_stimulation_with_years (instead of essrounds)
-
-render(input = "code/Analysis_stimulation_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_stimulation_with_years.Rmd",
-     output="code/Analysis_stimulation_with_years.R",
-     documentation = 2)
-
-## Analysis_conformity_with_years (instead of essrounds)
-
-render(input = "code/Analysis_conformity_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_conformity_with_years.Rmd",
-     output="code/Analysis_conformity_with_years.R",
-     documentation = 2)
-
-## Analysis_tradition_with_years (instead of essrounds)
-
-render(input = "code/Analysis_tradition_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_tradition_with_years.Rmd",
-     output="code/Analysis_tradition_with_years.R",
-     documentation = 2)
-
-## Analysis_security_with_years (instead of essrounds)
-
-render(input = "code/Analysis_security_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_security_with_years.Rmd",
-     output="code/Analysis_security_with_years.R",
-     documentation = 2)
-
-## Analysis_self_direction_with_years (instead of essrounds)
-
-render(input = "code/Analysis_self_direction_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_self_direction_with_years.Rmd",
-     output="code/Analysis_self_direction_with_years.R",
-     documentation = 2)
-
-## Analysis_hedonism_with_years (instead of essrounds)
-
-render(input = "code/Analysis_hedonism_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_hedonism_with_years.Rmd",
-     output="code/Analysis_hedonism_with_years.R",
-     documentation = 2)
-
-
-## Analysis_with_years (instead of essrounds), exclude RQ3 because models run so slowly
-
-render(input = "code/Analysis_with_years_no_RQ3.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_with_years_no_RQ3.Rmd",
-     output="code/Analysis_with_years_no_RQ3.R",
-     documentation = 2)
-
-## Analysis_youth_with_years (instead of essrounds)
-
-render(input = "code/Analysis_youth_with_years.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_youth_with_years.Rmd",
-     output="code/Analysis_youth_with_years.R",
-     documentation = 2)
-
-
 ## Analysis_youth
 
 render(input = "code/Analysis_youth.Rmd",
@@ -179,15 +60,6 @@ render(input = "code/Analysis_youth.Rmd",
 
 purl(input="code/Analysis_youth.Rmd",
      output="code/Analysis_youth.R",
-     documentation = 2)
-
-## Analysis_universalism
-
-render(input = "code/Analysis_universalism.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_universalism.Rmd",
-     output="code/Analysis_universalism.R",
      documentation = 2)
 
 ## Analysis_achievement
@@ -208,6 +80,24 @@ purl(input="code/Analysis_benevolence.Rmd",
      output="code/Analysis_benevolence.R",
      documentation = 2)
 
+## Analysis_conformity
+
+render(input = "code/Analysis_conformity.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_conformity.Rmd",
+     output="code/Analysis_conformity.R",
+     documentation = 2)
+
+## Analysis_hedonism
+
+render(input = "code/Analysis_hedonism.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_hedonism.Rmd",
+     output="code/Analysis_hedonism.R",
+     documentation = 2)
+
 ## Analysis_power
 
 render(input = "code/Analysis_power.Rmd",
@@ -215,6 +105,24 @@ render(input = "code/Analysis_power.Rmd",
 
 purl(input="code/Analysis_power.Rmd",
      output="code/Analysis_power.R",
+     documentation = 2)
+
+## Analysis_security
+
+render(input = "code/Analysis_security.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_security.Rmd",
+     output="code/Analysis_security.R",
+     documentation = 2)
+
+## Analysis_self_direction
+
+render(input = "code/Analysis_self_direction.Rmd",
+       envir = new.env())
+
+purl(input="code/Analysis_self_direction.Rmd",
+     output="code/Analysis_self_direction.R",
      documentation = 2)
 
 ## Analysis_stimulation
@@ -226,50 +134,22 @@ purl(input="code/Analysis_stimulation.Rmd",
      output="code/Analysis_stimulation.R",
      documentation = 2)
 
-## Analysis_power_youth
+## Analysis_tradition
 
-render(input = "code/Analysis_power_youth.Rmd",
+render(input = "code/Analysis_tradition.Rmd",
        envir = new.env())
 
-purl(input="code/Analysis_power_youth.Rmd",
-     output="code/Analysis_power_youth.R",
+purl(input="code/Analysis_tradition.Rmd",
+     output="code/Analysis_tradition.R",
      documentation = 2)
 
-## Analysis_universalism_youth
+## Analysis_universalism
 
-render(input = "code/Analysis_universalism_youth.Rmd",
+render(input = "code/Analysis_universalism.Rmd",
        envir = new.env())
 
-purl(input="code/Analysis_universalism_youth.Rmd",
-     output="code/Analysis_universalism_youth.R",
-     documentation = 2)
-
-## Analysis_benevolence_youth
-
-render(input = "code/Analysis_benevolence_youth.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_benevolence_youth.Rmd",
-     output="code/Analysis_benevolence_youth.R",
-     documentation = 2)
-
-## Analysis_achievement_youth
-
-render(input = "code/Analysis_achievement_youth.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_achievement_youth.Rmd",
-     output="code/Analysis_achievement_youth.R",
-     documentation = 2)
-
-
-## Analysis_stimulation_youth
-
-render(input = "code/Analysis_stimulation_youth.Rmd",
-       envir = new.env())
-
-purl(input="code/Analysis_stimulation_youth.Rmd",
-     output="code/Analysis_stimulation_youth.R",
+purl(input="code/Analysis_universalism.Rmd",
+     output="code/Analysis_universalism.R",
      documentation = 2)
 
 ## VBMT_reliability
@@ -281,6 +161,16 @@ purl(input="code/VBMT_reliability.Rmd",
      output="code/VBMT_reliability.R",
      documentation = 2)
 
+## VBMT_balanced_sampling_of_country_time
+
+render(input = "code/VBMT_balanced_sampling_of_country_time.Rmd",
+       envir = new.env())
+
+purl(input="code/VBMT_balanced_sampling_of_country_time.Rmd",
+     output="code/VBMT_balanced_sampling_of_country_time.R",
+     documentation = 2)
+
+
 ## cl_interaction_and_simple_slope_power
 
 render(input = "code/cl_interaction_and_simple_slope_power.Rmd",
@@ -289,3 +179,4 @@ render(input = "code/cl_interaction_and_simple_slope_power.Rmd",
 purl(input="code/cl_interaction_and_simple_slope_power.Rmd",
      output="code/cl_interaction_and_simple_slope_power.R",
      documentation = 2)
+
