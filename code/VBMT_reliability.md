@@ -653,7 +653,7 @@ long_GII_in_ESS_d <- GII_in_ESS_d %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
   mutate(gei = 1 - gii) %>%
-  select(ISO2, iso3, country, year, gii, gei, gii_2002_2023_avg, gei_2002_2023_avg)
+  dplyr::select(ISO2, iso3, country, year, gii, gei, gii_2002_2023_avg, gei_2002_2023_avg)
 
 
 # describe gei average
@@ -748,7 +748,7 @@ long_GDI_in_ESS_d <- GDI_in_ESS_d %>%
   ) %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
-  select(ISO2, iso3, country, year, gdi, gdi_2002_2023_avg)
+  dplyr::select(ISO2, iso3, country, year, gdi, gdi_2002_2023_avg)
 
 # describe gdi average
 psych::describe(GDI_in_ESS_d$gdi_2002_2023_avg)
@@ -831,7 +831,7 @@ long_GDP_in_ESS_d <- GDP_in_ESS_d %>%
   ) %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
-  select(ISO2, Country.Name, year, gdp, gdp_2002_2023_avg,log_gdp_2002_2023_avg) %>%
+  dplyr::select(ISO2, Country.Name, year, gdp, gdp_2002_2023_avg,log_gdp_2002_2023_avg) %>%
   mutate(log_gdp=log(gdp))
 
 #View(long_GDP_in_ESS_d)
@@ -931,7 +931,7 @@ long_GGGI_in_ESS_d <- GGGI_in_ESS_d %>%
   ) %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
-  select(ISO2, cname, year, gggi, GGGI_2002_2023_avg)
+  dplyr::select(ISO2, cname, year, gggi, GGGI_2002_2023_avg)
 
 # describe gggi average
 psych::describe(GGGI_in_ESS_d$GGGI_2002_2023_avg)
@@ -1191,7 +1191,7 @@ desc_frame<-left_join(
 
 cntry_desc_tbl<-
   desc_frame %>%
-  select(
+  dplyr::select(
     Country = CLDR,
     `n ESS rounds`,
     n,
@@ -1270,7 +1270,7 @@ export(cntry_desc_tbl,"../results/cntry_desc_tbl.xlsx",overwrite=T)
 ``` r
 cor_frame<-
   desc_frame %>%
-  select(
+  dplyr::select(
     VBMT=`FM M`,
     VBMT_Women=`FM M Women`,
     VBMT_Men=`FM M Men`,
@@ -1283,7 +1283,7 @@ cor_frame<-
   mutate(
     log_GDP=log(GDP)
   ) %>%
-  select(-GDP)
+  dplyr::select(-GDP)
 
 apa.cor.table(
   data=cor_frame,
@@ -2291,36 +2291,36 @@ print(s,locale=FALSE)
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] tibble_3.3.1          apaTables_2.0.8       stringr_1.6.0         tidyr_1.3.2          
-##  [5] r2mlm_0.3.8           nlme_3.1-169          Hmisc_5.2-5           ggpubr_0.6.3         
-##  [9] metafor_5.0-1         numDeriv_2016.8-1.1   metadat_1.6-0         lmerTest_3.2-1       
-## [13] ggflags_0.0.4         finalfit_1.1.0        ggplot2_4.0.3         MetBrewer_0.2.0      
-## [17] vjihelpers_0.0.0.9000 emmeans_2.0.3         lme4_2.0-1            Matrix_1.7-5         
-## [21] dplyr_1.2.1           rio_1.3.0             multid_1.0.2          knitr_1.51           
-## [25] rmarkdown_2.31       
+##  [1] MASS_7.3-65           matrixcalc_1.0-6      ggrepel_0.9.8         tibble_3.3.1         
+##  [5] apaTables_2.0.8       stringr_1.6.0         tidyr_1.3.2           r2mlm_0.3.8          
+##  [9] nlme_3.1-169          Hmisc_5.2-5           ggpubr_0.6.3          metafor_5.0-1        
+## [13] numDeriv_2016.8-1.1   metadat_1.6-0         lmerTest_3.2-1        ggflags_0.0.4        
+## [17] finalfit_1.1.0        ggplot2_4.0.3         MetBrewer_0.2.0       vjihelpers_0.0.0.9000
+## [21] emmeans_2.0.3         lme4_2.0-1            Matrix_1.7-5          dplyr_1.2.1          
+## [25] rio_1.3.0             multid_1.0.2          knitr_1.51            rmarkdown_2.31       
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] Rdpack_2.6.6       mnormt_2.1.2       pROC_1.19.0.1      gridExtra_2.3      writexl_1.5.4     
-##   [6] readxl_1.4.5       rlang_1.2.0        magrittr_2.0.5     otel_0.2.0         rockchalk_1.8.164 
-##  [11] compiler_4.6.0     mgcv_1.9-4         png_0.1-9          vctrs_0.7.3        quadprog_1.5-8    
-##  [16] pkgconfig_2.0.3    shape_1.4.6.1      fastmap_1.2.0      backports_1.5.1    labeling_0.4.3    
-##  [21] pbivnorm_0.6.0     utf8_1.2.6         nloptr_2.2.1       purrr_1.2.2        xfun_0.57         
-##  [26] glmnet_5.0         jomo_2.7-6         cachem_1.1.0       kutils_1.73        jsonlite_2.0.0    
-##  [31] pan_1.9            jpeg_0.1-11        psych_2.6.3        lavaan_0.6-21      broom_1.0.13      
-##  [36] parallel_4.6.0     cluster_2.1.8.2    R6_2.6.1           bslib_0.10.0       stringi_1.8.7     
-##  [41] RColorBrewer_1.1-3 car_3.1-5          boot_1.3-32        rpart_4.1.27       cellranger_1.1.0  
-##  [46] jquerylib_0.1.4    estimability_1.5.1 Rcpp_1.1.1-1.1     iterators_1.0.14   base64enc_0.1-6   
-##  [51] R.utils_2.13.0     splines_4.6.0      nnet_7.3-20        tidyselect_1.2.1   rstudioapi_0.18.0 
-##  [56] abind_1.4-8        yaml_2.3.12        codetools_0.2-20   plyr_1.8.9         lattice_0.22-9    
-##  [61] withr_3.0.2        S7_0.2.2           coda_0.19-4.1      evaluate_1.0.5     foreign_0.8-91    
-##  [66] survival_3.8-6     zip_2.3.3          pillar_1.11.1      carData_3.0-6      mice_3.19.0       
-##  [71] stats4_4.6.0       checkmate_2.3.4    foreach_1.5.2      reformulas_0.4.4   generics_0.1.4    
-##  [76] grImport2_0.3-3    mathjaxr_2.0-0     scales_1.4.0       minqa_1.2.8        xtable_1.8-8      
-##  [81] glue_1.8.1         tools_4.6.0        data.table_1.18.4  openxlsx_4.2.8.1   ggsignif_0.6.4    
-##  [86] forcats_1.0.1      XML_3.99-0.23      mvtnorm_1.3-7      cowplot_1.2.0      grid_4.6.0        
-##  [91] rbibutils_2.4.1    colorspace_2.1-2   htmlTable_2.5.0    Formula_1.2-5      cli_3.6.6         
-##  [96] gtable_0.3.6       R.methodsS3_1.8.2  rstatix_0.7.3      sass_0.4.10        digest_0.6.39     
-## [101] htmlwidgets_1.6.4  farver_2.1.2       htmltools_0.5.9    R.oo_1.27.1        lifecycle_1.0.5   
-## [106] mitml_0.4-5        MASS_7.3-65
+##   [1] mathjaxr_2.0-0     RColorBrewer_1.1-3 rstudioapi_0.18.0  jsonlite_2.0.0     shape_1.4.6.1     
+##   [6] magrittr_2.0.5     estimability_1.5.1 jomo_2.7-6         farver_2.1.2       nloptr_2.2.1      
+##  [11] vctrs_0.7.3        minqa_1.2.8        base64enc_0.1-6    rstatix_0.7.3      htmltools_0.5.9   
+##  [16] forcats_1.0.1      broom_1.0.13       cellranger_1.1.0   Formula_1.2-5      pROC_1.19.0.1     
+##  [21] mitml_0.4-5        sass_0.4.10        bslib_0.10.0       htmlwidgets_1.6.4  pbkrtest_0.5.5    
+##  [26] plyr_1.8.9         cachem_1.1.0       lifecycle_1.0.5    iterators_1.0.14   pkgconfig_2.0.3   
+##  [31] R6_2.6.1           fastmap_1.2.0      rbibutils_2.4.1    digest_0.6.39      colorspace_2.1-2  
+##  [36] labeling_0.4.3     abind_1.4-8        mgcv_1.9-4         compiler_4.6.0     withr_3.0.2       
+##  [41] htmlTable_2.5.0    S7_0.2.2           backports_1.5.1    carData_3.0-6      psych_2.6.3       
+##  [46] R.utils_2.13.0     ggsignif_0.6.4     pan_1.9            tools_4.6.0        pbivnorm_0.6.0    
+##  [51] foreign_0.8-91     otel_0.2.0         zip_2.3.3          nnet_7.3-20        R.oo_1.27.1       
+##  [56] glue_1.8.1         quadprog_1.5-8     grid_4.6.0         checkmate_2.3.4    cluster_2.1.8.2   
+##  [61] generics_0.1.4     gtable_0.3.6       R.methodsS3_1.8.2  data.table_1.18.4  car_3.1-5         
+##  [66] utf8_1.2.6         foreach_1.5.2      pillar_1.11.1      rockchalk_1.8.164  splines_4.6.0     
+##  [71] lattice_0.22-9     survival_3.8-6     kutils_1.73        tidyselect_1.2.1   reformulas_0.4.4  
+##  [76] gridExtra_2.3      grImport2_0.3-3    stats4_4.6.0       xfun_0.57          stringi_1.8.7     
+##  [81] yaml_2.3.12        boot_1.3-32        evaluate_1.0.5     codetools_0.2-20   cli_3.6.6         
+##  [86] rpart_4.1.27       xtable_1.8-8       Rdpack_2.6.6       jquerylib_0.1.4    lavaan_0.6-21     
+##  [91] Rcpp_1.1.1-1.1     readxl_1.4.5       coda_0.19-4.1      png_0.1-9          XML_3.99-0.23     
+##  [96] parallel_4.6.0     jpeg_0.1-11        glmnet_5.0         mvtnorm_1.3-7      scales_1.4.0      
+## [101] openxlsx_4.2.8.1   purrr_1.2.2        writexl_1.5.4      rlang_1.2.0        cowplot_1.2.0     
+## [106] mnormt_2.1.2       mice_3.19.0
 ```
 

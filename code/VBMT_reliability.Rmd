@@ -315,7 +315,7 @@ long_GII_in_ESS_d <- GII_in_ESS_d %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
   mutate(gei = 1 - gii) %>%
-  select(ISO2, iso3, country, year, gii, gei, gii_2002_2023_avg, gei_2002_2023_avg)
+  dplyr::select(ISO2, iso3, country, year, gii, gei, gii_2002_2023_avg, gei_2002_2023_avg)
 
 
 # describe gei average
@@ -395,7 +395,7 @@ long_GDI_in_ESS_d <- GDI_in_ESS_d %>%
   ) %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
-  select(ISO2, iso3, country, year, gdi, gdi_2002_2023_avg)
+  dplyr::select(ISO2, iso3, country, year, gdi, gdi_2002_2023_avg)
 
 # describe gdi average
 psych::describe(GDI_in_ESS_d$gdi_2002_2023_avg)
@@ -470,7 +470,7 @@ long_GDP_in_ESS_d <- GDP_in_ESS_d %>%
   ) %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
-  select(ISO2, Country.Name, year, gdp, gdp_2002_2023_avg,log_gdp_2002_2023_avg) %>%
+  dplyr::select(ISO2, Country.Name, year, gdp, gdp_2002_2023_avg,log_gdp_2002_2023_avg) %>%
   mutate(log_gdp=log(gdp))
 
 #View(long_GDP_in_ESS_d)
@@ -548,7 +548,7 @@ long_GGGI_in_ESS_d <- GGGI_in_ESS_d %>%
   ) %>%
   mutate(year = as.integer(year)) %>%
   filter(year >= 2002 & year <= 2023) %>%
-  select(ISO2, cname, year, gggi, GGGI_2002_2023_avg)
+  dplyr::select(ISO2, cname, year, gggi, GGGI_2002_2023_avg)
 
 # describe gggi average
 psych::describe(GGGI_in_ESS_d$GGGI_2002_2023_avg)
@@ -743,7 +743,7 @@ desc_frame<-left_join(
 
 cntry_desc_tbl<-
   desc_frame %>%
-  select(
+  dplyr::select(
     Country = CLDR,
     `n ESS rounds`,
     n,
@@ -778,7 +778,7 @@ export(cntry_desc_tbl,"../results/cntry_desc_tbl.xlsx",overwrite=T)
 ```{r}
 cor_frame<-
   desc_frame %>%
-  select(
+  dplyr::select(
     VBMT=`FM M`,
     VBMT_Women=`FM M Women`,
     VBMT_Men=`FM M Men`,
@@ -791,7 +791,7 @@ cor_frame<-
   mutate(
     log_GDP=log(GDP)
   ) %>%
-  select(-GDP)
+  dplyr::select(-GDP)
 
 apa.cor.table(
   data=cor_frame,
