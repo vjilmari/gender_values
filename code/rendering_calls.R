@@ -180,3 +180,20 @@ purl(input="code/cl_interaction_and_simple_slope_power.Rmd",
      output="code/cl_interaction_and_simple_slope_power.R",
      documentation = 2)
 
+
+## make .html documents
+
+md_files <- list.files(
+  path = "code",
+  pattern = "\\.md$",
+  full.names = TRUE
+)
+
+for (f in md_files) {
+  rmarkdown::render(
+    input = f,
+    output_format = "html_document"
+  )
+}
+
+
